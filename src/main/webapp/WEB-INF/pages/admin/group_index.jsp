@@ -33,7 +33,6 @@
 </head>
 <body>
 <!--头部 star-->
-<jsp:include page="head.jsp"></jsp:include>
 <!--头部 end-->
 
 <!--主体部分  star-->

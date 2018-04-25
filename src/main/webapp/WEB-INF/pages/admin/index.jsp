@@ -29,7 +29,7 @@
                     <ul class="layui-nav" lay-filter="">
                       <li class="layui-nav-item"><img src="${pageContext.request.contextPath}/assets/admin/images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
                       <li class="layui-nav-item">
-                        <a href="javascript:;">admin</a>
+                        <a href="javascript:;">${currentUser.trueName}</a>
                         <dl class="layui-nav-child"> <!-- 二级菜单 -->
                           <dd><a href="">个人信息</a></dd>
                           <dd><a href="">切换帐号</a></dd>
@@ -50,39 +50,46 @@
                     <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
                         <li class="layui-nav-item">
                             <a >
-                                <i class="layui-icon" style="top: 3px;">&#xe607;</i><cite>文章</cite>
+                                <i class="layui-icon" style="top: 3px;">&#xe607;</i><cite>信息管理</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd class="">
-                                        <a  _href="${pageContext.request.contextPath}/article/index">
-                                            <cite>问题列表</cite>
+                                        <a href="javascript:;" _href="${pageContext.request.contextPath}/article/index">
+                                            <cite>文章列表</cite>
                                         </a>
                                 </dd>
                                 <dd class="">
                                         <a href="javascript:;" _href="${pageContext.request.contextPath}/column/index">
-                                            <cite>删除问题</cite>
+                                            <cite>栏目管理</cite>
                                         </a>
                                 </dd>
                             </dl>
                         </li>
                         <li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
-                                <i class="layui-icon" style="top: 3px;">&#xe62d;</i><cite>产品管理</cite>
+                                <i class="layui-icon" style="top: 3px;">&#xe62d;</i><cite>系统设置</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd class="">
                                     <dd class="">
                                         <a href="javascript:;" _href="${pageContext.request.contextPath}/group/index">
-                                            <cite>产品列表（待开发）</cite>
+                                            <cite>机构管理</cite>
                                         </a>
                                     </dd>
                                 </dd>
                                 <dd class="">
                                     <dd class="">
                                         <a href="javascript:;" _href="${pageContext.request.contextPath}/user/index">
-                                            <cite>品牌管理（待开发）</cite>
+                                            <cite>用户管理</cite>
                                         </a>
                                     </dd>
+                                </dd>
+                                <dd class="">
+                                <dd class="">
+                                    <a href="javascript:;" _href="${pageContext.request.contextPath}/user/index">
+                                        <cite>个人信息</cite>
+                                    </a>
+                                </dd>
                                 </dd>
                                 <%--<dd class="">
                                     <dd class="">
@@ -107,21 +114,28 @@
                                 </dd>--%>
                             </dl>
                         </li>
-                        <%--<li class="layui-nav-item">
+                        <li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
-                                <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>轮播管理</cite>
+                                <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>统计管理</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd class="">
                                     <dd class="">
                                         <a href="javascript:;" _href="./banner-list.html">
-                                            <cite>轮播列表</cite>
+                                            <cite>信息统计</cite>
+                                        </a>
+                                    </dd>
+                                </dd>
+                                <dd class="">
+                                    <dd class="">
+                                        <a href="javascript:;" _href="./banner-list.html">
+                                            <cite>访问统计</cite>
                                         </a>
                                     </dd>
                                 </dd>
                             </dl>
                         </li>
-                        <li class="layui-nav-item">
+                        <%--<li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
                                 <i class="layui-icon" style="top: 3px;">&#xe642;</i><cite>订单管理</cite>
                             </a>
@@ -133,9 +147,9 @@
                                         </a>
                                     </dd>
                                 </dd>
-                            </dl>
+                            </dl>--%>
                         </li>
-                        <li class="layui-nav-item">
+                        <%--<li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
                                 <i class="layui-icon" style="top: 3px;">&#xe630;</i><cite>分类管理</cite>
                             </a>

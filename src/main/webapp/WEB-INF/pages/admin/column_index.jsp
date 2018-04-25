@@ -35,7 +35,6 @@
 </head>
 <body>
 <!--头部 star-->
-<jsp:include page="head.jsp"></jsp:include>
 <!--头部 end-->
 
 <!--主体部分  star-->
@@ -430,10 +429,10 @@
 </script>
 <script type="text/html" id="barDemo">
 
-    <a class="layui-btn layui-btn-mini  layui-btn-normal" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="edit">编辑</a>
     {{#  if(d.coluDefault != 1 ){ }}
 
-    <a class="layui-btn layui-btn-danger layui-btn-mini  layui-btn-danger" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs  layui-btn-danger" lay-event="del">删除</a>
     {{#  } }}
 
 </script>

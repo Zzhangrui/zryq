@@ -487,8 +487,8 @@
     <a class="layui-btn  layui-btn-xs layui-btn-normal " lay-event="view">查看</a>
     <a class="layui-btn  layui-btn-xs  " lay-event="cancel">撤稿</a>
     {{#  } else { }}
-    <%--<a class="layui-btn layui-btn-mini  layui-btn-normal" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-mini  layui-btn-warm" lay-event="publish">发布</a>--%>
+   <%-- <a class="layui-btn layui-btn-mini  layui-btn-normal" lay-event="edit">编辑</a>--%>
+    <a class="layui-btn layui-btn-xs  layui-btn-warm" lay-event="publish">重新发布</a>
     {{#  } }}
 
     <%--<a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>

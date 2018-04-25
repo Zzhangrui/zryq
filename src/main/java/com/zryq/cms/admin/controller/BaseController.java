@@ -1,7 +1,6 @@
 package com.zryq.cms.admin.controller;
 
 import com.zryq.cms.admin.entity.User;
-import com.zryq.cms.admin.entity.User;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,7 +41,7 @@ public class BaseController {
             HttpServletRequest request =
                     ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             HttpSession session = request.getSession();
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute("currentUser");
             return user;
         } catch (NullPointerException e) {
             e.printStackTrace();
