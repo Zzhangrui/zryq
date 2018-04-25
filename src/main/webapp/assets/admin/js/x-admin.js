@@ -1,7 +1,7 @@
-layui.use(['element'], function(){
+layui.use(['element','table'], function(){
 	$ = layui.jquery;
-  	element = layui.element(); 
-  
+  	element = layui.element;
+
   //导航的hover效果、二级菜单等功能，需要依赖element模块
   // 侧边栏点击隐藏兄弟元素
 	$('.layui-nav-item').click(function(event) {
@@ -32,30 +32,28 @@ layui.use(['element'], function(){
 		
 	});
 
+//监听导航点击
+    element.on('nav(side)', function(elem){
+        title = elem.find('cite').text();
+        url = elem.attr('_href');
+        if(url == undefined){
+        	return;
+		}
+        for (var i = 0; i <$('.x-iframe').length; i++) {
+            if($('.x-iframe').eq(i).attr('src')==url){
+                element.tabChange('x-tab', url);
+                return;
+            }
+        };
 
+        res = element.tabAdd('x-tab', {
+            title: title//用于演示
+            ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe"></iframe>'
+			,id:url
+        });
+        element.tabChange('x-tab', url);
+        $('.layui-tab-title li').eq(0).find('i').remove();
+    });
 
-  	//监听导航点击
-  	element.on('nav(side)', function(elem){
-    	title = elem.find('cite').text();
-    	url = elem.find('a').attr('_href');
-    	// alert(url);
-
-    	for (var i = 0; i <$('.x-iframe').length; i++) {
-    		if($('.x-iframe').eq(i).attr('src')==url){
-    			element.tabChange('x-tab', i);
-    			return;
-    		}
-    	};
-
-    	res = element.tabAdd('x-tab', {
-	        title: title//用于演示
-	        ,content: '<iframe frameborder="0" src="'+url+'" class="x-iframe"></iframe>'
-		    });
-
-
-		element.tabChange('x-tab', $('.layui-tab-title li').length-1);
-
-    	$('.layui-tab-title li').eq(0).find('i').remove();
-  });
 });
 

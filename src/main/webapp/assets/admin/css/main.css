@@ -292,7 +292,7 @@ hr{
 #con_main_nav{
     position: fixed;
     left: 0;
-    top:120px;
+    top:0px;
     width: 180px;
     bottom: 0;
     z-index: 100;
@@ -409,7 +409,7 @@ hr{
 /*左侧主导航  end*/
 
 #con_box{
-    top: 120px;
+    top: 0px;
     overflow: auto;
     background: #fff;
     position: fixed;
@@ -890,21 +890,21 @@ hr{
     vertical-align: middle;
     display: inline-block;
 }
-/*图文消息*/
+/*!*图文消息*!
 .tab_appmsg .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -240px no-repeat;
 }
 .tab_appmsg:hover .icon_msg_sender,.tab_appmsg .active .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -270px no-repeat;
 }
-/*文字*/
+!*文字*!
 .tab_text .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 0 no-repeat;
 }
 .tab_text:hover .icon_msg_sender,.tab_text .active .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -30px no-repeat;
 }
-/*图片*/
+!*图片*!
 .tab_img .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -60px no-repeat;
 }
@@ -912,20 +912,20 @@ hr{
     background: url(../images/msg_tab_z25df2d.png) 0 -90px no-repeat;
 }
 
-/*语音*/
+!*语音*!
 .tab_audio .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -180px no-repeat;
 }
 .tab_audio:hover .icon_msg_sender,.tab_audio .active .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -210px no-repeat;
 }
-/*视频*/
+!*视频*!
 .tab_video .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -120px no-repeat;
 }
 .tab_video:hover .icon_msg_sender,.tab_video .active .icon_msg_sender{
     background: url(../images/msg_tab_z25df2d.png) 0 -150px no-repeat;
-}
+}*/
 
 
 .tab_body_box{
@@ -1234,7 +1234,7 @@ hr{
     width: 100%;
     height: 100%;
     position: relative;
-    background: url("../images/logo_02.png")no-repeat center;
+    /*background: url("../images/logo_02.png")no-repeat center;*/
 }
 .ImgTextItem .cover_ImgTextItem h4{
     position: absolute;
@@ -1587,14 +1587,12 @@ select{padding:8px 0\9;}/* Ie8字体select垂直居中*/
     border: 1px solid #ccc;
     cursor: pointer;
     display: inline-block;
-    margin-left: 2px;
     text-align: center;
     text-decoration: none;
     color: #666;
     height: 26px;
     line-height: 26px;
-    text-decoration: none;
-    margin: 0 0 6px 6px;
+    margin: 0 0 6px 2px;
     padding: 0 10px;
     font-size: 14px;
 }

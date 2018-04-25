@@ -15,13 +15,16 @@
         <meta name="format-detection" content="telephone=no">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layui/css/layui.css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/css/x-admin.css" media="all">
+        <style>
+            .layui-body{overflow-y: scroll;}
+        </style>
     </head>
     <body>
         <div class="layui-layout layui-layout-admin">
             <div class="layui-header header header-demo">
                 <div class="layui-main">
-                    <a class="logo" href="./index.html">
-                        X-admin v1.0
+                    <a class="logo" href="${pageContext.request.contextPath}/index">
+                        R v1.0
                     </a>
                     <ul class="layui-nav" lay-filter="">
                       <li class="layui-nav-item"><img src="${pageContext.request.contextPath}/assets/admin/images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
@@ -46,23 +49,19 @@
                 <div class="layui-side-scroll">
                     <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
                         <li class="layui-nav-item">
-                            <a class="javascript:;" href="javascript:;">
-                                <i class="layui-icon" style="top: 3px;">&#xe607;</i><cite>问题管理</cite>
+                            <a >
+                                <i class="layui-icon" style="top: 3px;">&#xe607;</i><cite>文章</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd class="">
-                                    <dd class="">
-                                        <a href="javascript:;" _href="./question-list.html">
+                                        <a  _href="${pageContext.request.contextPath}/article/index">
                                             <cite>问题列表</cite>
                                         </a>
-                                    </dd>
                                 </dd>
                                 <dd class="">
-                                    <dd class="">
-                                        <a href="javascript:;" _href="./question-del.html">
+                                        <a href="javascript:;" _href="${pageContext.request.contextPath}/column/index">
                                             <cite>删除问题</cite>
                                         </a>
-                                    </dd>
                                 </dd>
                             </dl>
                         </li>
@@ -73,19 +72,19 @@
                             <dl class="layui-nav-child">
                                 <dd class="">
                                     <dd class="">
-                                        <a href="javascript:;" _href="./welcome.html">
+                                        <a href="javascript:;" _href="${pageContext.request.contextPath}/group/index">
                                             <cite>产品列表（待开发）</cite>
                                         </a>
                                     </dd>
                                 </dd>
                                 <dd class="">
                                     <dd class="">
-                                        <a href="javascript:;" _href="./welcome.html">
+                                        <a href="javascript:;" _href="${pageContext.request.contextPath}/user/index">
                                             <cite>品牌管理（待开发）</cite>
                                         </a>
                                     </dd>
                                 </dd>
-                                <dd class="">
+                                <%--<dd class="">
                                     <dd class="">
                                         <a href="javascript:;" _href="./welcome.html">
                                             <cite>类型管理（待开发）</cite>
@@ -105,10 +104,10 @@
                                             <cite>产品分类</cite>
                                         </a>
                                     </dd>
-                                </dd>
+                                </dd>--%>
                             </dl>
                         </li>
-                        <li class="layui-nav-item">
+                        <%--<li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
                                 <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>轮播管理</cite>
                             </a>
@@ -319,7 +318,7 @@
                             </dl>
                         </li>
                         <li class="layui-nav-item" style="height: 30px; text-align: center">
-                        </li>
+                        </li>--%>
                     </ul>
                 </div>
 
@@ -327,22 +326,22 @@
             <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true">
                 <div class="x-slide_left"></div>
                 <ul class="layui-tab-title">
-                    <li class="layui-this">
-                        我的桌面
-                        <i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
+                    <li class="layui-this" lay-id="/cms/article/index">
+                        文章列表
+                        <%--<i class="layui-icon layui-unselect layui-tab-close" style="display:none">ဆ</i>--%>
                     </li>
                 </ul>
                 <div class="layui-tab-content site-demo site-demo-body">
                     <div class="layui-tab-item layui-show">
-                        <iframe frameborder="0" src="./welcome.html" class="x-iframe"></iframe>
+                        <iframe frameborder="0" src="${pageContext.request.contextPath}/article/index" class="x-iframe"></iframe>
                     </div>
                 </div>
             </div>
             <div class="site-mobile-shade">
             </div>
         </div>
+        <script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
         <script src="${pageContext.request.contextPath}/assets/layui/layui.js" charset="utf-8"></script>
         <script src="${pageContext.request.contextPath}/assets/admin/js/x-admin.js"></script>
-
     </body>
 </html>

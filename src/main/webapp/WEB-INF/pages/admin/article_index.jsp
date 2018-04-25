@@ -33,11 +33,12 @@
         li {
             display: flow-root;
         }
+
     </style>
 </head>
 <body>
 <!--头部 star-->
-<jsp:include page="head.jsp"></jsp:include>
+<%--<jsp:include page="head.jsp"></jsp:include>--%>
 <!--头部 end-->
 
 <!--主体部分  star-->
@@ -53,7 +54,7 @@
                     <li class="open">
                         <div class="link">
                             <i class="fa fa-envelope-o"></i>
-                            信息管理
+                            栏目分类
                             <i class="fa fa-angle-down"></i>
                         </div>
                         <ul class="submenu" style="display: block">
@@ -114,19 +115,7 @@
                     <!--页面底部 star-->
                     <footer>
                         <div id="foot">
-                            <div id="search_color_wrap" class="lf">
-                                <span>选择色系：</span>
-                                <div class="color_box">
-                                    <a class="color1"></a>
-                                    <a class="color2 "></a>
-                                    <a class="color3"> </a>
-                                    <a class="color4"></a>
-                                    <a class="color5"></a>
-                                    <a class="color6"></a>
-                                    <a class="color7"></a>
-                                    <a class="color8"></a>
-                                </div>
-                            </div>
+
                             <div id="bp" class="rt">图形化页面系统 2017 版本</div>
                         </div>
                     </footer>
@@ -155,8 +144,9 @@
     var laypage = "";
     var coluId = "";
     var coluName = "";
-    layui.use(['layer', 'form', 'table', 'laypage'], function () {
-        layer = layui.layer, form = layui.form, table = layui.table, laypage = layui.laypage;
+    var laytpl="";
+    layui.use(['layer', 'form', 'table', 'laypage','laytpl'], function () {
+        layer = layui.layer, form = layui.form, table = layui.table, laypage = layui.laypage, laytpl = layui.laytpl;
 
         putData("1",coluId);
 
@@ -215,12 +205,14 @@
                 , data: data
                 , cols: [[
                     {checkbox: true}
-                    ,{field: 'artTitle', title: '标题', width: 200, sort: false}
-                    , {field: 'artDigest', title: '摘要', width: 200, sort: false}
-                    , {field: 'createTime', title: '创建时间', width: 200, sort: true}
-                    , {field: 'createUsername', title: '创建人', width: 200, sort: true}
-                    , {field: 'coluName', title: '所属栏目', width: 200, sort: true}
-                     , {fixed: 'right', title: '操作', width: 153, align: 'center', templet: '#barDemo'}
+                    ,{field: 'artTitle', title: '标题', width: '20%', sort: false}
+                    , {field: 'artDigest', title: '摘要', width: '25%', sort: false}
+                    , {field: 'createTime', title: '创建时间', width: '15%', sort: true,templet:function(d){
+                            return d.createTime.substr(0,16);
+                        }}
+                    , {field: 'createUsername', title: '创建人', width: '10%', sort: true}
+                    , {field: 'coluName', title: '所属栏目',  sort: true}
+                     , {fixed: 'right', title: '操作', width: '20%', align: 'center', templet: '#barDemo'}
                 ]] //设置表头
                 //,…… //更多参数参考右侧目录：基本参数选项
             });
@@ -484,17 +476,16 @@
 <script type="text/html" id="barDemo">
 
     {{#  if(d.artState == 0 || d.artState == 3){ }}
-    <a class="layui-btn layui-btn-mini  layui-btn-normal" lay-event="edit">编辑</a>
-
-    <a class="layui-btn layui-btn-mini  layui-btn-warm" lay-event="publish">发布</a>
+    <a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs  layui-btn-warm" lay-event="publish">发布</a>
    <%-- <a class="layui-btn layui-btn-mini  layui-btn-warm" lay-event="sub">提交</a>--%>
     {{#  } else if(d.artState == 1){ }}
-    <a class="layui-btn  layui-btn-mini layui-btn-disabled ">审核中</a>
+    <a class="layui-btn  layui-btn-xs layui-btn-disabled ">审核中</a>
     {{#  } else if(d.artState == 2){ }}
-    <a class="layui-btn layui-btn-mini  layui-btn-warm" lay-event="publish">发布</a>
+    <a class="layui-btn layui-btn-xs  layui-btn-warm" lay-event="publish">发布</a>
     {{#  } else if(d.artState == 4){ }}
-    <a class="layui-btn  layui-btn-mini layui-btn-normal " lay-event="view">查看</a>
-    <a class="layui-btn  layui-btn-mini  " lay-event="cancel">撤稿</a>
+    <a class="layui-btn  layui-btn-xs layui-btn-normal " lay-event="view">查看</a>
+    <a class="layui-btn  layui-btn-xs  " lay-event="cancel">撤稿</a>
     {{#  } else { }}
     <%--<a class="layui-btn layui-btn-mini  layui-btn-normal" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-mini  layui-btn-warm" lay-event="publish">发布</a>--%>
