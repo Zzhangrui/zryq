@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zryq.cms.admin.dao.WebInfoMapper">
+    <resultMap id="BaseResultMap" type="com.zryq.cms.admin.entity.WebInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="web_name" property="webName" jdbcType="VARCHAR"/>
+        <result column="web_des" property="webDes" jdbcType="VARCHAR"/>
+        <result column="web_state" property="webState" jdbcType="VARCHAR"/>
+        <result column="temp_id" property="tempId" jdbcType="INTEGER"/>
+        <result column="web_address" property="webAddress" jdbcType="VARCHAR"/>
+        <result column="web_code" property="webCode" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, web_name, web_des, web_state, temp_id, web_address, web_code, parent_id
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.zryq.cms.admin.entity.WebInfoExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from cms_web
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_web
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from cms_web
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.zryq.cms.admin.entity.WebInfoExample">
+        delete from cms_web
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.zryq.cms.admin.entity.WebInfo" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into cms_web (id, web_name, web_des,
+        web_state, temp_id, web_address,
+        web_code, parent_id)
+        values (#{id,jdbcType=INTEGER}, #{webName,jdbcType=VARCHAR}, #{webDes,jdbcType=VARCHAR},
+        #{webState,jdbcType=VARCHAR}, #{tempId,jdbcType=INTEGER}, #{webAddress,jdbcType=VARCHAR},
+        #{webCode,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.WebInfo">
+        insert into cms_web
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="webName != null">
+                web_name,
+            </if>
+            <if test="webDes != null">
+                web_des,
+            </if>
+            <if test="webState != null">
+                web_state,
+            </if>
+            <if test="tempId != null">
+                temp_id,
+            </if>
+            <if test="webAddress != null">
+                web_address,
+            </if>
+            <if test="webCode != null">
+                web_code,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="webName != null">
+                #{webName,jdbcType=VARCHAR},
+            </if>
+            <if test="webDes != null">
+                #{webDes,jdbcType=VARCHAR},
+            </if>
+            <if test="webState != null">
+                #{webState,jdbcType=VARCHAR},
+            </if>
+            <if test="tempId != null">
+                #{tempId,jdbcType=INTEGER},
+            </if>
+            <if test="webAddress != null">
+                #{webAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="webCode != null">
+                #{webCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.zryq.cms.admin.entity.WebInfoExample"
+            resultType="java.lang.Integer">
+        select count(*) from cms_web
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update cms_web
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.webName != null">
+                web_name = #{record.webName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webDes != null">
+                web_des = #{record.webDes,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webState != null">
+                web_state = #{record.webState,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tempId != null">
+                temp_id = #{record.tempId,jdbcType=INTEGER},
+            </if>
+            <if test="record.webAddress != null">
+                web_address = #{record.webAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webCode != null">
+                web_code = #{record.webCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentId != null">
+                parent_id = #{record.parentId,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update cms_web
+        set id = #{record.id,jdbcType=INTEGER},
+        web_name = #{record.webName,jdbcType=VARCHAR},
+        web_des = #{record.webDes,jdbcType=VARCHAR},
+        web_state = #{record.webState,jdbcType=VARCHAR},
+        temp_id = #{record.tempId,jdbcType=INTEGER},
+        web_address = #{record.webAddress,jdbcType=VARCHAR},
+        web_code = #{record.webCode,jdbcType=VARCHAR},
+        parent_id = #{record.parentId,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zryq.cms.admin.entity.WebInfo">
+        update cms_web
+        <set>
+            <if test="webName != null">
+                web_name = #{webName,jdbcType=VARCHAR},
+            </if>
+            <if test="webDes != null">
+                web_des = #{webDes,jdbcType=VARCHAR},
+            </if>
+            <if test="webState != null">
+                web_state = #{webState,jdbcType=VARCHAR},
+            </if>
+            <if test="tempId != null">
+                temp_id = #{tempId,jdbcType=INTEGER},
+            </if>
+            <if test="webAddress != null">
+                web_address = #{webAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="webCode != null">
+                web_code = #{webCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zryq.cms.admin.entity.WebInfo">
+        update cms_web
+        set web_name = #{webName,jdbcType=VARCHAR},
+        web_des = #{webDes,jdbcType=VARCHAR},
+        web_state = #{webState,jdbcType=VARCHAR},
+        temp_id = #{tempId,jdbcType=INTEGER},
+        web_address = #{webAddress,jdbcType=VARCHAR},
+        web_code = #{webCode,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

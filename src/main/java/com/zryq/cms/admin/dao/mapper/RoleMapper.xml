@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zryq.cms.admin.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.zryq.cms.admin.entity.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="role_des" property="roleDes" jdbcType="VARCHAR"/>
+        <result column="role_state" property="roleState" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, role_name, role_des, role_state
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.zryq.cms.admin.entity.RoleExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from cms_role
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from cms_role
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.zryq.cms.admin.entity.RoleExample">
+        delete from cms_role
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.zryq.cms.admin.entity.Role">
+        insert into cms_role (id, role_name, role_des,
+        role_state)
+        values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDes,jdbcType=VARCHAR},
+        #{roleState,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.Role">
+        insert into cms_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="roleDes != null">
+                role_des,
+            </if>
+            <if test="roleState != null">
+                role_state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDes != null">
+                #{roleDes,jdbcType=VARCHAR},
+            </if>
+            <if test="roleState != null">
+                #{roleState,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.zryq.cms.admin.entity.RoleExample"
+            resultType="java.lang.Integer">
+        select count(*) from cms_role
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update cms_role
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.roleName != null">
+                role_name = #{record.roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roleDes != null">
+                role_des = #{record.roleDes,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roleState != null">
+                role_state = #{record.roleState,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update cms_role
+        set id = #{record.id,jdbcType=INTEGER},
+        role_name = #{record.roleName,jdbcType=VARCHAR},
+        role_des = #{record.roleDes,jdbcType=VARCHAR},
+        role_state = #{record.roleState,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zryq.cms.admin.entity.Role">
+        update cms_role
+        <set>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDes != null">
+                role_des = #{roleDes,jdbcType=VARCHAR},
+            </if>
+            <if test="roleState != null">
+                role_state = #{roleState,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zryq.cms.admin.entity.Role">
+        update cms_role
+        set role_name = #{roleName,jdbcType=VARCHAR},
+        role_des = #{roleDes,jdbcType=VARCHAR},
+        role_state = #{roleState,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <resultMap id="roleWithUsers" type="com.zryq.cms.admin.entity.Role">
+        <id column="crid" property="id" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="role_des" property="roleDes" jdbcType="VARCHAR"/>
+        <result column="role_state" property="roleState" jdbcType="INTEGER"/>
+        <collection property="userList" ofType="com.zryq.cms.admin.entity.User">
+            <id column="cuid" property="id" jdbcType="INTEGER"/>
+            <result column="username" property="username" jdbcType="VARCHAR"/>
+            <result column="password" property="password" jdbcType="VARCHAR"/>
+            <result column="true_name" property="trueName" jdbcType="VARCHAR"/>
+            <result column="group_id" property="groupId" jdbcType="INTEGER"/>
+            <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+            <result column="state" property="state" jdbcType="INTEGER"/>
+            <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+            <result column="web_id" property="webId" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <select id="getWithUserListById" resultMap="roleWithUsers">
+        select
+        cr.id as crid, cr.role_name, cr.role_des, cr.role_state,
+        cu.id as cuid, cu.username, cu.password, cu.true_name, cu.group_id, cu.group_name, cu.state,
+        cu.uuid, cu.web_id
+        from cms_role as cr left join cms_role_relationship as crr on cr.id = crr.role_id
+        left join cms_user as cu on cu.id = crr.user_id
+        where
+        cr.id = #{id}
+    </select>
+</mapper>

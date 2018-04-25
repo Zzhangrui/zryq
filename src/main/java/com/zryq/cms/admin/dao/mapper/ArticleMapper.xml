@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zryq.cms.admin.dao.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.zryq.cms.admin.entity.Article">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="art_title" property="artTitle" jdbcType="VARCHAR"/>
+        <result column="art_digest" property="artDigest" jdbcType="VARCHAR"/>
+        <result column="art_from" property="artFrom" jdbcType="VARCHAR"/>
+        <result column="art_author" property="artAuthor" jdbcType="VARCHAR"/>
+        <result column="web_id" property="webId" jdbcType="INTEGER"/>
+        <result column="cate_id" property="cateId" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="create_username" property="createUsername" jdbcType="VARCHAR"/>
+        <result column="create_user_id" property="createUserId" jdbcType="INTEGER"/>
+        <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
+        <result column="publish_username" property="publishUsername" jdbcType="VARCHAR"/>
+        <result column="publish_user_id" property="publishUserId" jdbcType="VARCHAR"/>
+        <result column="art_top" property="artTop" jdbcType="INTEGER"/>
+        <result column="art_state" property="artState" jdbcType="INTEGER"/>
+        <result column="show_start_time" property="showStartTime" jdbcType="TIMESTAMP"/>
+        <result column="show_end_time" property="showEndTime" jdbcType="TIMESTAMP"/>
+        <result column="open_commen" property="openCommen" jdbcType="INTEGER"/>
+        <result column="colu_id" property="coluId" jdbcType="INTEGER"/>
+        <result column="colu_name" property="coluName" jdbcType="VARCHAR"/>
+        <result column="create_group_id" property="createGroupId" jdbcType="INTEGER"/>
+        <result column="create_group_name" property="createGroupName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.zryq.cms.admin.entity.Article"
+               extends="BaseResultMap">
+        <result column="art_content" property="artContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, art_title, art_digest, art_from, art_author, web_id, cate_id, create_time,
+        create_username,
+        create_user_id, publish_time, publish_username, publish_user_id, art_top, art_state,
+        show_start_time, show_end_time, open_commen, colu_id, colu_name, create_group_id,
+        create_group_name
+    </sql>
+    <sql id="Blob_Column_List">
+        art_content
+    </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.zryq.cms.admin.entity.ArticleExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cms_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.zryq.cms.admin.entity.ArticleExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from cms_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cms_article
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from cms_article
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.zryq.cms.admin.entity.ArticleExample">
+        delete from cms_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.zryq.cms.admin.entity.Article">
+        insert into cms_article (id, art_title, art_digest,
+        art_from, art_author, web_id,
+        cate_id, create_time, create_username,
+        create_user_id, publish_time, publish_username,
+        publish_user_id, art_top, art_state,
+        show_start_time, show_end_time, open_commen,
+        colu_id, colu_name, create_group_id,
+        create_group_name, art_content)
+        values (#{id,jdbcType=INTEGER}, #{artTitle,jdbcType=VARCHAR}, #{artDigest,jdbcType=VARCHAR},
+        #{artFrom,jdbcType=VARCHAR}, #{artAuthor,jdbcType=VARCHAR}, #{webId,jdbcType=INTEGER},
+        #{cateId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+        #{createUsername,jdbcType=VARCHAR},
+        #{createUserId,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP},
+        #{publishUsername,jdbcType=VARCHAR},
+        #{publishUserId,jdbcType=VARCHAR}, #{artTop,jdbcType=INTEGER}, #{artState,jdbcType=INTEGER},
+        #{showStartTime,jdbcType=TIMESTAMP}, #{showEndTime,jdbcType=TIMESTAMP},
+        #{openCommen,jdbcType=INTEGER},
+        #{coluId,jdbcType=INTEGER}, #{coluName,jdbcType=VARCHAR}, #{createGroupId,jdbcType=INTEGER},
+        #{createGroupName,jdbcType=VARCHAR}, #{artContent,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.Article">
+        insert into cms_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="artTitle != null">
+                art_title,
+            </if>
+            <if test="artDigest != null">
+                art_digest,
+            </if>
+            <if test="artFrom != null">
+                art_from,
+            </if>
+            <if test="artAuthor != null">
+                art_author,
+            </if>
+            <if test="webId != null">
+                web_id,
+            </if>
+            <if test="cateId != null">
+                cate_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUsername != null">
+                create_username,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="publishUsername != null">
+                publish_username,
+            </if>
+            <if test="publishUserId != null">
+                publish_user_id,
+            </if>
+            <if test="artTop != null">
+                art_top,
+            </if>
+            <if test="artState != null">
+                art_state,
+            </if>
+            <if test="showStartTime != null">
+                show_start_time,
+            </if>
+            <if test="showEndTime != null">
+                show_end_time,
+            </if>
+            <if test="openCommen != null">
+                open_commen,
+            </if>
+            <if test="coluId != null">
+                colu_id,
+            </if>
+            <if test="coluName != null">
+                colu_name,
+            </if>
+            <if test="createGroupId != null">
+                create_group_id,
+            </if>
+            <if test="createGroupName != null">
+                create_group_name,
+            </if>
+            <if test="artContent != null">
+                art_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="artTitle != null">
+                #{artTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="artDigest != null">
+                #{artDigest,jdbcType=VARCHAR},
+            </if>
+            <if test="artFrom != null">
+                #{artFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="artAuthor != null">
+                #{artAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="webId != null">
+                #{webId,jdbcType=INTEGER},
+            </if>
+            <if test="cateId != null">
+                #{cateId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUsername != null">
+                #{createUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="publishUsername != null">
+                #{publishUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="publishUserId != null">
+                #{publishUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="artTop != null">
+                #{artTop,jdbcType=INTEGER},
+            </if>
+            <if test="artState != null">
+                #{artState,jdbcType=INTEGER},
+            </if>
+            <if test="showStartTime != null">
+                #{showStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="showEndTime != null">
+                #{showEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="openCommen != null">
+                #{openCommen,jdbcType=INTEGER},
+            </if>
+            <if test="coluId != null">
+                #{coluId,jdbcType=INTEGER},
+            </if>
+            <if test="coluName != null">
+                #{coluName,jdbcType=VARCHAR},
+            </if>
+            <if test="createGroupId != null">
+                #{createGroupId,jdbcType=INTEGER},
+            </if>
+            <if test="createGroupName != null">
+                #{createGroupName,jdbcType=VARCHAR},
+            </if>
+            <if test="artContent != null">
+                #{artContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.zryq.cms.admin.entity.ArticleExample"
+            resultType="java.lang.Integer">
+        select count(*) from cms_article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update cms_article
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.artTitle != null">
+                art_title = #{record.artTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.artDigest != null">
+                art_digest = #{record.artDigest,jdbcType=VARCHAR},
+            </if>
+            <if test="record.artFrom != null">
+                art_from = #{record.artFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="record.artAuthor != null">
+                art_author = #{record.artAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webId != null">
+                web_id = #{record.webId,jdbcType=INTEGER},
+            </if>
+            <if test="record.cateId != null">
+                cate_id = #{record.cateId,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.createUsername != null">
+                create_username = #{record.createUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createUserId != null">
+                create_user_id = #{record.createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="record.publishTime != null">
+                publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.publishUsername != null">
+                publish_username = #{record.publishUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="record.publishUserId != null">
+                publish_user_id = #{record.publishUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.artTop != null">
+                art_top = #{record.artTop,jdbcType=INTEGER},
+            </if>
+            <if test="record.artState != null">
+                art_state = #{record.artState,jdbcType=INTEGER},
+            </if>
+            <if test="record.showStartTime != null">
+                show_start_time = #{record.showStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.showEndTime != null">
+                show_end_time = #{record.showEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.openCommen != null">
+                open_commen = #{record.openCommen,jdbcType=INTEGER},
+            </if>
+            <if test="record.coluId != null">
+                colu_id = #{record.coluId,jdbcType=INTEGER},
+            </if>
+            <if test="record.coluName != null">
+                colu_name = #{record.coluName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createGroupId != null">
+                create_group_id = #{record.createGroupId,jdbcType=INTEGER},
+            </if>
+            <if test="record.createGroupName != null">
+                create_group_name = #{record.createGroupName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.artContent != null">
+                art_content = #{record.artContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update cms_article
+        set id = #{record.id,jdbcType=INTEGER},
+        art_title = #{record.artTitle,jdbcType=VARCHAR},
+        art_digest = #{record.artDigest,jdbcType=VARCHAR},
+        art_from = #{record.artFrom,jdbcType=VARCHAR},
+        art_author = #{record.artAuthor,jdbcType=VARCHAR},
+        web_id = #{record.webId,jdbcType=INTEGER},
+        cate_id = #{record.cateId,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        create_username = #{record.createUsername,jdbcType=VARCHAR},
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+        publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+        publish_username = #{record.publishUsername,jdbcType=VARCHAR},
+        publish_user_id = #{record.publishUserId,jdbcType=VARCHAR},
+        art_top = #{record.artTop,jdbcType=INTEGER},
+        art_state = #{record.artState,jdbcType=INTEGER},
+        show_start_time = #{record.showStartTime,jdbcType=TIMESTAMP},
+        show_end_time = #{record.showEndTime,jdbcType=TIMESTAMP},
+        open_commen = #{record.openCommen,jdbcType=INTEGER},
+        colu_id = #{record.coluId,jdbcType=INTEGER},
+        colu_name = #{record.coluName,jdbcType=VARCHAR},
+        create_group_id = #{record.createGroupId,jdbcType=INTEGER},
+        create_group_name = #{record.createGroupName,jdbcType=VARCHAR},
+        art_content = #{record.artContent,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update cms_article
+        set id = #{record.id,jdbcType=INTEGER},
+        art_title = #{record.artTitle,jdbcType=VARCHAR},
+        art_digest = #{record.artDigest,jdbcType=VARCHAR},
+        art_from = #{record.artFrom,jdbcType=VARCHAR},
+        art_author = #{record.artAuthor,jdbcType=VARCHAR},
+        web_id = #{record.webId,jdbcType=INTEGER},
+        cate_id = #{record.cateId,jdbcType=INTEGER},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        create_username = #{record.createUsername,jdbcType=VARCHAR},
+        create_user_id = #{record.createUserId,jdbcType=INTEGER},
+        publish_time = #{record.publishTime,jdbcType=TIMESTAMP},
+        publish_username = #{record.publishUsername,jdbcType=VARCHAR},
+        publish_user_id = #{record.publishUserId,jdbcType=VARCHAR},
+        art_top = #{record.artTop,jdbcType=INTEGER},
+        art_state = #{record.artState,jdbcType=INTEGER},
+        show_start_time = #{record.showStartTime,jdbcType=TIMESTAMP},
+        show_end_time = #{record.showEndTime,jdbcType=TIMESTAMP},
+        open_commen = #{record.openCommen,jdbcType=INTEGER},
+        colu_id = #{record.coluId,jdbcType=INTEGER},
+        colu_name = #{record.coluName,jdbcType=VARCHAR},
+        create_group_id = #{record.createGroupId,jdbcType=INTEGER},
+        create_group_name = #{record.createGroupName,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zryq.cms.admin.entity.Article">
+        update cms_article
+        <set>
+            <if test="artTitle != null">
+                art_title = #{artTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="artDigest != null">
+                art_digest = #{artDigest,jdbcType=VARCHAR},
+            </if>
+            <if test="artFrom != null">
+                art_from = #{artFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="artAuthor != null">
+                art_author = #{artAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="webId != null">
+                web_id = #{webId,jdbcType=INTEGER},
+            </if>
+            <if test="cateId != null">
+                cate_id = #{cateId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUsername != null">
+                create_username = #{createUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="publishTime != null">
+                publish_time = #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="publishUsername != null">
+                publish_username = #{publishUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="publishUserId != null">
+                publish_user_id = #{publishUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="artTop != null">
+                art_top = #{artTop,jdbcType=INTEGER},
+            </if>
+            <if test="artState != null">
+                art_state = #{artState,jdbcType=INTEGER},
+            </if>
+            <if test="showStartTime != null">
+                show_start_time = #{showStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="showEndTime != null">
+                show_end_time = #{showEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="openCommen != null">
+                open_commen = #{openCommen,jdbcType=INTEGER},
+            </if>
+            <if test="coluId != null">
+                colu_id = #{coluId,jdbcType=INTEGER},
+            </if>
+            <if test="coluName != null">
+                colu_name = #{coluName,jdbcType=VARCHAR},
+            </if>
+            <if test="createGroupId != null">
+                create_group_id = #{createGroupId,jdbcType=INTEGER},
+            </if>
+            <if test="createGroupName != null">
+                create_group_name = #{createGroupName,jdbcType=VARCHAR},
+            </if>
+            <if test="artContent != null">
+                art_content = #{artContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zryq.cms.admin.entity.Article">
+        update cms_article
+        set art_title = #{artTitle,jdbcType=VARCHAR},
+        art_digest = #{artDigest,jdbcType=VARCHAR},
+        art_from = #{artFrom,jdbcType=VARCHAR},
+        art_author = #{artAuthor,jdbcType=VARCHAR},
+        web_id = #{webId,jdbcType=INTEGER},
+        cate_id = #{cateId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_username = #{createUsername,jdbcType=VARCHAR},
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+        publish_username = #{publishUsername,jdbcType=VARCHAR},
+        publish_user_id = #{publishUserId,jdbcType=VARCHAR},
+        art_top = #{artTop,jdbcType=INTEGER},
+        art_state = #{artState,jdbcType=INTEGER},
+        show_start_time = #{showStartTime,jdbcType=TIMESTAMP},
+        show_end_time = #{showEndTime,jdbcType=TIMESTAMP},
+        open_commen = #{openCommen,jdbcType=INTEGER},
+        colu_id = #{coluId,jdbcType=INTEGER},
+        colu_name = #{coluName,jdbcType=VARCHAR},
+        create_group_id = #{createGroupId,jdbcType=INTEGER},
+        create_group_name = #{createGroupName,jdbcType=VARCHAR},
+        art_content = #{artContent,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zryq.cms.admin.entity.Article">
+        update cms_article
+        set art_title = #{artTitle,jdbcType=VARCHAR},
+        art_digest = #{artDigest,jdbcType=VARCHAR},
+        art_from = #{artFrom,jdbcType=VARCHAR},
+        art_author = #{artAuthor,jdbcType=VARCHAR},
+        web_id = #{webId,jdbcType=INTEGER},
+        cate_id = #{cateId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_username = #{createUsername,jdbcType=VARCHAR},
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+        publish_username = #{publishUsername,jdbcType=VARCHAR},
+        publish_user_id = #{publishUserId,jdbcType=VARCHAR},
+        art_top = #{artTop,jdbcType=INTEGER},
+        art_state = #{artState,jdbcType=INTEGER},
+        show_start_time = #{showStartTime,jdbcType=TIMESTAMP},
+        show_end_time = #{showEndTime,jdbcType=TIMESTAMP},
+        open_commen = #{openCommen,jdbcType=INTEGER},
+        colu_id = #{coluId,jdbcType=INTEGER},
+        colu_name = #{coluName,jdbcType=VARCHAR},
+        create_group_id = #{createGroupId,jdbcType=INTEGER},
+        create_group_name = #{createGroupName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zryq.cms.admin.dao.GroupMapper">
+    <resultMap id="BaseResultMap" type="com.zryq.cms.admin.entity.Group">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+        <result column="group_code" property="groupCode" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="group_des" property="groupDes" jdbcType="VARCHAR"/>
+        <result column="web_id" property="webId" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, group_name, group_code, parent_id, group_des, web_id
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.zryq.cms.admin.entity.GroupExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from cms_group
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_group
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from cms_group
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.zryq.cms.admin.entity.GroupExample">
+        delete from cms_group
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.zryq.cms.admin.entity.Group">
+        insert into cms_group (id, group_name, group_code,
+        parent_id, group_des, web_id
+        )
+        values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR},
+        #{groupCode,jdbcType=VARCHAR},
+        #{parentId,jdbcType=INTEGER}, #{groupDes,jdbcType=VARCHAR}, #{webId,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.Group">
+        insert into cms_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="groupCode != null">
+                group_code,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="groupDes != null">
+                group_des,
+            </if>
+            <if test="webId != null">
+                web_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupCode != null">
+                #{groupCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="groupDes != null">
+                #{groupDes,jdbcType=VARCHAR},
+            </if>
+            <if test="webId != null">
+                #{webId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.zryq.cms.admin.entity.GroupExample"
+            resultType="java.lang.Integer">
+        select count(*) from cms_group
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update cms_group
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.groupName != null">
+                group_name = #{record.groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.groupCode != null">
+                group_code = #{record.groupCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentId != null">
+                parent_id = #{record.parentId,jdbcType=INTEGER},
+            </if>
+            <if test="record.groupDes != null">
+                group_des = #{record.groupDes,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webId != null">
+                web_id = #{record.webId,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update cms_group
+        set id = #{record.id,jdbcType=INTEGER},
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+        group_code = #{record.groupCode,jdbcType=VARCHAR},
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+        group_des = #{record.groupDes,jdbcType=VARCHAR},
+        web_id = #{record.webId,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zryq.cms.admin.entity.Group">
+        update cms_group
+        <set>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupCode != null">
+                group_code = #{groupCode,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="groupDes != null">
+                group_des = #{groupDes,jdbcType=VARCHAR},
+            </if>
+            <if test="webId != null">
+                web_id = #{webId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zryq.cms.admin.entity.Group">
+        update cms_group
+        set group_name = #{groupName,jdbcType=VARCHAR},
+        group_code = #{groupCode,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=INTEGER},
+        group_des = #{groupDes,jdbcType=VARCHAR},
+        web_id = #{webId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

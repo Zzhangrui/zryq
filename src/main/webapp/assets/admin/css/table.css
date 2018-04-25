@@ -1,0 +1,79 @@
+
+table  td{
+    line-height: 32px !important;
+    padding: 5px 3px !important;
+    text-align: center !important;
+}
+thead{
+    font-weight: bold;
+    border-top:1px solid #D8D8D8 ;
+    border-bottom:1px solid #D8D8D8 ;
+}
+tbody td{
+    border-bottom: 1px solid #D8D8D8;
+    border-right: 1px solid #D8D8D8;
+    vertical-align: middle !important;
+}
+tbody td input[type=checkbox]{
+   margin: 0;
+    border: none;
+}
+tbody tr:hover{
+   background: #F5F5F5;
+}
+tbody td a.link{
+    color: #848484;
+    margin: 0px 3px;
+}
+
+
+
+/*��ҳ*/
+.pag_ination{
+    display: inline-block;
+    overflow: hidden;
+    border-right:1px solid #d8d8d8 ;
+    border-top-right-radius:3px ;
+    border-bottom-right-radius:3px ;
+}
+.pag_ination li{
+    text-align: center;
+    float: left;
+    border-left:1px solid #d8d8d8 ;
+    border-top:1px solid #d8d8d8 ;
+    border-bottom:1px solid #d8d8d8 ;
+}
+.pag_ination li.active a{
+   background: #6EDB9A;
+
+    color: #fff;
+}
+.pag_ination li:first-child{
+   border-top-left-radius:3px ;
+   border-bottom-left-radius:3px ;
+}
+.pag_ination li a{
+    display: inline-block;
+    line-height: 32px;
+    width: 40px;
+    color: #848484;
+}
+
+.td10{
+    width: 10%;
+}
+.td20{
+    width: 20%;
+}
+.td30{
+    width: 30%;
+}
+.td40{
+    width: 40%;
+}
+.td50{
+    width: 50%;
+}
+.td60{
+    width: 60%;
+}

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zryq.cms.admin.dao.ColumnMapper">
+    <resultMap id="BaseResultMap" type="com.zryq.cms.admin.entity.Column">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="colu_name" property="coluName" jdbcType="VARCHAR"/>
+        <result column="colu_des" property="coluDes" jdbcType="VARCHAR"/>
+        <result column="web_id" property="webId" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="open_comment" property="openComment" jdbcType="INTEGER"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="colu_type" property="coluType" jdbcType="VARCHAR"/>
+        <result column="colu_level" property="coluLevel" jdbcType="INTEGER"/>
+        <result column="colu_img_path" property="coluImgPath" jdbcType="VARCHAR"/>
+        <result column="colu_img_name" property="coluImgName" jdbcType="VARCHAR"/>
+        <result column="colu_default" property="coluDefault" jdbcType="INTEGER"/>
+        <result column="share_in" property="shareIn" jdbcType="INTEGER"/>
+        <result column="share_out" property="shareOut" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and
+                                    #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="("
+                                             close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, colu_name, colu_des, web_id, parent_id, state, open_comment, position, colu_type,
+        colu_level, colu_img_path, colu_img_name, colu_default, share_in, share_out
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.zryq.cms.admin.entity.ColumnExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from cms_column
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_column
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from cms_column
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.zryq.cms.admin.entity.ColumnExample">
+        delete from cms_column
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.zryq.cms.admin.entity.Column" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into cms_column (id, colu_name, colu_des,
+        web_id, parent_id, state,
+        open_comment, position, colu_type,
+        colu_level, colu_img_path, colu_img_name,
+        colu_default, share_in, share_out
+        )
+        values (#{id,jdbcType=INTEGER}, #{coluName,jdbcType=VARCHAR}, #{coluDes,jdbcType=VARCHAR},
+        #{webId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
+        #{openComment,jdbcType=INTEGER}, #{position,jdbcType=VARCHAR}, #{coluType,jdbcType=VARCHAR},
+        #{coluLevel,jdbcType=INTEGER}, #{coluImgPath,jdbcType=VARCHAR},
+        #{coluImgName,jdbcType=VARCHAR},
+        #{coluDefault,jdbcType=INTEGER}, #{shareIn,jdbcType=INTEGER}, #{shareOut,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.Column">
+        insert into cms_column
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="coluName != null">
+                colu_name,
+            </if>
+            <if test="coluDes != null">
+                colu_des,
+            </if>
+            <if test="webId != null">
+                web_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="openComment != null">
+                open_comment,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="coluType != null">
+                colu_type,
+            </if>
+            <if test="coluLevel != null">
+                colu_level,
+            </if>
+            <if test="coluImgPath != null">
+                colu_img_path,
+            </if>
+            <if test="coluImgName != null">
+                colu_img_name,
+            </if>
+            <if test="coluDefault != null">
+                colu_default,
+            </if>
+            <if test="shareIn != null">
+                share_in,
+            </if>
+            <if test="shareOut != null">
+                share_out,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="coluName != null">
+                #{coluName,jdbcType=VARCHAR},
+            </if>
+            <if test="coluDes != null">
+                #{coluDes,jdbcType=VARCHAR},
+            </if>
+            <if test="webId != null">
+                #{webId,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="openComment != null">
+                #{openComment,jdbcType=INTEGER},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="coluType != null">
+                #{coluType,jdbcType=VARCHAR},
+            </if>
+            <if test="coluLevel != null">
+                #{coluLevel,jdbcType=INTEGER},
+            </if>
+            <if test="coluImgPath != null">
+                #{coluImgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="coluImgName != null">
+                #{coluImgName,jdbcType=VARCHAR},
+            </if>
+            <if test="coluDefault != null">
+                #{coluDefault,jdbcType=INTEGER},
+            </if>
+            <if test="shareIn != null">
+                #{shareIn,jdbcType=INTEGER},
+            </if>
+            <if test="shareOut != null">
+                #{shareOut,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.zryq.cms.admin.entity.ColumnExample"
+            resultType="java.lang.Integer">
+        select count(*) from cms_column
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update cms_column
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.coluName != null">
+                colu_name = #{record.coluName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.coluDes != null">
+                colu_des = #{record.coluDes,jdbcType=VARCHAR},
+            </if>
+            <if test="record.webId != null">
+                web_id = #{record.webId,jdbcType=INTEGER},
+            </if>
+            <if test="record.parentId != null">
+                parent_id = #{record.parentId,jdbcType=INTEGER},
+            </if>
+            <if test="record.state != null">
+                state = #{record.state,jdbcType=INTEGER},
+            </if>
+            <if test="record.openComment != null">
+                open_comment = #{record.openComment,jdbcType=INTEGER},
+            </if>
+            <if test="record.position != null">
+                position = #{record.position,jdbcType=VARCHAR},
+            </if>
+            <if test="record.coluType != null">
+                colu_type = #{record.coluType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.coluLevel != null">
+                colu_level = #{record.coluLevel,jdbcType=INTEGER},
+            </if>
+            <if test="record.coluImgPath != null">
+                colu_img_path = #{record.coluImgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="record.coluImgName != null">
+                colu_img_name = #{record.coluImgName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.coluDefault != null">
+                colu_default = #{record.coluDefault,jdbcType=INTEGER},
+            </if>
+            <if test="record.shareIn != null">
+                share_in = #{record.shareIn,jdbcType=INTEGER},
+            </if>
+            <if test="record.shareOut != null">
+                share_out = #{record.shareOut,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update cms_column
+        set id = #{record.id,jdbcType=INTEGER},
+        colu_name = #{record.coluName,jdbcType=VARCHAR},
+        colu_des = #{record.coluDes,jdbcType=VARCHAR},
+        web_id = #{record.webId,jdbcType=INTEGER},
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+        state = #{record.state,jdbcType=INTEGER},
+        open_comment = #{record.openComment,jdbcType=INTEGER},
+        position = #{record.position,jdbcType=VARCHAR},
+        colu_type = #{record.coluType,jdbcType=VARCHAR},
+        colu_level = #{record.coluLevel,jdbcType=INTEGER},
+        colu_img_path = #{record.coluImgPath,jdbcType=VARCHAR},
+        colu_img_name = #{record.coluImgName,jdbcType=VARCHAR},
+        colu_default = #{record.coluDefault,jdbcType=INTEGER},
+        share_in = #{record.shareIn,jdbcType=INTEGER},
+        share_out = #{record.shareOut,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zryq.cms.admin.entity.Column">
+        update cms_column
+        <set>
+            <if test="coluName != null">
+                colu_name = #{coluName,jdbcType=VARCHAR},
+            </if>
+            <if test="coluDes != null">
+                colu_des = #{coluDes,jdbcType=VARCHAR},
+            </if>
+            <if test="webId != null">
+                web_id = #{webId,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="openComment != null">
+                open_comment = #{openComment,jdbcType=INTEGER},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="coluType != null">
+                colu_type = #{coluType,jdbcType=VARCHAR},
+            </if>
+            <if test="coluLevel != null">
+                colu_level = #{coluLevel,jdbcType=INTEGER},
+            </if>
+            <if test="coluImgPath != null">
+                colu_img_path = #{coluImgPath,jdbcType=VARCHAR},
+            </if>
+            <if test="coluImgName != null">
+                colu_img_name = #{coluImgName,jdbcType=VARCHAR},
+            </if>
+            <if test="coluDefault != null">
+                colu_default = #{coluDefault,jdbcType=INTEGER},
+            </if>
+            <if test="shareIn != null">
+                share_in = #{shareIn,jdbcType=INTEGER},
+            </if>
+            <if test="shareOut != null">
+                share_out = #{shareOut,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zryq.cms.admin.entity.Column">
+        update cms_column
+        set colu_name = #{coluName,jdbcType=VARCHAR},
+        colu_des = #{coluDes,jdbcType=VARCHAR},
+        web_id = #{webId,jdbcType=INTEGER},
+        parent_id = #{parentId,jdbcType=INTEGER},
+        state = #{state,jdbcType=INTEGER},
+        open_comment = #{openComment,jdbcType=INTEGER},
+        position = #{position,jdbcType=VARCHAR},
+        colu_type = #{coluType,jdbcType=VARCHAR},
+        colu_level = #{coluLevel,jdbcType=INTEGER},
+        colu_img_path = #{coluImgPath,jdbcType=VARCHAR},
+        colu_img_name = #{coluImgName,jdbcType=VARCHAR},
+        colu_default = #{coluDefault,jdbcType=INTEGER},
+        share_in = #{shareIn,jdbcType=INTEGER},
+        share_out = #{shareOut,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <resultMap id="ArticleResultMap" type="com.zryq.cms.admin.entity.Column">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="colu_name" property="coluName" jdbcType="VARCHAR"/>
+        <result column="colu_des" property="coluDes" jdbcType="VARCHAR"/>
+        <result column="web_id" property="webId" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="open_comment" property="openComment" jdbcType="INTEGER"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="colu_type" property="coluType" jdbcType="VARCHAR"/>
+        <result column="colu_level" property="coluLevel" jdbcType="INTEGER"/>
+        <result column="colu_img_path" property="coluImgPath" jdbcType="VARCHAR"/>
+        <result column="colu_img_name" property="coluImgName" jdbcType="VARCHAR"/>
+        <result column="colu_default" property="coluDefault" jdbcType="INTEGER"/>
+        <result column="share_in" property="shareIn" jdbcType="INTEGER"/>
+        <result column="share_out" property="shareOut" jdbcType="INTEGER"/>
+        <collection property="articleList" ofType="com.zryq.cms.admin.entity.Article">
+            <id column="id1" property="id" jdbcType="INTEGER"/>
+            <result column="art_title" property="artTitle" jdbcType="VARCHAR"/>
+            <result column="art_digest" property="artDigest" jdbcType="VARCHAR"/>
+            <result column="art_from" property="artFrom" jdbcType="VARCHAR"/>
+            <result column="art_author" property="artAuthor" jdbcType="VARCHAR"/>
+            <result column="web_id" property="webId" jdbcType="INTEGER"/>
+            <result column="cate_id" property="cateId" jdbcType="INTEGER"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="create_username" property="createUsername" jdbcType="VARCHAR"/>
+            <result column="create_user_id" property="createUserId" jdbcType="INTEGER"/>
+            <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP"/>
+            <result column="publish_username" property="publishUsername" jdbcType="VARCHAR"/>
+            <result column="publish_user_id" property="publishUserId" jdbcType="VARCHAR"/>
+            <result column="art_top" property="artTop" jdbcType="INTEGER"/>
+            <result column="art_state" property="artState" jdbcType="INTEGER"/>
+            <result column="show_start_time" property="showStartTime" jdbcType="TIMESTAMP"/>
+            <result column="show_end_time" property="showEndTime" jdbcType="TIMESTAMP"/>
+            <result column="open_commen" property="openCommen" jdbcType="INTEGER"/>
+            <result column="colu_id" property="coluId" jdbcType="INTEGER"/>
+            <result column="colu_name1" property="coluName" jdbcType="VARCHAR"/>
+            <result column="create_group_id" property="createGroupId" jdbcType="INTEGER"/>
+            <result column="create_group_name" property="createGroupName" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <select id="selectColumnArticle" resultMap="ArticleResultMap">
+        SELECT a.id, a.colu_name, a.colu_des, a.web_id, a.parent_id, a.state, a.open_comment,
+        a.position, a.colu_type,
+        a.colu_level, a.colu_img_path, a.colu_img_name, a.colu_default, a.share_in, a.share_out,b.id
+        as id1, b.art_title, b.art_digest, b.art_from, b.art_author, b.web_id, b.cate_id,
+        b.create_time, b.create_username,
+        b.create_user_id, b.publish_time, b.publish_username, b.publish_user_id, b.art_top,
+        b.art_state,
+        b.show_start_time, b.show_end_time, b.open_commen, b.colu_id, b.colu_name as colu_name1,
+        b.create_group_id,
+        b.create_group_name
+        from cms_column as a LEFT JOIN cms_article as b on a.id= b.colu_id
+        WHERE 1= 1
+        <if test="artState !=null ">
+            and b.art_state = #{artState}
+        </if>
+
+        <if test="list!=null and list.size()>0">
+            and a.id in
+            <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+    </select>
+</mapper>

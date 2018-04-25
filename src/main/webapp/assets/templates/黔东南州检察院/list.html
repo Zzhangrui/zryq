@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>列表页</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/menu.css">
+	<!--解决ie低版本不兼容h5新标签,不支持placeholder问题-->
+	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+	<script type="text/javascript" src="js/html5shiv.min.js"></script>
+    <script type="text/javascript" src="js/slides.min.jquery.js"></script>       
+	<script type="text/javascript" src="js/jquery.placeholder.js"></script>
+    <style>
+            body{
+                background: #e7e7e7;
+            }
+    </style>
+</head>
+<body>
+   <!--头部star-->
+    <div id="header">
+        <div class="logo"><img src="img/logo.png" alt=""></div>
+    </div>
+    <!--头部end-->
+    <div style="width: 100%">
+        <!--导航-->
+        <div class="nav">
+            <ul>
+                <li class="index"><a href="index.html">首页</a></li>
+                <li><a href="" target="">贵州头条</a></li>
+                <li><a href="" target="">检察要闻</a></li>
+                <li><a href="" target="">图片新闻</a></li>
+                <li><a href="" target="">权威发布</a></li>
+                <li><a href="" target="">以案说法</a></li>
+                <li class="lastli">
+                <form action="">
+                    <input type="text" value="请输入关键字查询" class="lf">
+                    <button class="btn lf">搜索</button>
+                </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--主体star-->
+    <div id="section" style="margin:20px auto;">
+        <div class="list_content content fff">
+             <!--面包屑导航-->
+             <div class="listNav">
+                 <div class="breadNav rt of">
+                    <ul class="of">
+                        <li class="MyLocation"><a href="">我的位置 :</a></li>
+                        <li><a href="">首页 ></a></li>
+                        <li><a href="">新闻中心 ></a></li>
+                    </ul>
+                </div>
+                <p class='listTit'><span class="shenglue">新闻资讯</span></p>
+                  
+             </div>
+             <!--列表-->
+             <div class="list of">
+                    <ul class="expmenu lf">
+                        <li>
+                            <div class="header">
+                                <span class="label" >首页  </span>
+                                <span class="arrow up"></span>
+                            </div>
+                            <ul class="menu" style="display:block;">
+                                <li><i></i><a href="javascript:void(0)">系统通知</a></li>
+                                <li><i></i><a href="javascript:void(0)">工作报告</a></li>
+                                <li><i></i><a href="javascript:void(0)">内部刊物</a></li>
+                                <li><i></i><a href="javascript:void(0)">资讯中心</a></li>
+                                <li><i></i><a href="javascript:void(0)">机关管理规定 </a></li>
+                                <li><i></i><a href="javascript:void(0)">法规规章</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li>
+                            <div class="header">
+                                <span class="label">栏目</span>
+                                <span class="arrow down"></span>
+                            </div>
+                            <ul class="menu">
+                                <li><i></i><a href="javascript:void(0)">系统通知</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                    <!--右侧内容-->
+                    <div class="RTcont lf">
+                         <ul class="">
+                            <li><span>2017-10-19</span><a href="details.html">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                            <li><span>2017-10-19</span><a href="">贵州省人民检察院依法对余越前等4人决定逮捕</a></li>
+                         </ul>
+                    </div>
+                    <!--右侧内容end-->
+             </div>
+             <!--分页-->
+             <div class="Paging"></div>
+        </div>
+    </div>
+    <!--主体end-->
+
+<!--尾部-->
+    <div class="footer">
+          <div class="content of">
+            <ul class="of">
+                <li><a href="">网站首页 |</a></li>
+                <li><a href="">本院概况 |</a></li>
+                <li><a href="">检察要闻 |</a></li>
+                <li><a href="">网站首页 |</a></li>
+                <li><a href="">本院概况 |</a></li>
+                <li><a href="">检察要闻 |</a></li>
+                <li><a href="">检察要闻 |</a></li>
+            </ul><br>
+            <ul class="of">
+                <li>版权所有：遵义市人民检察院 |</li>
+                <li>贵ICP备08000571号-2 |</li>
+                <li>贵公网安备 45100202000135号</li>
+            </ul><br>
+            <ul class="of">
+                <li>Copyright@2012-2017 All rights reserved</li>
+                <li>技术支持：江苏连邦信息技术有限公司</li>
+            </ul>
+          </div>
+    </div>
+    <!--尾部end-->
+<script  type="text/javascript" src="js/policeSystem.js"></script>
+</body>
+</html>
