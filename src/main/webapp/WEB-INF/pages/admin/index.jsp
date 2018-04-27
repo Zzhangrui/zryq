@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-            X-admin v1.0
+           后台管理
         </title>
         <meta name="renderer" content="webkit">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -83,6 +83,11 @@
                                             <cite>用户管理</cite>
                                         </a>
                                     </dd>
+                                </dd>
+                                <dd class="">
+                                    <a href="javascript:;" _href="${pageContext.request.contextPath}/role/index">
+                                        <cite>角色管理</cite>
+                                    </a>
                                 </dd>
                                 <dd class="">
                                 <dd class="">

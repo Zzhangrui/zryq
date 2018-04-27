@@ -12,6 +12,8 @@ import java.util.Map;
  */
 public class CheckListUtil {
 
+    public static final String ADD = "add";
+    public static final String REMOVE = "remove";
 
     public static boolean checkContain(List<String> bigList, List<String> smallList) {
 
@@ -63,8 +65,8 @@ public class CheckListUtil {
             }
         }
         Map defMap = Maps.newHashMap();
-        defMap.put("add", addList);
-        defMap.put("remove", removeList);
+        defMap.put(ADD, addList);
+        defMap.put(REMOVE, removeList);
         return defMap;
     }
 }

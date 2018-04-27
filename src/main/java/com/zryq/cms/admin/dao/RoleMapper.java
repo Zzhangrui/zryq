@@ -31,4 +31,6 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     Role getWithUserListById(Integer id);
+
+    Role selectPermissionByRoleId(Integer id);
 }

@@ -33,7 +33,7 @@ public class LoginController extends BaseController {
 
 
     /**
-     * 默认调整
+     * 默认跳转
      *
      * @return
      */

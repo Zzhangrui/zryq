@@ -105,13 +105,13 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.zryq.cms.admin.entity.Role">
+    <insert id="insert" parameterType="com.zryq.cms.admin.entity.Role" useGeneratedKeys="true" keyProperty="id">
         insert into cms_role (id, role_name, role_des,
         role_state)
         values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDes,jdbcType=VARCHAR},
         #{roleState,jdbcType=INTEGER})
     </insert>
-    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.Role">
+    <insert id="insertSelective" parameterType="com.zryq.cms.admin.entity.Role" useGeneratedKeys="true" keyProperty="id">
         insert into cms_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -229,5 +229,26 @@
         left join cms_user as cu on cu.id = crr.user_id
         where
         cr.id = #{id}
+    </select>
+
+    <resultMap id="roleWithPermissions" type="com.zryq.cms.admin.entity.Role">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+        <result column="role_des" property="roleDes" jdbcType="VARCHAR"/>
+        <result column="role_state" property="roleState" jdbcType="INTEGER"/>
+        <collection property="permissionList" ofType="com.zryq.cms.admin.entity.Permission">
+            <id column="permissionId" property="id" jdbcType="INTEGER"/>
+            <result column="permission_name" property="permissionName" jdbcType="VARCHAR"/>
+            <result column="permission_des" property="permissionDes" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <select id="selectPermissionByRoleId" resultMap="roleWithPermissions"
+            parameterType="java.lang.Integer">
+      select a.id,a.role_name,a.role_des,b.id as permissionId ,b.permission_name,b.permission_des
+      FROM  cms_role as a JOIN  cms_role_permission_relationship as c JOIN  cms_permission as b
+      ON a.id=c.role_id and c.permission_id = b.id
+        <if test="id != null">
+            a.id = #{id}
+        </if>
     </select>
 </mapper>

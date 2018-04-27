@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 角色控制器（用户角色的分派）
@@ -44,6 +45,40 @@ public class RoleController {
         model.addAttribute("role", roleService.getWithUserListById(roleId));
         return "";
     }
+
+    @GetMapping("add_show")
+    public ModelAndView showAdd(){
+        ModelAndView modelAndView = new ModelAndView("admin/role_add");
+        modelAndView.addObject("url","add_submit");
+        modelAndView.addObject("permissions",roleService.findAllPermission());
+        return modelAndView;
+    }
+
+    @PostMapping("add_submit")
+    @ResponseBody
+    public JsonResult submitAdd(Role role,String permissionIds){
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setSuccess(roleService.insert(role,permissionIds));
+        return jsonResult;
+    }
+
+    @GetMapping("modify_show/{roleId}")
+    public ModelAndView showModify(@PathVariable("roleId") Integer id){
+        ModelAndView modelAndView = new ModelAndView("admin/role_add");
+        modelAndView.addObject("url","modify_submit");
+        modelAndView.addObject("role",roleService.findPermissionByRoleId(id));
+        modelAndView.addObject("permissions",roleService.findAllPermission());
+        return modelAndView;
+    }
+
+    @PostMapping("modify_submit")
+    @ResponseBody
+    public JsonResult submitModify(Role role,String permissionIds){
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setSuccess(roleService.modify(role,permissionIds));
+        return jsonResult;
+    }
+
 
     @GetMapping("assignUsers")
     @ResponseBody
