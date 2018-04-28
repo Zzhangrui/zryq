@@ -1,4 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: rui.zhang
+  Date: 2018/4/28
+  Time: 14:50
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -69,24 +77,62 @@
                             <!--面包屑导航 当前位置 star-->
                             <ul class="bread_wrap">
                                 <li><span class="fa fa-map-marker fa-2x"></span>&nbsp;<span>您当前的位置：</span></li>
-                                <li><a class="local-site" href="">用户角色</a></li>
+                                <li><a class="local-site" href="">个人信息</a></li>
                             </ul>
                             <!--面包屑导航 当前位置 end-->
                             <!---->
                             <div class="public_wrap">
                                 <ul class="sub_nav">
-                                    <li class="active"><a class="local-site" href="javascript:;">角色信息</a></li>
+                                    <li class="active"><a class="local-site" href="javascript:;">个人信息</a></li>
                                     <%--<li><a class="local-site" href="javascript:;">角色信息</a></li>--%>
                                 </ul>
 
                                 <article id="roleMessage">
-                                    <div class="btn_box">
-                                        <button id="role-add" class="layui-btn layui-btn-normal layui-btn-small"><i class="layui-icon"></i>新增角色</button>
-                                    </div>
+
                                     <div class="mt-10">
                                         <div>
-                                            <table id="roleTable" class="layui-table" lay-filter="testRole" lay-skin="nob"></table>
-                                            <div id="rolePage" style="text-align: center;"></div>
+                                            <form class="layui-form layui-form-pane" action="">
+
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">登陆名</label>
+                                                    <div class="layui-input-inline">
+                                                        <input type="text" value="${self.username}"  autocomplete="off" class="layui-input" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">机构名称</label>
+                                                    <div class="layui-input-inline">
+                                                        <input type="text" value="${self.groupName}"  autocomplete="off" class="layui-input" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">真实姓名</label>
+                                                    <div class="layui-input-inline">
+                                                        <input type="text" name="trueName" lay-verify="required" value="${self.trueName}" placeholder="请输入" autocomplete="off" class="layui-input" >
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">原密码</label>
+                                                    <div class="layui-input-inline">
+                                                        <input type="password" name="oldPassword" id="old-password" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">新密码</label>
+                                                    <div class="layui-input-inline">
+                                                        <input type="password" id="new-password1" name="newPassword1" lay-verify="password" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <label class="layui-form-label">重复新密码</label>
+                                                    <div class="layui-input-inline">
+                                                        <input type="password" id="new-password2" name="newPassword2" lay-verify="password" placeholder="请重复输入新密码" autocomplete="off" class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <button class="layui-btn" lay-submit="" lay-filter="save">提交</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </article>
@@ -122,8 +168,6 @@
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/assets/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script>
 <script>
-
-
     var layer = "";
     var form = "";
     var table = "";
@@ -131,133 +175,49 @@
     layui.use(['layer', 'form', 'table', 'laypage'], function () {
         layer = layui.layer, form = layui.form, table = layui.table, laypage = layui.laypage;
 
-        putData(0,"1",username);
-        putData(1,"1",null);
+        form.verify({
+            trueName: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,password: function(value){
+                if(value!=""){
+                    var oldPassword = $("#old-password").val();
+                    if(oldPassword==""){
+                        return '修改密码需要提供原始密码';
+                    }
+                    if($("#new-password2").val()!=$("#new-password1").val()){
+                        return '两次输入密码不一致';
+                    }
+                }
+            }
+        });
 
-
-        table.on('tool(testRole)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
+        //监听保存提交
+        form.on('submit(save)', function(data){
             console.log(data);
-            var layEvent = obj.event; //获得 lay-event 对应的值
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'assign') {
-                modify_show(data.id);
-            }else if(layEvent==='remove'){
-                deleteById("确认要删除吗？",data.id);
-            }
-        });
-
-    });
-
-
-    //全局页面
-    var  initRoleNum = "0";
-    var username;
-    /**
-     * 填充数据
-     * */
-
-    function putData(type,pageNum) {
-            $.getJSON('${pageContext.request.contextPath}/role/data', {
-                pageNum: pageNum //向服务端传的参数
-            }, function (res) {
-                var data = res.data;
-                var len = data.length;
-                initRoleNum = pageNum;  //当前页码存到全局变量中
-                //自定义样式
-                laypage.render({
-                    elem: 'rolePage'
-                    , count: res.count
-                    , theme: '#1E9FFF'
-                    , curr: pageNum
-                    , jump: function (obj, first) {
-                        if (!first) {
-                            putData(obj.curr,null);
-                        }
-                    }
-                });
-                table.render({
-                    elem: '#roleTable' //指定原始表格元素选择器（推荐id选择器）
-                    /*, height: 450 //容器高度
-                     ,width: 650*/
-                    ,id: 'roleTest'
-                    , data: data
-                    , cols: [[
-                        {field: 'roleName', title: '角色名',  sort: false}
-                        , {field: 'roleDes', title: '角色描述',  sort: false}
-                        , {fixed: 'right', title: '操作',  align: 'center', templet: '#barRoleDemo'}
-                    ]] //设置表头
-                });
-            });
-    }
-    ;
-
-    jQuery(function ($) {
-        $('input, textarea').placeholder();
-
-        $("#role-add").click(function () {
-            layer.open({
-                type: 2,
-                title: '新增角色',
-                closeBtn: '2',
-                area: ['50%', '50%'],
-                content: '${pageContext.request.contextPath}/role/add',
-                end:function(){
-                    putData(initRoleNum,null);
-                }
-            });
-        });
-
-    });
-
-
-    /**
-     * 编辑
-     * */
-    function modify_show(id){
-        layer.open({
-            type: 2,
-            title: '角色配置',
-            closeBtn: '2',
-            area: ['50%', '50%'],
-            content: '${pageContext.request.contextPath}/role/edit/'+id,
-            end:function(){
-                putData(initRoleNum,username);
-            }
-        });
-    }
-
-    /**
-     * 删除
-     * @param msg
-     * @param id
-     * @param state
-     */
-    function  deleteById(msg,id){
-        layer.confirm(msg, function (index) {
             $.ajax({
-                url:"${pageContext.request.contextPath}/role/delete/"+id,
-                type:"post",
-                dataType:"json",
-                traditional: true,
-                success:function(res){
+                url:'${pageContext.request.contextPath}/user/self',
+                data:{'trueName':data.field.trueName,'oldPassword':data.field.oldPassword,'newPassword1':data.field.newPassword1,'newPassword2':data.field.newPassword2},
+                type:'post',
+                dataType:'json',
+                traditional: true ,
+                success: function (res) {
                     if(res.success){
-                        layer.msg("操作成功");
-                        putData(initRoleNum,username); //重新加载table
-                    }else{
-                        layer.alert("操作失败，请刷新后再试")
+                        layer.msg(res.message);
+                        setTimeout(function(){
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                        },2000);
+                    }else {
+                        layer.alert(res.message);
                     }
                 }
             });
-            //layer.close(index);
+            return false;
         });
-    }
-    /**
-     * 预览
-     * */
-    function view(id){
-        layer.msg("功能正在开发");
-    }
+    });
 </script>
 <script type="text/html" id="barRoleDemo">
     <a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="assign">角色分配</a>

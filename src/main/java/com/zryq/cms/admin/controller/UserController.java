@@ -11,10 +11,14 @@ import com.zryq.cms.admin.entity.User;
 import com.zryq.cms.admin.service.GroupService;
 import com.zryq.cms.admin.service.RoleService;
 import com.zryq.cms.admin.service.UserService;
+import com.zryq.cms.common.utils.MD5;
+import com.zryq.cms.common.utils.SessionPerson;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 用户控制器（用户的增删改查）
@@ -101,6 +105,23 @@ public class UserController {
         } else {
             jsonResult.markError("删除失败！");
         }
+        return jsonResult;
+    }
+
+    @GetMapping("self")
+    public ModelAndView self(){
+        ModelAndView modelAndView = new ModelAndView("admin/user_self");
+        User user = SessionPerson.current();
+        modelAndView.addObject("self",user);
+        return modelAndView;
+    }
+
+    @PostMapping("self")
+    @ResponseBody
+    public JsonResult self(String trueName,String oldPassword,String newPassword1,String newPassword2){
+        User currentUser = SessionPerson.current();
+        JsonResult jsonResult = userService.modifySelf(currentUser,trueName,oldPassword,newPassword1,newPassword2);
+       // SessionPerson.kickOnlineUser(currentUser.getId().toString(),null);
         return jsonResult;
     }
 }

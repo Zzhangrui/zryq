@@ -34,7 +34,7 @@
             display: flow-root;
         }
     </style>
-    <title>添加用户</title>
+    <title>角色配置</title>
 </head>
 <body>
 <form class="layui-form layui-form-pane" style="padding: 5px;margin-left: 110px;" >
@@ -42,38 +42,32 @@
     <div class="layui-form-item">
         <label class="layui-form-label">角色名称</label>
         <div class="layui-input-inline">
-            <input type="text" name="username" lay-verify="roleName" value="${role.roleName}"   autocomplete="off" class="layui-input">
+            <input type="text" name="roleName" lay-verify="roleName" value="${role.roleName}"   autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">默认密码“111111”</div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">角色描述</label>
         <div class="layui-input-inline">
-            <input type="text" name="trueName" lay-verify="roleDes" value="${role.roleDes}"   autocomplete="off" class="layui-input">
+            <input type="text" name="roleDes" lay-verify="roleDes" value="${role.roleDes}"   autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">权限分配</label>
         <div class="layui-input-block">
-            <c:forEach items="${roles}" var="role">
-                <c:if test="${user eq null}">
-                    <input type="radio" name="roleId" value="${role.id}" title="${role.roleName}" <c:if test="${role.roleName eq 'common'}">checked</c:if>>
-                </c:if>
-                <c:if test="${user ne null}">
-                    <input type="radio" name="roleId" value="${role.id}" title="${role.roleName}" <c:if test="${role.roleName eq user.roleList[0].roleName}">checked</c:if>>
-                </c:if>
+            <c:forEach items="${permissions}" var="p">
+                <input type="checkbox" value="${p.id}" id="${p.id}" name="permission" lay-skin="primary" title="${p.permissionDes}"
+                       <c:forEach items="${role.permissionList}" var="p2">
+                        <c:if test="${p.id eq p2.id}">checked="checked"</c:if>
+                       </c:forEach>>
             </c:forEach>
         </div>
     </div>
-
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">保存</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
-
 <!--主体部分 end-->
 <script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
 <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
@@ -95,16 +89,18 @@
             }
         });
 
-        var url;
-        if (${role eq null}) {
-            url = '${pageContext.request.contextPath}/role/add';
-        } else {
-            url = '${pageContext.request.contextPath}/role/edit';
-        }
+        var url="${pageContext.request.contextPath}/role/${url}";
+        var permissionIds="";
         //监听保存提交
         form.on('submit(save)', function(data){
-            data.field.groupName = $("select[name=groupId]").find("option:selected").text();
-            data.field.roleId = $("input[name=roleId]:checked").val();
+            permissionIds = $("input:checkbox[name='permission']:checked").map(function (index, elem) {
+                return $(elem).val();
+            }).get().join(',');
+            if(permissionIds==""){
+                layer.msg("请为该角色分配权限");
+                return ;
+            }
+            data.field.permissionIds=permissionIds;
             $.ajax({
                 url:url,
                 data:data.field,
@@ -125,7 +121,13 @@
             });
             return false;
         });
+
+
+
+
+
     });
+
 </script>
 </body>
 </html>

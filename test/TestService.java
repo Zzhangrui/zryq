@@ -4,6 +4,7 @@ import com.zryq.cms.admin.dao.UserMapper;
 import com.zryq.cms.admin.dao.WebInfoMapper;
 import com.zryq.cms.admin.entity.Article;
 import com.zryq.cms.admin.entity.Column;
+import com.zryq.cms.admin.entity.Role;
 import com.zryq.cms.admin.service.ArticleService;
 import com.zryq.cms.admin.service.UserService;
 import com.zryq.cms.common.enums.WebTemplate;
@@ -55,9 +56,8 @@ public class TestService {
 
     @Test
     public void test19(){
-        List<Integer> idList = Lists.newArrayList(1);
-        List<Column> columns = columnMapper.selectColumnArticle(idList,null);
-        System.out.println("Aaa");
+        Role role = roleMapper.selectPermissionByRoleId(1);
+        System.out.println(" = ");
     }
 
 

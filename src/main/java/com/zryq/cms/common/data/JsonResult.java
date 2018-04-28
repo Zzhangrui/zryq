@@ -1,9 +1,20 @@
 package com.zryq.cms.common.data;
 
+import com.zryq.cms.common.data.jstree.JsonResultEnum;
+
 /**
  * Created by Gong on 2016/4/7.
  */
 public class JsonResult {
+
+
+    public static  final JsonResult SUCCESS;
+
+    public static  final JsonResult FAIL;
+
+    public static  final JsonResult ERROR_PARAM;
+
+    public static final JsonResult ILLEGAL_REQUEST;
 
     private boolean success;
     private Object data;
@@ -25,6 +36,12 @@ public class JsonResult {
     public JsonResult(boolean success, String message) {
         this.success = success;
         this.message = message;
+    }
+
+    public JsonResult(JsonResultEnum resultEnum,boolean success){
+        this.code = resultEnum.getCode();
+        this.message = resultEnum.getMessgage();
+        this.success = success;
     }
 
     public boolean isSuccess() {
@@ -65,5 +82,11 @@ public class JsonResult {
     public void markError(String message) {
         this.success = false;
         this.message = message;
+    }
+    static{
+        SUCCESS = new JsonResult(JsonResultEnum.SUCCESS,true);
+        FAIL = new JsonResult(JsonResultEnum.FAIL,false);
+        ERROR_PARAM = new JsonResult(JsonResultEnum.ERROR_PARAM,false);
+        ILLEGAL_REQUEST = new JsonResult(JsonResultEnum.ILLEGAL_REQUEST,false);
     }
 }

@@ -46,36 +46,41 @@ public class RoleController {
         return "";
     }
 
-    @GetMapping("add_show")
+    @GetMapping("add")
     public ModelAndView showAdd(){
         ModelAndView modelAndView = new ModelAndView("admin/role_add");
-        modelAndView.addObject("url","add_submit");
+        modelAndView.addObject("url","add");
         modelAndView.addObject("permissions",roleService.findAllPermission());
         return modelAndView;
     }
 
-    @PostMapping("add_submit")
+    @PostMapping("add")
     @ResponseBody
     public JsonResult submitAdd(Role role,String permissionIds){
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setSuccess(roleService.insert(role,permissionIds));
-        return jsonResult;
+        roleService.insert(role,permissionIds);
+        return JsonResult.SUCCESS;
     }
 
-    @GetMapping("modify_show/{roleId}")
+    @GetMapping("edit/{roleId}")
     public ModelAndView showModify(@PathVariable("roleId") Integer id){
         ModelAndView modelAndView = new ModelAndView("admin/role_add");
-        modelAndView.addObject("url","modify_submit");
+        modelAndView.addObject("url","edit");
         modelAndView.addObject("role",roleService.findPermissionByRoleId(id));
         modelAndView.addObject("permissions",roleService.findAllPermission());
         return modelAndView;
     }
 
-    @PostMapping("modify_submit")
+    @PostMapping("edit")
     @ResponseBody
     public JsonResult submitModify(Role role,String permissionIds){
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setSuccess(roleService.modify(role,permissionIds));
+        roleService.modify(role,permissionIds);
+        return JsonResult.SUCCESS;
+    }
+
+    @PostMapping("delete/{id}")
+    @ResponseBody
+    public JsonResult delete(@PathVariable("id") Integer id){
+        JsonResult jsonResult =  roleService.delete(id);
         return jsonResult;
     }
 

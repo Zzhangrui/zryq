@@ -32,5 +32,5 @@ public interface RoleMapper {
 
     Role getWithUserListById(Integer id);
 
-    Role selectPermissionByRoleId(Integer id);
+    Role selectPermissionByRoleId(@Param("id") Integer id);
 }

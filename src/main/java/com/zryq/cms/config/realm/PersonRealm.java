@@ -1,8 +1,13 @@
 package com.zryq.cms.config.realm;
 
+import com.google.common.collect.Lists;
+import com.zryq.cms.admin.entity.Permission;
 import com.zryq.cms.admin.entity.Role;
 import com.zryq.cms.admin.entity.User;
+import com.zryq.cms.admin.service.RoleService;
 import com.zryq.cms.admin.service.UserService;
+import com.zryq.cms.common.utils.SessionPerson;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -25,12 +30,16 @@ public class PersonRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         //获取当前登录的用户名,等价于(String)principals.fromRealm(this.getName()).iterator().next()
         String currentUsername = (String) super.getAvailablePrincipal(principals);
         User user = userService.selectByUsername(currentUsername);
         List<String> roleList = new ArrayList<String>();
+        List<String> permissions = Lists.newArrayList();
         //从数据库中获取当前登录用户的详细信息
         //      if(null != person){
         //          //实体类User中包含有用户角色的实体类信息
@@ -42,10 +51,18 @@ public class PersonRealm extends AuthorizingRealm {
         List<Role> roles = userService.getWithRoleListById(user.getId()).getRoleList();
         roles.forEach(role -> {
             roleList.add(role.getRoleName());
+            Role role1 = roleService.findPermissionByRoleId(role.getId());
+            List<Permission> permissionList = role1.getPermissionList();
+            if(CollectionUtils.isNotEmpty(permissionList)){
+                permissionList.forEach(permission -> {
+                    permissions.add(permission.getPermissionName());
+                });
+
+            }
         });
         SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
         simpleAuthorInfo.addRoles(roleList);
-
+        simpleAuthorInfo.addStringPermissions(permissions);
         return simpleAuthorInfo;
     }
 
@@ -65,6 +82,7 @@ public class PersonRealm extends AuthorizingRealm {
             AuthenticationInfo authcInfo =
                     new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), user.getTrueName());
             this.setSession("currentUser", user);
+            SessionPerson.save(user);
             this.setSession("userWebId", user.getWebId());
             return authcInfo;
         } else {
@@ -86,6 +104,7 @@ public class PersonRealm extends AuthorizingRealm {
             if (null != session) {
                 session.setAttribute(key, value);
                 session.setTimeout(7200000);
+                session.getId();
             }
         }
     }

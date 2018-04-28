@@ -232,7 +232,7 @@
     </select>
 
     <resultMap id="roleWithPermissions" type="com.zryq.cms.admin.entity.Role">
-        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="rid" property="id" jdbcType="INTEGER"/>
         <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
         <result column="role_des" property="roleDes" jdbcType="VARCHAR"/>
         <result column="role_state" property="roleState" jdbcType="INTEGER"/>
@@ -244,11 +244,11 @@
     </resultMap>
     <select id="selectPermissionByRoleId" resultMap="roleWithPermissions"
             parameterType="java.lang.Integer">
-      select a.id,a.role_name,a.role_des,b.id as permissionId ,b.permission_name,b.permission_des
+      select a.id as rid,a.role_name,a.role_des,b.id as permissionId ,b.permission_name,b.permission_des
       FROM  cms_role as a JOIN  cms_role_permission_relationship as c JOIN  cms_permission as b
       ON a.id=c.role_id and c.permission_id = b.id
-        <if test="id != null">
-            a.id = #{id}
+        <if test=" id != null">
+           and a.id = #{id}
         </if>
     </select>
 </mapper>

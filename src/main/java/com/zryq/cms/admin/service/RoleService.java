@@ -10,6 +10,7 @@ import com.zryq.cms.admin.dao.RoleRelationshipMapper;
 import com.zryq.cms.admin.dao.UserMapper;
 import com.zryq.cms.admin.entity.RoleRelationshipExample;
 import com.zryq.cms.admin.entity.User;
+import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.utils.CheckListUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -149,7 +150,8 @@ public class RoleService {
 
     @Transactional
     public boolean insert(Role role,String permissionIds){
-        Integer roleId = roleMapper.insert(role);
+         roleMapper.insert(role);
+        Integer roleId = role.getId();
         if(Strings.isNotBlank(permissionIds)){
             List<String> permissionIdList = Arrays.asList(permissionIds.split(","));
             permissionIdList.forEach(permissionId ->{
@@ -163,7 +165,8 @@ public class RoleService {
     }
 
     @Transactional
-    public boolean modify(Role role,String permissionIds){
+    public JsonResult modify(Role role,String permissionIds){
+        JsonResult jsonResult = new JsonResult();
         roleMapper.updateByPrimaryKeySelective(role);
         Role hisRole = findPermissionByRoleId(role.getId());
         List<Permission> permissionList = hisRole.getPermissionList();
@@ -171,7 +174,10 @@ public class RoleService {
         permissionList.forEach(permission ->{
             oldPermissionIds.add(permission.getId());
         });
-        List<String> permissionIdList = Arrays.asList(permissionIds.split(","));
+        List<String> permissionIdList = Lists.newArrayList();
+        if(Strings.isNotEmpty(permissionIds)){
+            permissionIdList = Arrays.asList(permissionIds.split(","));
+        }
         List<Integer> newPermissionIds = Lists.newArrayList();
         if(CollectionUtils.isNotEmpty(permissionIdList)){
             permissionIdList.forEach(s->{
@@ -192,13 +198,35 @@ public class RoleService {
         if(CollectionUtils.isNotEmpty(removeList)){
             Example example = new Example(PermissionRole.class);
             Example.Criteria criteria = example.createCriteria();
-            criteria.andEqualTo("role_id",role.getId()).andIn("permission_id",removeList);
+            criteria.andEqualTo("roleId",role.getId()).andIn("permissionId",removeList);
             permissionRoleMapper.deleteByExample(example);
         }
-        return true;
+        return jsonResult;
     }
 
     public Role findPermissionByRoleId(Integer roleId){
         return roleMapper.selectPermissionByRoleId(roleId);
+    }
+
+    @Transactional
+    public JsonResult delete(Integer id){
+        JsonResult jsonResult = new JsonResult();
+        Role role = getWithUserListById(id);
+        if(role==null){
+            jsonResult.setSuccess(true);
+            return jsonResult;
+        }
+        if(CollectionUtils.isNotEmpty(role.getUserList())){
+            jsonResult.setSuccess(false);
+            jsonResult.markError("该角色有分配的用户，无法删除");
+            return jsonResult;
+        }
+        roleMapper.deleteByPrimaryKey(id);
+        //关联删除
+        PermissionRole permissionRole = new PermissionRole();
+        permissionRole.setRoleId(id);
+        permissionRoleMapper.delete(permissionRole);
+
+        return JsonResult.SUCCESS;
     }
 }
