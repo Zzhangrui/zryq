@@ -1,9 +1,15 @@
 package com.zryq.cms.admin.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
+@Table(name = "cms_article")
 public class Article {
+    @Id
+    @Column(name = "id")
     private Integer id;
 
     private String artTitle;

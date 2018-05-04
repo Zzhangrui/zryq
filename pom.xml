@@ -12,6 +12,7 @@
         <spring-framework.version>4.3.7.RELEASE</spring-framework.version>
         <slf4j.version>1.7.5</slf4j.version>
         <axis-version>1.6.2</axis-version>
+        <elastic-job.version>2.0.3</elastic-job.version>
     </properties>
 
     <dependencies>
@@ -357,6 +358,25 @@
             <version>2.3.20</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-elasticsearch</artifactId>
+            <version>2.0.2.RELEASE</version>
+        </dependency>
+        <!-- 引入elastic-job-lite核心模块 -->
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-core</artifactId>
+            <version>${elastic-job.version}</version>
+        </dependency>
+        <!-- 使用springframework自定义命名空间时引入 -->
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-spring</artifactId>
+            <version>${elastic-job.version}</version>
+        </dependency>
+
+
     </dependencies>
     <profiles>
         <profile>
@@ -366,6 +386,9 @@
             </activation>
             <properties>
                 <env>DEV</env>
+                <es.host>127.0.0.1:8080</es.host>
+                <eh.dir>E:\\cache\\</eh.dir>
+                <zk.host>47.98.152.163:2181</zk.host>
             </properties>
             <build>
                 <filters>

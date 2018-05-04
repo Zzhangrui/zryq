@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:reg="http://www.dangdang.com/schema/ddframe/reg" xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+          http://www.dangdang.com/schema/ddframe/reg http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+         http://www.dangdang.com/schema/ddframe/job http://www.dangdang.com/schema/ddframe/job/job.xsd">
+
+	<!--配置作业注册中心 -->
+	<reg:zookeeper id="regCenter" server-lists="${zk.host}"
+		namespace="imf-job/article" base-sleep-time-milliseconds="1000"
+		max-sleep-time-milliseconds="3000" max-retries="3" />
+
+	<!-- 处理policyBracket-->
+	<job:simple id="restoreRiskMerchantPolicyBracketJob" class="com.zryq.cms.job.PublishArticleJob"
+		registry-center-ref="regCenter" sharding-total-count="1" cron="0 0 9 * * ?" description="简单定时任务"
+		sharding-item-parameters="0=A" overwrite="true" >
+	</job:simple>
+
+</beans>

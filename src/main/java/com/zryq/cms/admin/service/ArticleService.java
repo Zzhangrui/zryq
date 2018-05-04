@@ -16,6 +16,7 @@ import com.zryq.cms.admin.entity.Article;
 import com.zryq.cms.admin.entity.Column;
 import com.zryq.cms.admin.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class ArticleService {
     @Autowired
     private ColumnService columnService;
 
+   /* @Autowired
+    private ElasticsearchRepository elasticsearchRepository;*/
     /**
      * 新增
      *

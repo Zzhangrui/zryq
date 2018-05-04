@@ -19,6 +19,10 @@
     </context:component-scan>
     <!--读取mybatis配置文件-->
     <import resource="spring-mybatis.xml"/>
+    <!--读取es配置-->
+    <!--<import resource="spring-es.xml"/>-->
+    <!--读取elastic-job配置-->
+    <!--<import resource="spring-job.xml"/>-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <!-- 线程池维护线程的最少数量 -->
         <property name="corePoolSize" value="50"/>
