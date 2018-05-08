@@ -585,4 +585,8 @@
         create_group_name = #{createGroupName,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
+
+    <select id="selectCountInfo">
+
+    </select>
 </mapper>

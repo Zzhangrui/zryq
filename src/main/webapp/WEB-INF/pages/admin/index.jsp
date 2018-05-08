@@ -63,6 +63,11 @@
                                             <cite>栏目管理</cite>
                                         </a>
                                 </dd>
+                                <dd class="">
+                                    <a href="javascript:;" _href="${pageContext.request.contextPath}/scroll/index">
+                                        <cite>scroll管理</cite>
+                                    </a>
+                                </dd>
                             </dl>
                         </li>
                         <li class="layui-nav-item">

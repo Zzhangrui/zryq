@@ -45,5 +45,7 @@
         </property>
     </bean>
 
+    <bean id="exceptionResolver" class="com.zryq.cms.resolver.MyExceptionResolver"></bean>
+
 
 </beans>

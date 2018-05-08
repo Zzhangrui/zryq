@@ -38,21 +38,24 @@
         <hr class="hr15">
         <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
         <hr class="hr15">
-        <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+        <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit" id="login">
         <hr class="hr20" >
     </form>
 </div>
 
 <script>
     var layer = "";
+    var layerIndex = "";
     layui.use(['layer'], function () {
         layer = layui.layer;
-
-
     });
 
     $(function(){
         $('input,textarea').placeholder();
+
+        $("#login").click(function(){
+            layerIndex = layer.load(1);
+        });
 
         $("#loginForm").validate({
             rules:{
@@ -79,10 +82,10 @@
                         // 此处可对 data 作相关处理
                         //var index = parent.layer.getFrameIndex(window.name);
                         //parent.$('#ref').click();
-                        console.log(res);
                         if(res.success){
                             top.location = "${pageContext.request.contextPath}/index";
                         }else{
+                            layer.close(layerIndex);
                             parent.layer.msg(res.message,{icon:2,time:3000});
                         }
                     }
