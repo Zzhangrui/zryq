@@ -1,5 +1,6 @@
 package com.zryq.cms.admin.controller;
 
+import com.google.common.collect.Sets;
 import com.zryq.cms.admin.entity.Article;
 import com.zryq.cms.admin.entity.User;
 import com.zryq.cms.admin.service.ArticleService;
@@ -16,6 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 锐 on 2017/10/24.
@@ -223,5 +229,37 @@ public class ArticleController extends BaseController {
     }
 
 
+    public static void main(String[] args) {
+
+        isPowerOfFour(16);
+    }
+
+    public static void  isPowerOfFour(int num) {
+       String n =  Integer.toBinaryString( num);
+        System.out.println("n = " + n);
+
+    }
+
+
+    public static void solution(){
+        String s ="abcabcdfdefgghbeeerbddd";
+        int max = 0;
+        int temMax= 0;
+        byte[] a = s.getBytes();
+        List charSet = new ArrayList();
+        for(byte b : a){
+            if(charSet.contains(b)){
+                int startIndex = charSet.indexOf(b);
+                charSet = charSet.subList(startIndex+1,charSet.size());
+                charSet.add(b);
+                max = temMax>max?temMax:max;
+                temMax = charSet.size();
+            }else{
+                charSet.add(b);
+                temMax = temMax+1;
+            }
+        }
+        System.out.println(max);
+    }
 
 }
