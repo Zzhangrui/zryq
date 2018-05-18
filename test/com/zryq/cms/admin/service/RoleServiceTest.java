@@ -14,14 +14,11 @@ import static org.junit.Assert.*;
 /**
  * Created by lollipop on 17/11/9
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:spring-application.xml"})
 public class RoleServiceTest {
 
     @Autowired
     RoleMapper roleMapper;
 
-    @Test
     public void testGetWithUserListById() throws Exception {
         Role role = roleMapper.getWithUserListById(1);
         Assert.assertEquals(1, role.getUserList().size());

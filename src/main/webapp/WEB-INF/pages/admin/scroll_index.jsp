@@ -186,9 +186,13 @@
                     if(res.success){
                         layer.msg("修改成功");
                     }else {
-                        layer.msg("修改成功");
+                        layer.msg("修改失败");
+                        putData(initPageNum);
                     }
                     form.render('checkbox');
+                },error:function () {
+                    layer.msg("服务器故障");
+                    putData(initPageNum);
                 }
             });
             // layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);

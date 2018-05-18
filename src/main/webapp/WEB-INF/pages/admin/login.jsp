@@ -30,7 +30,7 @@
 <body class="login-bg">
 
 <div class="login">
-    <div class="message">cms-后台登录</div>
+    <div class="message">Ifm-后台登录</div>
     <div id="darkbannerwrap"></div>
 
     <form method="post" class="layui-form" id="loginForm" action="${pageContext.request.contextPath }/dologin">
@@ -83,7 +83,7 @@
                         //var index = parent.layer.getFrameIndex(window.name);
                         //parent.$('#ref').click();
                         if(res.success){
-                            top.location = "${pageContext.request.contextPath}/index";
+                            top.location = "${pageContext.request.contextPath}/admin/index";
                         }else{
                             layer.close(layerIndex);
                             parent.layer.msg(res.message,{icon:2,time:3000});

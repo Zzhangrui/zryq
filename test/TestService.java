@@ -23,8 +23,6 @@ import java.util.Map;
 /**
  * Created by 锐 on 2017/10/20.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:spring-application.xml"})
 public class TestService {
 
     @Autowired
@@ -46,15 +44,13 @@ public class TestService {
     @Autowired
     private ArticleService articleService;
 
-    @Test
-    public  void test(){
+    /*public  void test(){
 
         Map  map = new HashMap<>();
         map.put("username","张锐1");
         FreeMarkerUtil.createHtml("贵州省检察院/list.ftl",map,"list.html");
     }
 
-    @Test
     public void test19(){
         Role role = roleMapper.selectPermissionByRoleId(1);
         System.out.println(" = ");
@@ -62,7 +58,6 @@ public class TestService {
 
 
 
-    @Test
     public void test2(){
         int a = WebTemplate.GYS.getValue();
 
@@ -73,10 +68,9 @@ public class TestService {
     }
 
 
-    @Test
     public void test3(){
 
        List<Article> articleList =  articleService.includePic(null,null);
         System.out.println("aaa");
-    }
+    }*/
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,8 +26,8 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <p class="pull-left hidden-xs"><i class="fa fa-clock-o"></i><span>Mon - Sat 8.00 - 18.00. Sunday CLOSED</span></p>
-        <p class="pull-right"><i class="fa fa-phone"></i>Tel No. (+001) 123-456-789</p>
+        <p class="pull-left hidden-xs"><i class="fa fa-clock-o"></i><span id="timeP"></span></p>
+        <p class="pull-right"><i class="fa fa-phone"></i>183****2623</p>
       </div>
     </div>
   </div>
@@ -45,7 +46,7 @@
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.jsp">主页</a></li>
+                        <li class="active"><a href="${pageContext.request.contextPath}/trip/index">主页</a></li>
 						 <%--<li class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle">About Us <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -54,11 +55,11 @@
                             <li><a href="#">News</a></li> 
                             <li><a href="#">Investors</a></li>
                         </ul>
-                    </li> 
-						<li><a href="services.html">Services</a></li>
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="contact.html">Contact</a></li>--%>
+                    </li> --%>
+						<%--<li><a href="services.html">个人博客</a></li>--%>
+                        <%--<li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>--%>
+                        <li><a href="${pageContext.request.contextPath}/login">后台登陆</a></li>
                     </ul>
                 </div>
             </div>
@@ -66,40 +67,25 @@
 	</header>
 	<!-- end header -->
 	<section id="banner">
-	 
+
 	<!-- Slider -->
         <div id="main-slider" class="flexslider">
             <ul class="slides">
-              <li>
-                <img src="${pageContext.request.contextPath}/assets/front/img/slides/1.jpg" alt="" />
-                <div class="flex-caption">
-                    <h3>Adventure Travel</h3> 
-					<p>Since we love a great adventure</p> 
-					 
-                </div>
-              </li>
-              <li>
-                <img src="${pageContext.request.contextPath}/assets/front/img/slides/2.jpg" alt="" />
-                <div class="flex-caption">
-                    <h3>Enjoy the Journey111</h3> 
-					<p>Stop worrying and enjoy the trip</p> 
-					 
-                </div>
-              </li>
-              <li>
-                <img src="${pageContext.request.contextPath}/assets/front/img/slides/2.jpg" alt="" />
-                <div class="flex-caption">
-                    <h3>Enjoy the Journey222</h3> 
-					<p>Stop worrying and enjoy the trip</p> 
-					 
-                </div>
-              </li>
+				<c:forEach items="${scrollList}" var="scroll">
+					<li>
+						<img src="${pageContext.request.contextPath}/${scroll.scrollPicPath}" onclick='window.open("${scroll.url}")' alt="" />
+						<div class="flex-caption">
+							<h3>${scroll.scrollTitle}</h3>
+							<p>${scroll.scrollDesc}</p>
+						</div>
+					</li>
+				</c:forEach>
             </ul>
         </div>
 	<!-- end slider -->
- 
-	</section> 
-	<section id="call-to-action-2">
+
+	</section>
+	<%--<section id="call-to-action-2">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-10 col-sm-9">
@@ -112,9 +98,9 @@
 			</div>
 		</div>
 	</section>
-	
+
 	<section id="content">
-	
+
 	<div class="container">
 	    	<div class="row">
 			<div class="col-md-12">
@@ -129,9 +115,9 @@
 			<a href="details.html">
                <img class="img-responsive" src="${pageContext.request.contextPath}/assets/front/img/img01.jpg" alt="">
                 <h3>England <span class="price pull-right">$230</span></h3>
-				<strong>Istanbul, Antalya, Ephesus 8 days</strong>  
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus</p>  
-             </a>				
+				<strong>Istanbul, Antalya, Ephesus 8 days</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus</p>
+             </a>
             </div>
 			</div>
             <div class="col-md-4">
@@ -139,9 +125,9 @@
 			<a href="details.html">
                 <img class="img-responsive" src="${pageContext.request.contextPath}/assets/front/img/img02.jpg" alt="">
                  <h3>Italy <span class="price pull-right">$140</span></h3>
-				<strong>Istanbul, Antalya, Ephesus 8 days</strong> 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident</p>   
- </a>				
+				<strong>Istanbul, Antalya, Ephesus 8 days</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident</p>
+ </a>
             </div>
 			</div>
             <div class="col-md-4">
@@ -149,22 +135,22 @@
 			<a href="details.html">
               <img class="img-responsive" src="${pageContext.request.contextPath}/assets/front/img/img03.jpg" alt="">
                 <h3>Russia <span class="price pull-right">$125</span></h3>
-				<strong>Istanbul, Antalya, Ephesus 8 days</strong> 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus omnis</p> 
- </a>				
+				<strong>Istanbul, Antalya, Ephesus 8 days</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus omnis</p>
+ </a>
             </div>
 			</div>
         </div>
-		
+
 		<div class="row box-section">
             <div class="col-md-4">
 			<div class="box-content">
 			<a href="details.html">
                <img class="img-responsive" src="${pageContext.request.contextPath}/assets/front/img/img04.jpg" alt="">
                 <h3>France <span class="price pull-right">$230</span></h3>
-				<strong>Istanbul, Antalya, Ephesus 8 days</strong>  
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus</p> 
- </a>				
+				<strong>Istanbul, Antalya, Ephesus 8 days</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus</p>
+ </a>
             </div>
 			</div>
             <div class="col-md-4">
@@ -172,9 +158,9 @@
 			<a href="details.html">
                 <img class="img-responsive" src="${pageContext.request.contextPath}/assets/front/img/img05.jpg" alt="">
                  <h3>Germany <span class="price pull-right">$140</span></h3>
-				<strong>Istanbul, Antalya, Ephesus 8 days</strong> 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident</p>   
- </a>				
+				<strong>Istanbul, Antalya, Ephesus 8 days</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident</p>
+ </a>
             </div>
 			</div>
             <div class="col-md-4">
@@ -182,15 +168,15 @@
 			<a href="details.html">
               <img class="img-responsive" src="${pageContext.request.contextPath}/assets/front/img/img06.jpg" alt="">
                 <h3>Spain <span class="price pull-right">$125</span></h3>
-				<strong>Istanbul, Antalya, Ephesus 8 days</strong> 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus omnis</p>   
- </a>				
+				<strong>Istanbul, Antalya, Ephesus 8 days</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores quae porro consequatur aliquam, incidunt eius magni provident, doloribus omnis</p>
+ </a>
             </div>
 			</div>
         </div>
-		 
-	
-	
+
+
+
 	<div class="container">
 	    	<div class="row">
 			<div class="col-md-12">
@@ -247,7 +233,7 @@
         </div>
 	</div>
 	</section>
-	
+
 	<section class="section-padding gray-bg">
 		<div class="container">
 			<div class="row">
@@ -279,7 +265,7 @@
 				</div>
 			</div>
 		</div>
-	</section>	  
+	</section>
 	<section id="content-3-10" class="content-block data-section nopad content-3-10">
 	<div class="image-container col-sm-6 col-xs-12 pull-left">
 		<div class="background-image-holder">
@@ -302,10 +288,10 @@
 		</div><!-- /.row-->
 	</div><!-- /.container -->
 </section>
-	
+
 	<div class="about home-about">
 				<div class="container">
-						
+
 						<div class="row">
 							<div class="col-md-4">
 								<!-- Heading and para -->
@@ -317,11 +303,11 @@
 							<div class="col-md-4">
 								<div class="block-heading-two">
 									<h3><span>Latest News</span></h3>
-								</div>		
+								</div>
 								<!-- Accordion starts -->
 								<div class="panel-group" id="accordion-alt3">
 								 <!-- Panel. Use "panel-XXX" class for different colors. Replace "XXX" with color. -->
-								  <div class="panel">	
+								  <div class="panel">
 									<!-- Panel heading -->
 									 <div class="panel-heading">
 										<h4 class="panel-title">
@@ -381,13 +367,13 @@
 								  </div>
 								</div>
 								<!-- Accordion ends -->
-								
+
 							</div>
-							
+
 							<div class="col-md-4">
 								<div class="block-heading-two">
 									<h3><span>Testimonials</span></h3>
-								</div>	
+								</div>
 								     <div class="testimonials">
 										<div class="active item">
 										  <blockquote><p>Lorem ipsum dolor met consectetur adipisicing. Aorem psum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met.</p></blockquote>
@@ -401,18 +387,18 @@
 										</div>
 									</div>
 							</div>
-							
+
 						</div>
-						
-						 						
-						 
+
+
+
 						<br>
-					 
+
 					  </div>
-						
+
 					</div>
-					
-					
+
+
 
 	<footer>
 	<div class="container">
@@ -485,7 +471,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>--%>
 	</footer>
 </div>
 <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
@@ -505,5 +491,28 @@
 <script src="${pageContext.request.contextPath}/assets/front/js/jquery.magnific-popup.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/front/js/animate.js"></script>
 <script src="${pageContext.request.contextPath}/assets/front/js/custom.js"></script>
+<script type="text/javascript">
+    function getTime(){
+        var str = "当前时间为："
+        var p = document.getElementById("timeP");
+        var time =  new Date();
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var day = time.getDate();
+        var hour = time.getHours();
+        var minutes = time.getMinutes();
+        var seconds = time.getSeconds();
+        str = str + year +"-"+ month +"-"+ day + " " +hour+":"+minutes+":"+seconds;
+        p.innerText = str;
+
+        setTimeout(getTime,1000);
+    }
+
+
+    window.onload = function(){
+        getTime();
+    }
+
+</script>
 </body>
 </html>

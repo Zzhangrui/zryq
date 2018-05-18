@@ -376,6 +376,22 @@
             <version>${elastic-job.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.htmlunit/htmlunit -->
+        <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>2.13</version>
+        </dependency>
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
 
     </dependencies>
     <profiles>
@@ -400,10 +416,13 @@
             <id>pro</id>
             <properties>
                 <env>PRO</env>
+                <es.host>127.0.0.1:8080</es.host>
+                <eh.dir>/usr/local/</eh.dir>
+                <zk.host>127.0.0.1:2181</zk.host>
             </properties>
             <build>
                 <filters>
-                    <filter>src/main/resources/application.properties</filter>
+                    <filter>src/main/resources/application-pro.properties</filter>
                 </filters>
             </build>
         </profile>
@@ -420,7 +439,7 @@
         </profile>
     </profiles>
     <build>
-        <finalName>cms</finalName>
+        <finalName>ifm</finalName>
         <!--编译时同步mapper.xml文件-->
         <resources>
             <resource>

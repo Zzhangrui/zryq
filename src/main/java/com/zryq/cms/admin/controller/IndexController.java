@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
+@RequestMapping("admin")
 public class IndexController {
 
     @RequestMapping("index")

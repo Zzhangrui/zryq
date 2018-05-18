@@ -6,6 +6,7 @@ import com.zryq.cms.admin.dao.ScrollInfoMapper;
 import com.zryq.cms.admin.entity.ScrollInfo;
 import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.data.LayUiData;
+import com.zryq.cms.common.enums.ScrollConstant;
 import com.zryq.cms.common.utils.SessionPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class ScrollInfoService {
         scrollInfo.setUpdateTime(new Date());
         scrollInfo.setCreateTime(new Date());
         scrollInfo.setWebId(SessionPerson.getWebId());
-        scrollInfo.setStatus("0");
+        scrollInfo.setStatus(ScrollConstant.Status.CLOSE.getCode());
         scrollInfoMapper.insert(scrollInfo);
         return JsonResult.SUCCESS;
     }
@@ -69,6 +70,12 @@ public class ScrollInfoService {
 
     public ScrollInfo selectById(Integer id) {
         return scrollInfoMapper.selectByPrimaryKey(id);
+    }
+
+    public List<ScrollInfo> selectFrontScroll(){
+        ScrollInfo scrollInfo = new ScrollInfo();
+        scrollInfo.setStatus(ScrollConstant.Status.OPEN.getCode());
+        return scrollInfoMapper.select(scrollInfo);
     }
 
 }
