@@ -145,6 +145,27 @@
                                 </dd>
                             </dl>
                         </li>
+                        <li class="layui-nav-item">
+                            <a class="javascript:;" href="javascript:;">
+                                <i class="layui-icon" style="top: 3px;">&#xe634;</i><cite>物品管理</cite>
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd class="">
+                                <dd class="">
+                                    <a href="javascript:;" _href="${pageContext.request.contextPath}/metalCate/index">
+                                        <cite>种类管理</cite>
+                                    </a>
+                                </dd>
+                                </dd>
+                                <dd class="">
+                                <dd class="">
+                                    <a href="javascript:;" _href="${pageContext.request.contextPath}/metalDetail/index">
+                                        <cite>产品管理</cite>
+                                    </a>
+                                </dd>
+                                </dd>
+                            </dl>
+                        </li>
                         <%--<li class="layui-nav-item">
                             <a class="javascript:;" href="javascript:;">
                                 <i class="layui-icon" style="top: 3px;">&#xe642;</i><cite>订单管理</cite>

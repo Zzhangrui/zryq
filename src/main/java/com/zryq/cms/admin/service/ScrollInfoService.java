@@ -42,7 +42,7 @@ public class ScrollInfoService {
         PageInfo pageInfo = new PageInfo(scrollInfoList);
         LayUiData layUiData = new LayUiData();
         layUiData.setData(pageInfo.getList());
-        layUiData.setCount(pageInfo.getSize());
+        layUiData.setCount((int)pageInfo.getTotal());
         layUiData.setCode("0");
         return layUiData;
     }

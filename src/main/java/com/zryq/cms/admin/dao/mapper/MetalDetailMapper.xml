@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zryq.cms.admin.dao.MetalDetailMapper">
+    <resultMap id="BaseResultMap" type="com.zryq.cms.admin.entity.MetalDetail">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="cate_id" property="cateId" jdbcType="INTEGER"/>
+        <result column="cate_name" property="cateName" jdbcType="VARCHAR"/>
+        <result column="metal_name" property="metalName" jdbcType="VARCHAR"/>
+        <result column="metal_model" property="metalModel" jdbcType="DOUBLE"/>
+        <result column="metal_price" property="metalPrice" jdbcType="DOUBLE"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectMetalDetails" resultMap="BaseResultMap">
+        SELECT
+            a.id,
+            a.cate_id,
+            a.metal_name,
+            a.metal_model,
+            a.metal_price,
+            a.create_time,
+            a.update_time,
+            b.cate_name
+        FROM
+            cms_metal_detail AS a
+        LEFT JOIN cms_metal_category AS b ON a.cate_id = b.id
+        <where>
+            <if test="metalName != null and metalName != '' ">
+                a.metal_name = LIKE CONCAT("%",#{metalName},"%")
+            </if>
+            <if test="cateId != null ">
+                a.cate_id = #{cateId}
+            </if>
+        </where>
+    </select>
+</mapper>
+

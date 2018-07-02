@@ -15,6 +15,9 @@ public class LayUiData<T> {
 
     private List<T> data;
 
+    public static final String SUEECSS_CODE = "0";
+
+    public  static final String ERROR_CODE = "-1";
 
     public String getCode() {
         return code;
