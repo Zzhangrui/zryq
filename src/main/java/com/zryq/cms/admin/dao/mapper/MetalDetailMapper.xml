@@ -28,7 +28,7 @@
         LEFT JOIN cms_metal_category AS b ON a.cate_id = b.id
         <where>
             <if test="metalName != null and metalName != '' ">
-                a.metal_name = LIKE CONCAT("%",#{metalName},"%")
+                a.metal_name  LIKE CONCAT("%",#{metalName},"%")
             </if>
             <if test="cateId != null ">
                 a.cate_id = #{cateId}

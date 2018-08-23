@@ -1,6 +1,7 @@
 package com.zryq.cms.admin.controller;
 
 import com.zryq.cms.common.data.JsonResult;
+import com.zryq.cms.common.data.jstree.JsonResultEnum;
 import com.zryq.cms.common.utils.MD5;
 import com.zryq.cms.common.utils.MD5;
 import org.apache.shiro.SecurityUtils;
@@ -78,9 +79,7 @@ public class LoginController extends BaseController {
         JsonResult jsonResult = new JsonResult();
         if (username == null || password == null || username.length() < 1
                 || password.length() < 1) {
-
-            jsonResult.markError("账号或密码不能为空");
-            return jsonResult;
+            return new JsonResult(JsonResultEnum.LOGIN_EMPTY, false);
         }
         password = MD5.MD5Encode(password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -95,17 +94,14 @@ public class LoginController extends BaseController {
             jsonResult.setSuccess(true);
             return jsonResult;
         } catch (UnknownAccountException uae) {
-            jsonResult.markError("账号或密码不正确");
-            return jsonResult;
+            return new JsonResult(JsonResultEnum.PASSWORD_ERROR, false);
         } catch (IncorrectCredentialsException ice) {
 
-            jsonResult.markError("账号或密码不正确");
-            return jsonResult;
+            return new JsonResult(JsonResultEnum.PASSWORD_ERROR, false);
         } catch (AuthenticationException ae) {
             //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景
             ae.printStackTrace();
-            jsonResult.markError("账号或密码不正确");
-            return jsonResult;
+            return new JsonResult(JsonResultEnum.PASSWORD_ERROR, false);
         }
         //验证是否登录成功
        /* if(currentUser.isAuthenticated()){

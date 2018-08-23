@@ -13,7 +13,9 @@ public enum JsonResultEnum {
     ERROR_PARAM("1002","参数异常"),
     ILLEGAL_REQUEST("1003","请求异常"),
     EDIT_SUCCESS("1000","编辑成功"),
-    EDIT_FALSE("1001","编辑失败")
+    EDIT_FALSE("1001","编辑失败"),
+    PASSWORD_ERROR("2001","账号或密码不正确"),
+    LOGIN_EMPTY("2002","登陆账号或密码不能为空")
     ;
 
     JsonResultEnum(String code, String messgage) {

@@ -164,6 +164,13 @@
                                     </a>
                                 </dd>
                                 </dd>
+                                <dd class="">
+                                <dd class="">
+                                    <a href="javascript:;" _href="${pageContext.request.contextPath}/orderInfo/index">
+                                        <cite>订单管理</cite>
+                                    </a>
+                                </dd>
+                                </dd>
                             </dl>
                         </li>
                         <%--<li class="layui-nav-item">

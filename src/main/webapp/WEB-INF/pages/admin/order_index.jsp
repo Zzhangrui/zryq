@@ -2,8 +2,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: rui.zhang
-  Date: 2018/6/21
-  Time: 15:17
+  Date: 2018/8/23
+  Time: 16:51
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -53,22 +53,22 @@
                                 <li><span
                                         class="fa fa-map-marker fa-2x"></span>&nbsp;<span>您当前的位置：</span>
                                 </li>
-                                <li><a class="local-site" href="">产品管理</a></li>
+                                <li><a class="local-site" href="">订单管理</a></li>
                             </ul>
                             <!--面包屑导航 当前位置 end-->
                             <!---->
                             <div class="public_wrap">
                                 <ul class="sub_nav">
-                                    <li class="active"><a class="local-site" href="javascript:;">产品信息</a>
+                                    <li class="active"><a class="local-site" href="javascript:;">订单信息</a>
                                     </li>
                                     <%--<li><a class="local-site" href="javascript:;">角色信息</a></li>--%>
                                 </ul>
 
                                 <article id="roleMessage">
                                     <div class="btn_box">
-                                        <button id="scroll-add"
+                                        <button id="order-add"
                                                 class="layui-btn layui-btn-normal layui-btn-small">
-                                            <i class="layui-icon"></i>新增
+                                            <i class="layui-icon">&#xe654;新增</i>
                                         </button>
                                     </div>
                                     <div class="mt-10">
@@ -88,9 +88,9 @@
                                             </div>
                                             <button class="layui-btn search-btn" data-type="search">搜索</button>
                                         </div>
-                                        <table id="scrollTable" class="layui-table"
+                                        <table id="orderTable" class="layui-table"
                                                style="margin-top: 5px;"
-                                               lay-filter="scroll-table" lay-skin="nob"></table>
+                                               lay-filter="order-table" lay-skin="nob"></table>
                                         <div id="rolePage" style="text-align: center;"></div>
                                     </div>
                                 </article>
@@ -139,7 +139,7 @@
         layer = layui.layer, form = layui.form, table = layui.table, laypage = layui.laypage;
 
 
-        table.on('tool(scroll-table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        table.on('tool(order-table)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值
             var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -153,9 +153,9 @@
         });
 
         tables = table.render({
-            elem: '#scrollTable' //指定原始表格元素选择器（推荐id选择器）
-            , id: 'scroll-1'
-            , url: '${pageContext.request.contextPath}/metalDetail/data'
+            elem: '#orderTable' //指定原始表格元素选择器（推荐id选择器）
+            , id: 'order-1'
+            , url: '${pageContext.request.contextPath}/orderInfo/data'
             , method: 'post'
             , request: {
                 pageName: 'pageNum',
@@ -169,10 +169,14 @@
             }
             , cols: [[
                 {field: 'id', title: 'ID', align: 'center', sort: false}
-                , {field: 'metalName', title: '名称', sort: false}
-                , {field: 'cateName', title: '类别', sort: false}
-                , {field: 'metalModel', title: '型号', sort: false}
-                , {field: 'metalPrice', title: '价格', sort: false}
+                , {field: 'guestName', title: '姓名', sort: false}
+                , {field: 'mobile', title: '联系方式', sort: false}
+                , {field: 'metalName', title: '品种', sort: false}
+                , {field: 'weight', title: '重量(吨)', sort: false}
+                , {field: 'truePrice', title: '价格(/吨)', sort: false}
+                , {field: 'totalMoney', title: '总价', sort: false}
+                , {field: 'orderType', title: '订单种类', sort: false}
+                , {field: 'orderStatus', title: '订单状态', sort: false}
                 , {field: 'createTime', title: '创建时间', sort: false}
                 , {field: 'updateTime', title: '更新时间', sort: false}
                 , {fixed: 'right', title: '操作', align: 'center', templet: '#barRoleDemo'}
@@ -185,8 +189,7 @@
                 var metalName = $("#metalName").val();
                 tables.reload({
                     where:{
-                        'cateId':cateId,
-                        'metalName':metalName
+                        'cateId':cateId
                     }
                 });
             }
@@ -201,13 +204,13 @@
     jQuery(function ($) {
         $('input, textarea').placeholder();
 
-        $("#scroll-add").click(function () {
+        $("#order-add").click(function () {
             layer.open({
                 type: 2,
                 title: '新增',
                 closeBtn: '2',
                 area: ['50%', '50%'],
-                content: '${pageContext.request.contextPath}/metalDetail/add',
+                content: '${pageContext.request.contextPath}/orderInfo/add',
                 end: function () {
                     tables.reload();
                 }
@@ -224,7 +227,7 @@
             title: '修改',
             closeBtn: '2',
             area: ['50%', '50%'],
-            content: '${pageContext.request.contextPath}/metalDetail/modify/' + id,
+            content: '${pageContext.request.contextPath}/orderInfo/modify/' + id,
             end: function () {
                 tables.reload();
             }
@@ -240,7 +243,7 @@
     function deleteById(msg, id) {
         layer.confirm(msg, function (index) {
             $.ajax({
-                url: "${pageContext.request.contextPath}/metalDetail/delete/" + id,
+                url: "${pageContext.request.contextPath}/orderInfo/delete/" + id,
                 type: "post",
                 dataType: "json",
                 traditional: true,
@@ -255,21 +258,10 @@
             });
         });
     }
-
-    function view(id) {
-        layer.open({
-            type: 2,
-            title: '价格走向图',
-            closeBtn: '2',
-            area: ['80%', '80%'],
-            content: '${pageContext.request.contextPath}/metalDetail/view/' + id
-        });
-    }
 </script>
 <script type="text/html" id="barRoleDemo">
     <a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="assign">编辑</a>
-    <a class="layui-btn layui-btn-xs  layui-btn-warm" lay-event="view">价格走向</a>
-    <a class="layui-btn layui-btn-xs  layui-btn-danger" lay-event="remove">删除</a>
+    <a class="layui-btn layui-btn-xs  layui-btn-danger" lay-event="remove"><i class="layui-icon">&#xe640;删除</i></a>
 </script>
 </body>
 </html>

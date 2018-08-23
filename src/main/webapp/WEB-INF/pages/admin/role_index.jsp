@@ -96,14 +96,7 @@
                         <!--内容 end-->
                     </div>
                     <!--页面底部 star-->
-                    <footer>
-                        <div id="foot">
-                            <div id="search_color_wrap" class="lf">
-
-                            </div>
-                            <div id="bp" class="rt">图形化页面系统 2017 版本</div>
-                        </div>
-                    </footer>
+                    <jsp:include page="foot.jsp"/>
                     <!--页面底部 end-->
                 </div>
             </div>

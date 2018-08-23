@@ -26,6 +26,12 @@ public class OrderInfo {
     @Column(name = "metal_name")
     private String metalName;
 
+    @Column(name = "cate_id")
+    private Integer cateId;
+
+    @Column(name = "cate_name")
+    private String cateName;
+
     @Column(name = "true_price")
     private Double truePrice;
 
@@ -203,5 +209,21 @@ public class OrderInfo {
 
     public void setSendDestination(String sendDestination) {
         this.sendDestination = sendDestination;
+    }
+
+    public Integer getCateId() {
+        return cateId;
+    }
+
+    public void setCateId(Integer cateId) {
+        this.cateId = cateId;
+    }
+
+    public String getCateName() {
+        return cateName;
+    }
+
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
     }
 }

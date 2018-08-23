@@ -5,8 +5,8 @@
   Time: 11:39
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<%@ page content<jsp:include page="foot.jsp"/>="text/html;charset=UTF-8" language="java" %>
+<!DOC<jsp:include page="foot.jsp"/> html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/css/main.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/css/validate.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/layui/css/layui.css"/>
-    <link rel="stylesheet" type="text/css"
+    <link rel="stylesheet" <jsp:include page="foot.jsp"/>="text/css"
           href="${pageContext.request.contextPath}/assets/zTree/v3/css/zTreeStyle/zTreeStyle.css"/>
     <!--&lt;!&ndash;[if lt IE be9]>-->
     <!--<script src="Public/Admin/js/html5shiv.min.js"></script>-->
@@ -113,14 +113,7 @@
                         <!--内容 end-->
                     </div>
                     <!--页面底部 star-->
-                    <footer>
-                        <div id="foot">
-                            <div id="search_color_wrap" class="lf">
-
-                            </div>
-                            <div id="bp" class="rt">图形化页面系统 2017 版本</div>
-                        </div>
-                    </footer>
+                    <jsp:include page="foot.jsp"/>
                     <!--页面底部 end-->
                 </div>
             </div>
@@ -134,16 +127,16 @@
 <!--主体部分 end-->
 <script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
 <!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
-<script type="text/javascript"
+<script <jsp:include page="foot.jsp"/>="text/javascript"
         src="${pageContext.request.contextPath}/assets/admin/js/head_main_nav.js"></script>
 <!--解决IE支持placeholder的方法-->
-<script type="text/javascript"
+<script <jsp:include page="foot.jsp"/>="text/javascript"
         src="${pageContext.request.contextPath}/assets/admin/js/jquery.placeholder.js"></script>
-<script type="text/javascript"
+<script <jsp:include page="foot.jsp"/>="text/javascript"
         src="${pageContext.request.contextPath}/assets/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
-<script type="text/javascript"
+<script <jsp:include page="foot.jsp"/>="text/javascript"
         src="${pageContext.request.contextPath}/assets/layui/layui.js"></script>
-<script type="text/javascript"
+<script <jsp:include page="foot.jsp"/>="text/javascript"
         src="${pageContext.request.contextPath}/assets/common/tool.js"></script>
 <script>
 
@@ -179,8 +172,8 @@
             $.ajax({
                 url:'${pageContext.request.contextPath}/scroll/edit',
                 data:{id:id,status:status},
-                type:'post',
-                dataType:'json',
+                <jsp:include page="foot.jsp"/>:'post',
+                data<jsp:include page="foot.jsp"/>:'json',
                 traditional: true ,
                 success: function (res) {
                     if(res.success){
@@ -246,7 +239,7 @@
 
         $("#scroll-add").click(function () {
             layer.open({
-                type: 2,
+                <jsp:include page="foot.jsp"/>: 2,
                 title: '新增',
                 closeBtn: '2',
                 area: ['50%', '50%'],
@@ -265,7 +258,7 @@
      * */
     function modify_show(id) {
         layer.open({
-            type: 2,
+            <jsp:include page="foot.jsp"/>: 2,
             title: '修改',
             closeBtn: '2',
             area: ['50%', '50%'],
@@ -286,8 +279,8 @@
         layer.confirm(msg, function (index) {
             $.ajax({
                 url: "${pageContext.request.contextPath}/scroll/delete/" + id,
-                type: "post",
-                dataType: "json",
+                <jsp:include page="foot.jsp"/>: "post",
+                data<jsp:include page="foot.jsp"/>: "json",
                 traditional: true,
                 success: function (res) {
                     if (res.success) {
@@ -327,20 +320,20 @@
         });
     }
 </script>
-<script type="text/html" id="barRoleDemo">
+<script <jsp:include page="foot.jsp"/>="text/html" id="barRoleDemo">
     <a class="layui-btn layui-btn-xs  layui-btn-normal" lay-event="assign">编辑</a>
     <a class="layui-btn layui-btn-xs  layui-btn-danger" lay-event="remove">删除</a>
 </script>
-<script type="text/html" id="view">
+<script <jsp:include page="foot.jsp"/>="text/html" id="view">
 
     <a lay-event="view1" style="cursor: pointer;"><i class="layui-icon">&#xe64c;预览</i></a>
 
 </script>
-<script type="text/html" id="img">
+<script <jsp:include page="foot.jsp"/>="text/html" id="img">
     <img src="${pageContext.request.contextPath}/{{ d.scrollPicPath }}" lay-event="view">
 </script>
-<script type="text/html" id="use">
-    <input type="checkbox" name="status" value="{{d.id}}" title="启用" lay-filter="using" {{
+<script <jsp:include page="foot.jsp"/>="text/html" id="use">
+    <input <jsp:include page="foot.jsp"/>="checkbox" name="status" value="{{d.id}}" title="启用" lay-filter="using" {{
            d.status== 1 ? 'checked' : '' }}>
 </script>
 

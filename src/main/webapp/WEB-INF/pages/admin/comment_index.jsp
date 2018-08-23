@@ -123,24 +123,7 @@
                         <!--内容 end-->
                     </div>
                     <!--页面底部 star-->
-                    <footer>
-                        <div id="foot">
-                            <div id="search_color_wrap" class="lf">
-                                <span>选择色系：</span>
-                                <div class="color_box">
-                                    <a class="color1"></a>
-                                    <a class="color2 "></a>
-                                    <a class="color3"> </a>
-                                    <a class="color4"></a>
-                                    <a class="color5"></a>
-                                    <a class="color6"></a>
-                                    <a class="color7"></a>
-                                    <a class="color8"></a>
-                                </div>
-                            </div>
-                            <div id="bp" class="rt">图形化页面系统 2017 版本</div>
-                        </div>
-                    </footer>
+                    <jsp:include page="foot.jsp"/>
                     <!--页面底部 end-->
                 </div>
             </div>
