@@ -121,7 +121,6 @@ public class UserController {
     public JsonResult self(String trueName,String oldPassword,String newPassword1,String newPassword2){
         User currentUser = SessionPerson.current();
         JsonResult jsonResult = userService.modifySelf(currentUser,trueName,oldPassword,newPassword1,newPassword2);
-       // SessionPerson.kickOnlineUser(currentUser.getId().toString(),null);
         return jsonResult;
     }
 }

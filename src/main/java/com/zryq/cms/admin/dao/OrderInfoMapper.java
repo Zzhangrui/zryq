@@ -3,6 +3,8 @@ package com.zryq.cms.admin.dao;
 import com.zryq.cms.admin.entity.OrderInfo;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Rui
@@ -11,4 +13,6 @@ import tk.mybatis.mapper.common.Mapper;
  * To change this template use File | Settings | File Templates.
  */
 public interface OrderInfoMapper extends Mapper<OrderInfo> {
+
+    List<OrderInfo>  selectOrderInfos(OrderInfo orderInfo);
 }

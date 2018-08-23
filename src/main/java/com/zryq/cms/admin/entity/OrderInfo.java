@@ -44,6 +44,9 @@ public class OrderInfo {
     @Column(name = "car_number")
     private String carNumber;
 
+    @Column(name = "send_destination")
+    private String sendDestination;
+
     @Column(name = "address")
     private String address;
 
@@ -56,6 +59,15 @@ public class OrderInfo {
 
     @Column(name = "file_url")
     private String fileUrl;
+
+    @Column(name = "order_status")
+    private Integer orderStatus;
+
+    @Column(name = "order_type")
+    private Integer orderType;
+
+    @Column(name = "pay_type")
+    private Integer payType;
 
     public Integer getId() {
         return id;
@@ -159,5 +171,37 @@ public class OrderInfo {
 
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl;
+    }
+
+    public Integer getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
+    }
+
+    public Integer getPayType() {
+        return payType;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
+    public String getSendDestination() {
+        return sendDestination;
+    }
+
+    public void setSendDestination(String sendDestination) {
+        this.sendDestination = sendDestination;
     }
 }

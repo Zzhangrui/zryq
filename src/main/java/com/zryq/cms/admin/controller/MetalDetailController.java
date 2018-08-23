@@ -1,6 +1,5 @@
 package com.zryq.cms.admin.controller;
 
-import com.zryq.cms.admin.entity.MetalCategory;
 import com.zryq.cms.admin.entity.MetalDetail;
 import com.zryq.cms.admin.service.MetalCategoryService;
 import com.zryq.cms.admin.service.MetalDetailLogService;
