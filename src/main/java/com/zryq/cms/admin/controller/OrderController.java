@@ -47,7 +47,7 @@ public class OrderController {
         return modelAndView;
     }
 
-    @PostMapping("order")
+    @PostMapping("add")
     @ResponseBody
     public JsonResult add(OrderInfo orderInfo) {
         return orderInfoService.add(orderInfo);

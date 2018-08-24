@@ -65,6 +65,33 @@ public class Article {
 
     private List<String> imgPath;
 
+
+    /**
+     * 点赞数量
+     */
+    private Integer likeCount;
+
+    /**
+     * 阅读数量
+     */
+    private Integer readCount;
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public Integer getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Integer readCount) {
+        this.readCount = readCount;
+    }
+
     public List<String> getImgPath() {
         return imgPath;
     }

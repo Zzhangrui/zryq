@@ -5,7 +5,12 @@ import com.zryq.cms.admin.entity.Article;
 import com.zryq.cms.admin.entity.ArticleExample;
 import com.zryq.cms.admin.entity.Column;
 import com.zryq.cms.admin.entity.User;
+import com.zryq.cms.common.data.JsonResult;
+import com.zryq.cms.common.data.LayUiData;
 import com.zryq.cms.common.enums.ArticleStatus;
+import com.zryq.cms.common.redis.JedisClient;
+import com.zryq.cms.common.redis.RedisConstant;
+import com.zryq.cms.common.redis.RedisManager;
 import com.zryq.cms.common.utils.OperateHtmlUtil;
 import com.zryq.cms.common.utils.SessionPerson;
 import com.github.pagehelper.PageHelper;
@@ -15,6 +20,7 @@ import com.zryq.cms.admin.dao.ArticleMapper;
 import com.zryq.cms.admin.entity.Article;
 import com.zryq.cms.admin.entity.Column;
 import com.zryq.cms.admin.entity.User;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +35,11 @@ import java.util.List;
 @Service
 public class ArticleService {
 
+    @Autowired
+    private RedisManager redisManager;
+
+    @Autowired
+    private JedisClient jedisClient;
 
     @Autowired
     private ArticleMapper articleMapper;
@@ -38,6 +49,7 @@ public class ArticleService {
 
    /* @Autowired
     private ElasticsearchRepository elasticsearchRepository;*/
+
     /**
      * 新增
      *
@@ -315,6 +327,134 @@ public class ArticleService {
         });
 
         return articleList;
+    }
+
+
+    /**
+     * 博客首页信息
+     * @param pageNum
+     * @param pageSize
+     * @param article
+     * @return
+     */
+    public LayUiData blogIndexData(Integer pageNum, Integer pageSize, Article article) {
+        if (null == pageNum) {
+            pageNum = 0;
+        }
+        if (null == pageSize) {
+            pageSize = 10;
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        ArticleExample articleExample = new ArticleExample();
+        ArticleExample.Criteria criteria = articleExample.or();
+        criteria.andArtStateEqualTo(ArticleStatus.Publish.getValue());//發佈的
+        if (!Strings.isNullOrEmpty(article.getArtTitle())) {
+            criteria.andArtTitleLike("%" + article.getArtTitle() + "%");
+        }
+        if (!Strings.isNullOrEmpty(article.getArtContent())) {
+            criteria.andCreateArtContentLike("%" + article.getArtContent() + "%");
+        }
+        List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
+        articleList.forEach(articleRes -> {
+            if(!Strings.isNullOrEmpty(articleRes.getArtContent())){
+                List<String> imgPath = OperateHtmlUtil.getImgSrc(articleRes.getArtContent());
+                articleRes.setImgPath(imgPath);
+                articleRes.setFirstPicPath(imgPath.get(0));
+                articleRes.setLikeCount(this.getLikeCount(articleRes.getId()));
+            }
+
+        });
+        PageInfo pageInfo = new PageInfo(articleList);
+        LayUiData layUiData = new LayUiData();
+        layUiData.setData(pageInfo.getList());
+        layUiData.setCount((int) pageInfo.getTotal());
+        layUiData.setCode(layUiData.SUEECSS_CODE);
+        return layUiData;
+    }
+
+    /**
+     * 详情页
+     * @param id
+     * @return
+     */
+    public Article blogDetail(Integer id){
+        ArticleExample articleExample = new ArticleExample();
+        ArticleExample.Criteria criteria = articleExample.or();
+        criteria.andIdEqualTo(id);
+        criteria.andArtStateEqualTo(ArticleStatus.Publish.getValue());//發佈的
+        List<Article> articles = articleMapper.selectByExampleWithBLOBs(articleExample);
+        if(CollectionUtils.isNotEmpty(articles)){
+            Article article = articles.get(0);
+            article.setLikeCount(this.getLikeCount(article.getId()));
+
+            //增加阅读次数
+            String key = RedisConstant.ARTICLE_READ_COUNT_PREFIX+id.toString();
+            String like = jedisClient.get(key);
+            if(Strings.isNullOrEmpty(like)){
+                like = String.valueOf(1);
+            }else{
+                like = String.valueOf(Integer.valueOf(like)+1);
+            }
+            jedisClient.set(key,like);
+            article.setLikeCount(Integer.valueOf(like));
+            return article;
+        }else{
+            return null;
+        }
+    }
+
+
+
+    /**
+     * 点赞操作
+     * @param id
+     * @return
+     */
+    public JsonResult doLike(Integer id){
+        if(null==id){
+            return JsonResult.ERROR_PARAM;
+        }
+        String key = RedisConstant.ARTICLE_LIKE_COUNT_PREFIX+id.toString();
+        String like = jedisClient.get(key);
+        if(Strings.isNullOrEmpty(like)){
+            like = String.valueOf(1);
+        }else{
+            like = String.valueOf(Integer.valueOf(like)+1);
+        }
+        jedisClient.set(key,like);
+        JsonResult jsonResult = new JsonResult();
+        jsonResult.setSuccess(true);
+        jsonResult.setData(like);
+        return jsonResult;
+    }
+
+    /**
+     * 获取点赞数量
+     * @param id
+     * @return
+     */
+    private Integer getLikeCount(Integer id){
+        if(null==id){
+           return null;
+        }
+        String key = RedisConstant.ARTICLE_LIKE_COUNT_PREFIX+id.toString();
+        String like = jedisClient.get(key);
+        if(Strings.isNullOrEmpty(like)){
+            like = String.valueOf(0);
+        }
+        return Integer.valueOf(like);
+    }
+
+    private Integer getReadCount(Integer id){
+        if(null==id){
+            return null;
+        }
+        String key = RedisConstant.ARTICLE_READ_COUNT_PREFIX+id.toString();
+        String like = jedisClient.get(key);
+        if(Strings.isNullOrEmpty(like)){
+            like = String.valueOf(0);
+        }
+        return Integer.valueOf(like);
     }
 
 }
