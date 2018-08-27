@@ -69,10 +69,11 @@
 <script src="${pageContext.request.contextPath}/assets/layui/layui.js"></script>
 <script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
 <script src="${pageContext.request.contextPath}/assets/blog/js/common.js"></script>
+<script src="${pageContext.request.contextPath}/assets/blog/js/index.js"></script>
 <script>
    layui.config({
         base: '${pageContext.request.contextPath}/assets/blog/js/'
-    }).use('index');
+    }).use('common');
    var contextPath = '${pageContext.request.contextPath}';
    var title = '${title}';
 </script>

@@ -8,9 +8,12 @@ import com.zryq.cms.admin.entity.CommentExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
+import com.zryq.cms.common.data.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +26,22 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
-    public boolean add(Comment comment) {
+    public JsonResult add(Comment comment) {
+        if (null == comment || null == comment.getArticleId()
+                || Strings.isNullOrEmpty(comment.getCommContent())) {
+            return JsonResult.ERROR_PARAM;
+        }
         comment.setCommTime(new Date());
         comment.setCommState(0);//保存
-        return commentMapper.insert(comment) > 0;
+        InetAddress addr = null;
+        try {
+            addr = InetAddress.getLocalHost();
+            comment.setUserIp(addr.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        commentMapper.insert(comment);
+        return JsonResult.SUCCESS;
     }
 
     public boolean updateState(Integer id, Integer state) {
@@ -40,7 +55,7 @@ public class CommentService {
         return commentMapper.updateByPrimaryKeySelective(comment) > 0;
     }
 
-    public PageInfo selectArticleData(Integer pageNum, Integer pageSize, String title, String search) {
+    public PageInfo selectCommentData(Integer pageNum, Integer pageSize, String title, String search) {
         PageHelper.startPage(pageNum, pageSize);
         CommentExample commentExample = new CommentExample();
         CommentExample.Criteria criteria = commentExample.or();
@@ -85,6 +100,24 @@ public class CommentService {
         comment.setCommState(state);
         return commentMapper.updateByExampleSelective(comment, commentExample) > 0;
 
+    }
+
+
+    public PageInfo getBlogComment(Integer pageSize, Integer pageNum, Integer articleId) {
+        if (null == pageNum) {
+            pageNum = 0;
+        }
+        if (null == pageSize) {
+            pageSize = 5;
+        }
+        CommentExample commentExample = new CommentExample();
+        commentExample.setOrderByClause("id DESC");
+        CommentExample.Criteria criteria = commentExample.or();
+        criteria.andArticleIdEqualTo(articleId);
+        PageHelper.startPage(pageNum, pageSize);
+        List<Comment> commentList = commentMapper.selectByExample(commentExample);
+        PageInfo pageInfo = new PageInfo(commentList);
+        return pageInfo;
     }
 
 }

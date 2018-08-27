@@ -1,7 +1,10 @@
 package com.zryq.cms.front.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zryq.cms.admin.entity.Article;
+import com.zryq.cms.admin.entity.Comment;
 import com.zryq.cms.admin.service.ArticleService;
+import com.zryq.cms.admin.service.CommentService;
 import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.data.LayUiData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class BlogController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping("index")
     public ModelAndView index(String artTitle){
@@ -50,6 +56,18 @@ public class BlogController {
     @ResponseBody
     public JsonResult doLike(Integer id){
         return articleService.doLike(id);
+    }
+
+    @PostMapping("submitComment")
+    @ResponseBody
+    public JsonResult submitComment(Comment comment){
+        return commentService.add(comment);
+    }
+
+    @PostMapping("getComment")
+    @ResponseBody
+    public PageInfo getComment(Integer id, Integer pageNum){
+        return commentService.getBlogComment(null,pageNum,id);
     }
 
 }

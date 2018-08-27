@@ -36,7 +36,7 @@ public class CommentController extends BaseController {
         if (pageSize == null) {
             pageSize = 10;
         }
-        PageInfo pageInfo = commentService.selectArticleData(pageNum, pageSize, title, search);
+        PageInfo pageInfo = commentService.selectCommentData(pageNum, pageSize, title, search);
         LayUiData data = new LayUiData();
         data.setCode("0");
         data.setCount(Integer.valueOf(String.valueOf(pageInfo.getTotal())));

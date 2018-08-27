@@ -10,7 +10,7 @@
 <div class="header">
     <div class="header-wrap">
         <h1 class="logo pull-left">
-            <a href="index.html">
+            <a href="${pageContext.request.contextPath}/blog/index">
                 <img src="${pageContext.request.contextPath}/assets/blog/images/logo.png" alt="" class="logo-img">
                 <img src="${pageContext.request.contextPath}/assets/blog/images/logo-text.png" alt="" class="logo-text">
             </a>
@@ -25,9 +25,9 @@
         </form>
         <div class="blog-nav pull-right">
             <ul class="layui-nav pull-left">
-                <li class="layui-nav-item layui-this"><a href="index.html">首页</a></li>
-                <li class="layui-nav-item"><a href="message.html">留言</a></li>
-                <li class="layui-nav-item"><a href="about.html">关于</a></li>
+                <li class="layui-nav-item layui-this"><a href="${pageContext.request.contextPath}/blog/index">首页</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/blog/index">留言</a></li>
+                <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/blog/index">关于</a></li>
             </ul>
             <a href="#" class="personal pull-left">
                 <i class="layui-icon layui-icon-username"></i>
@@ -40,9 +40,9 @@
         </div>
     </div>
     <ul class="pop-nav" id="pop-nav">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="message.html">留言</a></li>
-        <li><a href="about.html">关于</a></li>
+        <li><a href="${pageContext.request.contextPath}/blog/index">首页</a></li>
+        <li><a href="${pageContext.request.contextPath}/blog/index">留言</a></li>
+        <li><a href="${pageContext.request.contextPath}/blog/index">关于</a></li>
     </ul>
 </div>
 <script type="text/javascript">

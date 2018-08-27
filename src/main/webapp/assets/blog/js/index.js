@@ -1,4 +1,3 @@
-
 /**
  * 填充数据
  * */
@@ -30,7 +29,7 @@ function init(pageNum) {
                 var items = data.forEach(function (item, index, data) {
                     html += '<div class="item">\n' +
                         '                <div class="item-box  layer-photos-demo3 layer-photos-demo">\n' +
-                        '                    <h3><a href="'+contextPath+'/blog/detail/'+item.id+'">' + item.artTitle + '</a></h3>\n' +
+                        '                    <h3><a href="' + contextPath + '/blog/detail/' + item.id + '">' + item.artTitle + '</a></h3>\n' +
                         '                    <h5>发布于：<span>' + item.publishTime + '</span></h5>\n' +
                         '                    <p>' + item.artDigest + '</p>\n';
                     if (null != item.firstPicPath) {
@@ -38,8 +37,8 @@ function init(pageNum) {
                     }
                     html += '                </div>\n' +
                         '                <div class="comment count">\n' +
-                        '                    <a href="details.html#comment">评论</a>\n' +
-                        '                    <a href="javascript:;" likeCount="'+item.id+ '  "class="like" likeValue="点赞">点赞</a>\n' +
+                        '                    <a href="javascript:;" artId="' + item.id + '" class="comment-event">评论</a>\n' +
+                        '                    <a href="javascript:;" likeCount="' + item.id + '"class="like" likeValue="点赞">点赞</a>\n' +
                         '                </div>\n' +
                         '            </div>'
                 })
@@ -56,14 +55,14 @@ function init(pageNum) {
 $(function () {
     $("#title").val(title);
     //加载数据
-    init(initNum,title);
+    init(initNum, title);
 
-    $("#search").click(function(){
+    $("#search").click(function () {
         init(initNum);
     });
 
     $(".announcement").click(function () {
-        layer.msg('把思念寄托远方 ，愿你无恙',{
+        layer.msg('把思念寄托远方 ，愿你无恙', {
             icon: 6
             , time: 3000
         })

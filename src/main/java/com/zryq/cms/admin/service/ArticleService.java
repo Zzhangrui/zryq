@@ -389,14 +389,14 @@ public class ArticleService {
 
             //增加阅读次数
             String key = RedisConstant.ARTICLE_READ_COUNT_PREFIX+id.toString();
-            String like = jedisClient.get(key);
-            if(Strings.isNullOrEmpty(like)){
-                like = String.valueOf(1);
+            String read = jedisClient.get(key);
+            if(Strings.isNullOrEmpty(read)){
+                read = String.valueOf(1);
             }else{
-                like = String.valueOf(Integer.valueOf(like)+1);
+                read = String.valueOf(Integer.valueOf(read)+1);
             }
-            jedisClient.set(key,like);
-            article.setLikeCount(Integer.valueOf(like));
+            jedisClient.set(key,read);
+            article.setReadCount(Integer.valueOf(read));
             return article;
         }else{
             return null;
