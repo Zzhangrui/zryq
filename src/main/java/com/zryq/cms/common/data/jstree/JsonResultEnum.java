@@ -15,7 +15,10 @@ public enum JsonResultEnum {
     EDIT_SUCCESS("1000","编辑成功"),
     EDIT_FALSE("1001","编辑失败"),
     PASSWORD_ERROR("2001","账号或密码不正确"),
-    LOGIN_EMPTY("2002","登陆账号或密码不能为空")
+    LOGIN_EMPTY("2002","登陆账号或密码不能为空"),
+    VERIFY_CODE_ERROR("2005","验证码错误"),
+    USER_NOT_EXIST("2003","用户不存在"),
+    REPASSOWRD_WRONG("2004","两次密码不一致")
     ;
 
     JsonResultEnum(String code, String messgage) {

@@ -41,22 +41,22 @@
         </plugin>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://99.48.58.250:3306/anti_fraud_platform?characterEncoding=utf-8"
+                        connectionURL="jdbc:mysql://47.98.152.163:3306/cms?characterEncoding=utf-8"
                         userId="root"
-                        password="mime@123">
+                        password="1qaz@WSX">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="cn.mime.anti.fraud.platform.core.entity"
-                            targetProject="D:\code\anti-fraud-platform\anti-fraud-platform-core\src\main\java"/>
+        <javaModelGenerator targetPackage="com.zryq.cms.admin.entity"
+                            targetProject="E:\zr\fedtech-cms\src\main\java"/>
 
-        <sqlMapGenerator targetPackage="mapper"
-                         targetProject="D:\code\anti-fraud-platform\anti-fraud-platform-core\src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.zryq.cms.admin.dao.mapper"
+                         targetProject="E:\zr\fedtech-cms\src\main\java"/>
 
-        <javaClientGenerator targetPackage="cn.mime.anti.fraud.platform.core.mapper"
-                             targetProject="D:\code\anti-fraud-platform\anti-fraud-platform-core\src\main\java"
+        <javaClientGenerator targetPackage="com.zryq.cms.admin.dao"
+                             targetProject="E:\zr\fedtech-cms\src\main\java"
                              type="XMLMAPPER"/>
 
-        <table tableName="cl_credit_limit_add">
+        <table tableName="fly_user">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>
