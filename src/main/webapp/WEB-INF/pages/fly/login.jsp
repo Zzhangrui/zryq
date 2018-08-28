@@ -20,43 +20,7 @@
 </head>
 <body>
 
-<div class="fly-header layui-bg-black">
-    <div class="layui-container">
-        <a class="fly-logo" href="/">
-            <img src="${pageContext.request.contextPath}/assets/fly/images/logo.png" alt="layui">
-        </a>
-        <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>交流</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
-            </li>
-        </ul>
-
-        <ul class="layui-nav fly-nav-user">
-            <!-- 未登入的状态 -->
-            <li class="layui-nav-item">
-                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="user/login.html">登入</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="user/reg.html">注册</a>
-            </li>
-            <li class="layui-nav-item layui-hide-xs">
-                <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
-            </li>
-            <li class="layui-nav-item layui-hide-xs">
-                <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
-            </li>
-        </ul>
-    </div>
-</div>
+<jsp:include page="head.jsp"/>
 
 <div class="layui-container fly-marginTop">
     <div class="fly-panel fly-panel-user" pad20>
@@ -65,29 +29,29 @@
                 <li class="layui-this">登入</li>
                 <li>注册</li>
             </ul>
-            <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+            <div class=" layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form layui-form-pane">
                         <form method="post" class="layui-form" id="login-form">
                             <div class="layui-form-item">
                                 <label for="L_email" class="layui-form-label">邮箱</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="L_email" name="email" lay-verify="required"   autocomplete="off" class="layui-input">
+                                    <input type="text" id="L_email" name="email" lay-verify="email"   autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label for="L_pass" class="layui-form-label">密码</label>
                                 <div class="layui-input-inline">
-                                    <input type="password" id="L_pass" name="password"   autocomplete="off" class="layui-input">
+                                    <input type="password" id="L_pass" name="password"  lay-verify="required"  autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label for="L_vercode" class="layui-form-label">人类验证</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="L_vercode" name="verifyCode"  placeholder="请输入后面的验证码" autocomplete="off" class="layui-input">
+                                    <input type="text" id="L_vercode" name="verifyCode"  lay-verify="required" placeholder="请输入后面的验证码" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid">
-                                    <span style="color: #c00;"><img class="verify-code" style="margin-top: -8px;height: 35px;" src="${pageContext.request.contextPath}/verifyCode/captcha/login" /></span>
+                                    <span style="color: #c00;"><img id="l-ver-code" class="verify-code" style="margin-top: -8px;height: 35px;" src="${pageContext.request.contextPath}/verifyCode/captcha/login" /></span>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -110,40 +74,40 @@
                             <div class="layui-form-item">
                                 <label for="r_email" class="layui-form-label">邮箱</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="r_email" name="email1" lay-verify="email"  autocomplete="off" class="layui-input">
+                                    <input type="text" id="r_email" name="email" lay-verify="email"  autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
                             </div>
                             <div class="layui-form-item">
                                 <label for="r_username" class="layui-form-label">昵称</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="r_username" name="nickName" autocomplete="off" class="layui-input">
+                                    <input type="text" id="r_username" name="nickName" lay-verify="required" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label for="r_pass" class="layui-form-label">密码</label>
                                 <div class="layui-input-inline">
-                                    <input type="password" id="r_pass" name="password" autocomplete="off" class="layui-input">
+                                    <input type="password" id="r_pass" name="password" lay-verify="required" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid layui-word-aux">6到16个字符</div>
                             </div>
                             <div class="layui-form-item">
                                 <label for="r_repass" class="layui-form-label">确认密码</label>
                                 <div class="layui-input-inline">
-                                    <input type="password" id="r_repass" name="repassword"  autocomplete="off" class="layui-input">
+                                    <input type="password" id="r_repass" name="rePassword" lay-verify="required"  autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label for="L_vercode" class="layui-form-label">人类验证</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" id="r_vercode" name="verifyCode"  placeholder="请输入后面的验证码" autocomplete="off" class="layui-input">
+                                    <input type="text" id="r_vercode" name="verifyCode" lay-verify="required"  placeholder="请输入后面的验证码" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid">
-                                    <span style="color: #c00;"><img class="verify-code" style="margin-top: -8px;height: 35px;" src="${pageContext.request.contextPath}/verifyCode/captcha/register" /></span>
+                                    <span style="color: #c00;"><img id="r-ver-code" class="verify-code" style="margin-top: -8px;height: 35px;" src="${pageContext.request.contextPath}/verifyCode/captcha/register" /></span>
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="reg" lay-submit>立即注册</button>
+                                <button class="layui-btn" lay-filter="register" lay-submit>立即注册</button>
                             </div>
                             <div class="layui-form-item fly-form-app">
                                 <span>或者直接使用社交账号快捷注册</span>

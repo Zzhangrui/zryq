@@ -5,6 +5,7 @@ import com.zryq.cms.admin.dao.FlyUserMapper;
 import com.zryq.cms.admin.entity.FlyUser;
 import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.data.jstree.JsonResultEnum;
+import com.zryq.cms.common.enums.FlyUserStatus;
 import com.zryq.cms.common.utils.CaptchaUtil;
 import com.zryq.cms.common.utils.MD5;
 import com.zryq.cms.common.utils.SessionPerson;
@@ -25,6 +26,8 @@ import java.util.List;
  */
 @Service
 public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
+
+    private static final String DEFAULT_HEAD_IMG_PATH = "/assets/blog/images/default.jpg";
 
     @Autowired
     private FlyUserMapper flyUserMapper;
@@ -64,7 +67,24 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
         if (!jsonResult.isSuccess()) {
             return jsonResult;
         }
+        String email = flyUser.getEmail();
+        String nickName = flyUser. getNickName();
+        FlyUser checkFlyUser = new FlyUser();
+        checkFlyUser.setEmail(email);
+        checkFlyUser.setNickName(nickName);
+        List<FlyUser> flyUsers = flyUserMapper.select(checkFlyUser);
+        if (CollectionUtils.isNotEmpty(flyUsers)) {
+            return new JsonResult(JsonResultEnum.USERNAME_REPEAT, false);
+        }
+        flyUser.setPassword(MD5.MD5Encode(flyUser.getPassword()));
+        flyUser.setLastLoginTime(new Date());
+        flyUser.setUpdateTime(new Date());
+        flyUser.setCreateTime(new Date());
+        flyUser.setStatus(FlyUserStatus.NORMAL.getCode());
+        flyUser.setImgPath(DEFAULT_HEAD_IMG_PATH);
+        flyUser.setLevel("5");
         flyUserMapper.insertSelective(flyUser);
+        SessionPerson.saveFlyUser(flyUser);
         return JsonResult.SUCCESS;
     }
 

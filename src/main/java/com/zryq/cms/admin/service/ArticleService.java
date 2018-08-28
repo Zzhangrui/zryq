@@ -1,10 +1,7 @@
 package com.zryq.cms.admin.service;
 
 import com.zryq.cms.admin.dao.ArticleMapper;
-import com.zryq.cms.admin.entity.Article;
-import com.zryq.cms.admin.entity.ArticleExample;
-import com.zryq.cms.admin.entity.Column;
-import com.zryq.cms.admin.entity.User;
+import com.zryq.cms.admin.entity.*;
 import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.data.LayUiData;
 import com.zryq.cms.common.enums.ArticleStatus;
@@ -455,6 +452,39 @@ public class ArticleService {
             like = String.valueOf(0);
         }
         return Integer.valueOf(like);
+    }
+
+
+    public PageInfo getSelfArticle(Integer pageNum,Integer pageSize){
+        if(null==pageNum){
+            pageNum=0;
+        }
+        if(null==pageSize){
+            pageSize=10;
+        }
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        Integer id = flyUser.getId();
+        ArticleExample articleExample = new ArticleExample();
+        ArticleExample.Criteria criteria = articleExample.or();
+        criteria.andCreateUserIdEqualTo(id);
+        PageHelper.startPage(pageNum,pageSize);
+        List<Article> articles = articleMapper.selectByExample(articleExample);
+        PageInfo pageInfo = new PageInfo(articles);
+        return pageInfo;
+    }
+
+    public PageInfo getSelfLikeArticle(Integer pageNum,Integer pageSize){
+        if(null==pageNum){
+            pageNum=0;
+        }
+        if(null==pageSize){
+            pageSize=10;
+        }
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        Integer id = flyUser.getId();
+        PageHelper.startPage(pageNum,pageSize);
+        List<Article> articles = articleMapper.getSelfLikeArticle(id);
+        return new PageInfo(articles);
     }
 
 }
