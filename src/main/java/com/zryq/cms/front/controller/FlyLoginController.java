@@ -3,12 +3,17 @@ package com.zryq.cms.front.controller;
 import com.zryq.cms.admin.entity.FlyUser;
 import com.zryq.cms.admin.service.FlyUserService;
 import com.zryq.cms.common.data.JsonResult;
+import com.zryq.cms.common.utils.SessionPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,5 +46,12 @@ public class FlyLoginController {
     @ResponseBody
     public JsonResult register(FlyUser flyUser,String verifyCode){
         return flyUserService.register(flyUser,verifyCode);
+    }
+
+    @GetMapping("logout")
+    public ModelAndView logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        ModelAndView modelAndView = new ModelAndView("fly/login");
+        return modelAndView;
     }
 }

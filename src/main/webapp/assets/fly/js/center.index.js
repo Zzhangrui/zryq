@@ -20,13 +20,14 @@ function getSelfArticle(pageNum) {
         dataType: 'json',
         data: {pageNum: pageNum},
         success: function (res) {
-            var data = res.data;
+            var data = res.list;
+            console.log(res);
             var len = data.length;
             selfArticlePageNum = pageNum;  //当前页码存到全局变量中
             //自定义样式
             laypage.render({
                 elem: 'LAY_page-article'
-                , count: res.count
+                , count: res.total
                 , theme: '#1E9FFF'
                 , curr: pageNum
                 , jump: function (obj, first) {
@@ -37,17 +38,19 @@ function getSelfArticle(pageNum) {
             });
             var html = "";
             if (len > 0) {
+                $("#total-article").html(res.total);
                 for (var i = 0; i < len; i++) {
                     var article = data[i];
                     html += '<li>\n' +
                         '                            <a class="jie-title" href="../jie/detail.html" target="_blank">' + article.artTitle + '</a>\n' +
                         '                            <i>' + article.createTime + '</i>\n' +
-                        '                            <a class="mine-edit" >编辑</a>\n' +
+                        '                            <a class="mine-edit" href="'+contextPath+'/fly/user/edit'+'?id='+article.id+'"  style="cursor: pointer">编辑</a>\n' +
                         /*'                            <em>661阅/10答</em>\n' +*/
                         '                        </li>'
                 }
                 $("#self-article").html(html);
             } else {
+                $("#total-article").html(0);
                 html = '<li>\n' +
                     '                            <a class="jie-title" target="_blank">尚未发布帖子</a>\n' +
                     '                        </li>'
@@ -64,13 +67,13 @@ function getSelfLike(pageNum) {
         dataType: 'json',
         data: {pageNum: pageNum},
         success: function (res) {
-            var data = res.data;
+            var data = res.list;
             var len = data.length;
             selfLikePageNum = pageNum;  //当前页码存到全局变量中
             //自定义样式
             laypage.render({
                 elem: 'LAY_page-like'
-                , count: res.count
+                , count:  res.total
                 , theme: '#1E9FFF'
                 , curr: pageNum
                 , jump: function (obj, first) {
@@ -81,6 +84,7 @@ function getSelfLike(pageNum) {
             });
             var html = "";
             if (len > 0) {
+                $("#total-like").html(res.total);
                 for (var i = 0; i < len; i++) {
                     var article = data[i];
                     html += '<li>\n' +
@@ -90,6 +94,7 @@ function getSelfLike(pageNum) {
                 }
                 $("#self-like").html(html);
             } else {
+                $("#total-like").html(0);
                 html = '<li>\n' +
                     '                            <a class="jie-title" target="_blank">尚未收藏帖子</a>\n' +
                     '                        </li>'

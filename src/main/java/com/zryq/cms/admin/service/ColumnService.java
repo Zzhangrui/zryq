@@ -501,6 +501,12 @@ public class ColumnService {
 
     }
 
+    public List<Column> selectAll(){
+        ColumnExample columnExample = new ColumnExample();
+        columnExample.or();
+        return columnMapper.selectByExample(columnExample);
+    }
+
 
 
 }

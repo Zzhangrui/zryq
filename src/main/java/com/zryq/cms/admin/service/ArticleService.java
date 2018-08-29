@@ -487,4 +487,17 @@ public class ArticleService {
         return new PageInfo(articles);
     }
 
+    public JsonResult edit(Article article){
+        if(null == article.getId() ){
+            article.setCreateTime(new Date());
+            article.setCreateUserId(SessionPerson.currentFlyUser().getId());
+            article.setCreateUsername(SessionPerson.currentFlyUser().getNickName());
+            article.setArtState(ArticleStatus.Draft.getValue());
+            articleMapper.insertSelective(article);
+        }else{
+            articleMapper.updateByPrimaryKeySelective(article);
+        }
+        return JsonResult.SUCCESS;
+    }
+
 }

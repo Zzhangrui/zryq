@@ -1,8 +1,11 @@
 package com.zryq.cms.front.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zryq.cms.admin.entity.Article;
 import com.zryq.cms.admin.service.ArticleService;
+import com.zryq.cms.admin.service.ColumnService;
 import com.zryq.cms.admin.service.FlyUserService;
+import com.zryq.cms.common.data.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,9 @@ public class FlyUserCenterController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private ColumnService columnService;
+
     @GetMapping("index")
     public ModelAndView index(){
 
@@ -46,5 +52,22 @@ public class FlyUserCenterController {
     @ResponseBody
     public PageInfo getSelfLikeArticle(Integer pageNum,Integer pageSize){
         return articleService.getSelfLikeArticle(pageNum,pageSize);
+    }
+
+    @GetMapping("edit")
+    public ModelAndView edit(Integer id){
+
+        ModelAndView modelAndView = new ModelAndView("/fly/center_article_edit");
+        if(null!=id){
+            modelAndView.addObject("article",articleService.selectById(id));
+        }
+        modelAndView.addObject("columnList",columnService.selectAll());
+        return modelAndView;
+    }
+
+    @PostMapping("edit")
+    @ResponseBody
+    public JsonResult edit(Article article){
+        return JsonResult.SUCCESS;
     }
 }
