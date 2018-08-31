@@ -36,7 +36,6 @@
                 /group/*/**=authc
                 /role/*/**=authc
                 /scroll/*/**=authc
-                /user/*/**=authc
                 /admin/*/**=authc
                 <!--/group/*/**=authc,roles[admin]
                 /data/*/**=authc,roles[省政府督查室]-->

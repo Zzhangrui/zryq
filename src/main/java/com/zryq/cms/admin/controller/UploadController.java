@@ -1,8 +1,10 @@
 package com.zryq.cms.admin.controller;
 
+import com.zryq.cms.admin.service.FileOperateService;
 import com.zryq.cms.common.data.FileAttr;
 import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.utils.FileUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +23,9 @@ import java.net.URLDecoder;
 public class UploadController {
 
 
+    @Autowired
+    private FileOperateService fileOperateService;
+
     /**
      * @param file
      * @param request
@@ -31,28 +36,7 @@ public class UploadController {
     @RequestMapping("upload")
     @ResponseBody
     public FileAttr upload(MultipartFile file, HttpServletRequest request, HttpServletResponse response, String dirPath) {
-        FileAttr fileAttr = new FileAttr();
-        if (file != null && !file.isEmpty()) {
-
-            FileUtil fu = new FileUtil();
-            String fileName = file.getOriginalFilename();
-            //String fileType = fileName.substring(fileName.lastIndexOf("."));
-            JsonResult jsonResult =
-                    fu.saveFile(request, file, "attached" + File.separator + dirPath);
-
-            if (jsonResult.isSuccess()) {
-                fileAttr.setCode("0");
-                fileAttr.setMsg("上传成功");
-                fileAttr.setFileName(fileName);
-                fileAttr.setUrl(jsonResult.getData().toString());
-            } else {
-                fileAttr.setMsg("上传失败，请检查文件大小及格式是否正常");
-                fileAttr.setCode("10086");
-            }
-        }
-        response.setContentType("text/html");
-
-        return fileAttr;
+        return  fileOperateService.upload(file,request,response,dirPath);
     }
 
 

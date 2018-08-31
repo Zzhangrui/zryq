@@ -6,7 +6,8 @@ layui.use(['form','layer','element'], function() {
 
 
     $(".verify-code").on("click",function () {
-        $(this).attr("src",contextPath+"/verifyCode/captcha/login?"+Math.random());
+        var type = $(this).attr("code-type");
+        $(this).attr("src",contextPath+"/verifyCode/captcha/"+type+"?"+Math.random());
     });
 
     form.on('submit(login)',function(data){
@@ -46,5 +47,29 @@ layui.use(['form','layer','element'], function() {
         });
         return false;
     });
+
+    form.on('submit(forget)',function(data){
+        $.ajax({
+            url:contextPath+"/fly/forget",
+            type:'post',
+            dataType:'json',
+            data:data.field,
+            success:function(res){
+                console.log(res);
+                if(res.success){
+                    $("#f-ver-code").click();
+                    layer.msg("重置链接已发至您邮箱，请根据邮件提示进行重置密码");
+                }else{
+                    layer.msg(res.message);
+                    $("#f-ver-code").click();
+                }
+            }
+        });
+        return false;
+    });
+
+    $("#forget-a").on('click',function () {
+        layer.msg("吃屎去吧，密码都能忘，呆逼");
+    })
 });
 

@@ -51,13 +51,8 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/ldps/**"/>
-            <mvc:mapping path="/notice/**"/>
-            <mvc:mapping path="/workflow/**"/>
-            <mvc:mapping path="/data/**"/>
-            <mvc:mapping path="/announcement/**"/>
-            <mvc:mapping path="/study/**"/>
-            <mvc:mapping path="/liaison/**"/>
+            <mvc:mapping path="/fly/user/**"/>
+            <mvc:mapping path="/fly/post/edit"/>
             <bean class="com.zryq.cms.config.interceptor.AdminInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

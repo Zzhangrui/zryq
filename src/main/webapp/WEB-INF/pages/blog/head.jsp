@@ -29,7 +29,7 @@
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/blog/index">留言</a></li>
                 <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/blog/index">关于</a></li>
             </ul>
-            <a href="#" class="personal pull-left">
+            <a href="${pageContext.request.contextPath}/fly/user/index" class="personal pull-left">
                 <i class="layui-icon layui-icon-username"></i>
             </a>
         </div>

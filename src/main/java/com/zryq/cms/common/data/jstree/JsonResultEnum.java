@@ -19,7 +19,8 @@ public enum JsonResultEnum {
     VERIFY_CODE_ERROR("2005","验证码错误"),
     USER_NOT_EXIST("2003","用户不存在"),
     REPASSOWRD_WRONG("2004","两次密码不一致"),
-    USERNAME_REPEAT("2006","登录邮箱或登录名已存在")
+    USERNAME_REPEAT("2006","登录邮箱或登录名已存在"),
+    OLD_PASSWORD_ERROR("2007","原密码不正确")
     ;
 
     JsonResultEnum(String code, String messgage) {

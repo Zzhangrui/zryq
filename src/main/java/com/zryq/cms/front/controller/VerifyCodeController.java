@@ -44,11 +44,8 @@ public class VerifyCodeController {
         //返回验证码和图片的map
         Map<String,Object> map = CaptchaUtil.getImageCode(86, 37, os);
 
-        String VerifyCodeType = CaptchaUtil.LOGIN_SIMPLE_CAPTCHA;
-        if(!prefix.equalsIgnoreCase(type)){
-            VerifyCodeType = CaptchaUtil.REGISTER_SIMPLE_CAPTCHA;
-        }
-        request.getSession().setAttribute(VerifyCodeType, map.get("strEnsure").toString().toLowerCase());
+        String verifyCodeType = CaptchaUtil.VerifyCodeType.getValue(type);
+        request.getSession().setAttribute(verifyCodeType, map.get("strEnsure").toString().toLowerCase());
         request.getSession().setAttribute("codeTime",new Date().getTime());
         try {
             ImageIO.write((BufferedImage) map.get("image"), "jpg", os);

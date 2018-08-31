@@ -19,8 +19,43 @@ public class CaptchaUtil {
     private static char mapTable[] =
             {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-    public static  final String LOGIN_SIMPLE_CAPTCHA = "loginSimpleCaptcha";
-    public static  final String REGISTER_SIMPLE_CAPTCHA = "registerSimpleCaptcha";
+
+    public enum VerifyCodeType{
+        LOGIN("login","loginSimpleCaptcha"),REGISTER("register","registerSimpleCaptcha"),FORGET("forget","forgetSimpleCaptcha");
+        private String codeTypeKey;
+
+        private String codeTypeValue;
+
+        VerifyCodeType(String codeTypeKey, String codeTypeValue) {
+            this.codeTypeKey = codeTypeKey;
+            this.codeTypeValue = codeTypeValue;
+        }
+
+        public String getCodeTypeKey() {
+            return codeTypeKey;
+        }
+
+        public void setCodeTypeKey(String codeTypeKey) {
+            this.codeTypeKey = codeTypeKey;
+        }
+
+        public String getCodeTypeValue() {
+            return codeTypeValue;
+        }
+
+        public void setCodeTypeValue(String codeTypeValue) {
+            this.codeTypeValue = codeTypeValue;
+        }
+
+        public static String getValue(String key){
+            for(VerifyCodeType codeType : VerifyCodeType.values()){
+                if(codeType.getCodeTypeKey().equals(key)){
+                    return codeType.getCodeTypeValue();
+                }
+            }
+            return null;
+        }
+    }
     public static Map<String, Object> getImageCode(int width, int height, OutputStream os) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         if (width <= 0)

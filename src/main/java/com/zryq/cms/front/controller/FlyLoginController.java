@@ -54,4 +54,29 @@ public class FlyLoginController {
         ModelAndView modelAndView = new ModelAndView("fly/login");
         return modelAndView;
     }
+
+    @PostMapping("forget")
+    @ResponseBody
+    public JsonResult forget(String email, String verifyCode){
+        return flyUserService.forget(email,verifyCode);
+    }
+
+    @GetMapping("reset")
+    public ModelAndView reset(String email,String data){
+        ModelAndView modelAndView = null;
+        if(flyUserService.checkLink(email,data)){
+            modelAndView= new ModelAndView("fly/reset");
+            modelAndView.addObject("email",email);
+            modelAndView.addObject("data",data);
+        }else{
+            modelAndView = new ModelAndView("error");
+        }
+        return modelAndView;
+    }
+
+    @PostMapping("reset")
+    @ResponseBody
+    public JsonResult reset(FlyUser flyUser,String data){
+        return flyUserService.reset(flyUser,data);
+    }
 }

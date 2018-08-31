@@ -1,6 +1,8 @@
 package com.zryq.cms.config.interceptor;
 
 
+import com.zryq.cms.admin.entity.FlyUser;
+import com.zryq.cms.common.utils.SessionPerson;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -22,20 +24,16 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         String url = request.getRequestURI();
         logger.debug("管理员操作22.." + url);
         HttpSession session = request.getSession();
-        // Person person = (Person)session.getAttribute("person");
-        Object user = request.getSession().getAttribute("user");
-        //Person person = new BaseController().currentPerson();
-        /*if(person==null){
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        if(flyUser==null){
             try {
-                //TODO 地址
-
-                response.sendRedirect("/user/login");
+                response.sendRedirect(request.getContextPath()+"/fly/login");
             } catch (Exception e) {
                e.printStackTrace();
             }
 
             return false;
-        }*/
+        }
         return true;
     }
 

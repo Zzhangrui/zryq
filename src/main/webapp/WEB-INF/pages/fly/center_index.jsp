@@ -31,13 +31,13 @@
             </a>
         </li>
         <li class="layui-nav-item layui-this">
-            <a href="index.html">
+            <a href="${pageContext.request.contextPath}/fly/user/index">
                 <i class="layui-icon">&#xe612;</i>
                 用户中心
             </a>
         </li>
         <li class="layui-nav-item">
-            <a href="set.html">
+            <a href="${pageContext.request.contextPath}/fly/user/set">
                 <i class="layui-icon">&#xe620;</i>
                 基本设置
             </a>
@@ -69,8 +69,11 @@
         -->
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span id="total-article">89</span>）</li>
-                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖（<span id="total-like">16</span>）</li>
+                <li data-type="mine-jie" lay-id="index" class="layui-this">我发的文章（<span id="total-article">89</span>）</li>
+                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的文章（<span id="total-like">16</span>）</li>
+                <li data-type="post" data-url="/post/find/" lay-id="post">我发布的帖子（<span id="total-post">16</span>）</li>
+                <a style="float: right;margin-left: 10px" class="layui-btn"  href="${pageContext.request.contextPath}/fly/user/edit">发布新文章</a>
+                <a style="float: right" class="layui-btn"  href="${pageContext.request.contextPath}/fly/post/edit">发布新帖子</a>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
@@ -104,6 +107,14 @@
                     </ul>
                     <div id="LAY_page1-like" style="text-align: center"></div>
                 </div>
+                <div class="layui-tab-item">
+                    <ul class="mine-view jie-row" id="post">
+                        <li>
+                            <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
+                            <i>收藏于23小时前</i>  </li>
+                    </ul>
+                    <div id="LAY_page1-post" style="text-align: center"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -114,8 +125,11 @@
 <script src="${pageContext.request.contextPath}/assets/layui/layui.js"></script>
 <script src="${pageContext.request.contextPath}/assets/fly/js/center.index.js"></script>
 <script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/assets/common/tool.js"></script>
 <script>
     var contextPath = "${pageContext.request.contextPath}";
+    var createUserId = "${sessionScope.flyUser.id}"
 </script>
 </body>
 </html>

@@ -1,8 +1,7 @@
 package com.zryq.cms.admin.entity;
-
+import javax.persistence.Column;
 import java.util.Date;
 import javax.persistence.*;
-import javax.persistence.Column;
 
 @Table(name = "fly_user")
 public class FlyUser {
@@ -78,6 +77,16 @@ public class FlyUser {
      * 等级
      */
     private String level;
+
+    /**
+     * 0:男  1：女  2：保密
+     */
+    private Integer sex;
+
+    /**
+     * 签名
+     */
+    private String sign;
 
     @Transient
     private String rePassword;
@@ -322,5 +331,41 @@ public class FlyUser {
      */
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    /**
+     * 获取0:男  1：女  2：保密
+     *
+     * @return sex - 0:男  1：女  2：保密
+     */
+    public Integer getSex() {
+        return sex;
+    }
+
+    /**
+     * 设置0:男  1：女  2：保密
+     *
+     * @param sex 0:男  1：女  2：保密
+     */
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * 获取签名
+     *
+     * @return sign - 签名
+     */
+    public String getSign() {
+        return sign;
+    }
+
+    /**
+     * 设置签名
+     *
+     * @param sign 签名
+     */
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

@@ -18,5 +18,7 @@
     <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="sign" jdbcType="VARCHAR" property="sign" />
   </resultMap>
 </mapper>
