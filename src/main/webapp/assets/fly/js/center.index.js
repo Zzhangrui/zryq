@@ -44,7 +44,7 @@ function getSelfArticle(pageNum) {
                 for (var i = 0; i < len; i++) {
                     var article = data[i];
                     html += '<li>\n' +
-                        '                            <a class="jie-title" href="../jie/detail.html" target="_blank">' + article.artTitle + '</a>\n' +
+                        '                            <a class="jie-title" href="'+contextPath+'/blog/detail/'+article.id+'" target="_blank">' + article.artTitle + '</a>\n' +
                         '                            <i>' + article.createTime + '</i>\n' +
                         '                            <a class="mine-edit" href="'+contextPath+'/fly/user/edit'+'?id='+article.id+'"  style="cursor: pointer">编辑</a>\n' +
                         /*'                            <em>661阅/10答</em>\n' +*/
@@ -54,7 +54,7 @@ function getSelfArticle(pageNum) {
             } else {
                 $("#total-article").html(0);
                 html = '<li>\n' +
-                    '                            <a class="jie-title" target="_blank">尚未发布帖子</a>\n' +
+                    '                            <a class="jie-title" target="_blank">尚未发布文章</a>\n' +
                     '                        </li>'
                 $("#self-article").html(html);
             }
@@ -90,7 +90,7 @@ function getSelfLike(pageNum) {
                 for (var i = 0; i < len; i++) {
                     var article = data[i];
                     html += '<li>\n' +
-                        '                            <a class="jie-title"  target="_blank">' + article.artTitle + '</a>\n' +
+                        '                            <a class="jie-title"  href="'+contextPath+'/blog/detail/'+article.id+'"  target="_blank">' + article.artTitle + '</a>\n' +
                         '<i>'+article.createTime+'</i> '+
                         '                        </li>'
                 }
@@ -98,7 +98,7 @@ function getSelfLike(pageNum) {
             } else {
                 $("#total-like").html(0);
                 html = '<li>\n' +
-                    '                            <a class="jie-title" target="_blank">尚未收藏帖子</a>\n' +
+                    '                            <a class="jie-title" target="_blank">尚未收藏文章</a>\n' +
                     '                        </li>'
                 $("#self-like").html(html);
             }
@@ -134,7 +134,7 @@ function getPost(pageNum) {
                 for (var i = 0; i < len; i++) {
                     var article = data[i];
                     html += '<li>\n' +
-                        '                            <a class="jie-title" href="../jie/detail.html" target="_blank">' + article.title + '</a>\n' +
+                        '                            <a class="jie-title" href="'+contextPath+'/fly/post/detail/'+article.id+'" target="_blank">' + article.title + '</a>\n' +
                         '                            <i>' + article.createTime + '</i>\n' +
                         '                            <a class="mine-edit" href="'+contextPath+'/fly/post/edit'+'?id='+article.id+'"  style="cursor: pointer">编辑</a>\n' +
                         /*'                            <em>661阅/10答</em>\n' +*/

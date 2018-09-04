@@ -89,10 +89,10 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
             return jsonResult;
         }
         String email = flyUser.getEmail();
-        String nickName = flyUser.getNickName();
+        //String nickName = flyUser.getNickName();
         FlyUser checkFlyUser = new FlyUser();
         checkFlyUser.setEmail(email);
-        checkFlyUser.setNickName(nickName);
+        //checkFlyUser.setNickName(nickName);
         List<FlyUser> flyUsers = flyUserMapper.select(checkFlyUser);
         if (CollectionUtils.isNotEmpty(flyUsers)) {
             return new JsonResult(JsonResultEnum.USERNAME_REPEAT, false);
@@ -258,6 +258,16 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
         flyUserMapper.updateByPrimaryKeySelective(user);
         SessionPerson.saveFlyUser(user);
         return JsonResult.SUCCESS;
+    }
+
+    public FlyUser selectByUuid(String uuid){
+        if(Strings.isNullOrEmpty(uuid)){
+            return null;
+        }
+        FlyUser flyUser = new FlyUser();
+        flyUser.setUuid(uuid);
+        flyUser = flyUserMapper.selectOne(flyUser);
+        return flyUser;
     }
 
 

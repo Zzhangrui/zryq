@@ -163,7 +163,7 @@
                                 <label for="f_vercode" class="layui-form-label">人类验证</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="f_vercode" name="verifyCode" required
-                                           lay-verify="required" placeholder="请回答后面的问题"
+                                           lay-verify="required" placeholder="请输入后面的验证码"
                                            autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-form-mid">

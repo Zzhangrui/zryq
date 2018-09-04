@@ -33,7 +33,7 @@ layui.use('flow', function() {
                                 '                </div>'
                             lis.push(html)
                         }
-                        next(lis.join(''), page < res.pages); //假设总页数为 6
+                        next(lis.join(''), page < res.pages);
                     }, 500);
                 }
             })

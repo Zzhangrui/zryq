@@ -40,7 +40,7 @@ public class JsonResult {
 
     public JsonResult(JsonResultEnum resultEnum,boolean success){
         this.code = resultEnum.getCode();
-        this.message = resultEnum.getMessgage();
+        this.message = resultEnum.getMessage();
         this.success = success;
     }
 

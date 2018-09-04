@@ -2,20 +2,16 @@ package com.zryq.cms.front.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zryq.cms.admin.entity.Article;
+import com.zryq.cms.admin.entity.FlyPost;
 import com.zryq.cms.admin.entity.FlyUser;
-import com.zryq.cms.admin.service.ArticleService;
-import com.zryq.cms.admin.service.ColumnService;
-import com.zryq.cms.admin.service.FlyUserService;
+import com.zryq.cms.admin.service.*;
 import com.zryq.cms.common.data.FileAttr;
 import com.zryq.cms.common.data.JsonResult;
 import com.zryq.cms.common.utils.Servlets;
 import com.zryq.cms.common.utils.SessionPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,6 +38,12 @@ public class FlyUserCenterController {
     @Autowired
     private ColumnService columnService;
 
+    @Autowired
+    private FlyPostService flyPostService;
+
+    @Autowired
+    private FlyMessageService flyMessageService;
+
     @GetMapping("index")
     public ModelAndView index(){
 
@@ -49,17 +51,36 @@ public class FlyUserCenterController {
         return modelAndView;
     }
 
+    @GetMapping("home/{uuid}")
+    public ModelAndView home(@PathVariable String uuid){
+        ModelAndView modelAndView = new ModelAndView("/fly/center_home");
+        FlyUser flyUser = flyUserService.selectByUuid(uuid);
+        if(null == flyUser){
+           modelAndView.setViewName("error");
+           return modelAndView;
+        }
+        modelAndView.addObject("articleList",articleService.getSelfArticle(0,10,flyUser.getId()).getList());
+        FlyPost flyPost = new FlyPost();
+        flyPost.setCreateUserId(flyUser.getId());
+        modelAndView.addObject("postList",flyPostService.data(0,10,flyPost).getList());
+        modelAndView.addObject("friendUser", flyUserService.selectByUuid(uuid));
+        return modelAndView;
+    }
+
     @PostMapping("selfArticle")
     @ResponseBody
     public PageInfo getSelfArticle(Integer pageNum,Integer pageSize){
-
-        return articleService.getSelfArticle(pageNum,pageSize);
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        Integer id = flyUser.getId();
+        return articleService.getSelfArticle(pageNum,pageSize,id);
     }
 
     @PostMapping("selfLike")
     @ResponseBody
     public PageInfo getSelfLikeArticle(Integer pageNum,Integer pageSize){
-        return articleService.getSelfLikeArticle(pageNum,pageSize);
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        Integer id = flyUser.getId();
+        return articleService.getSelfLikeArticle(pageNum,pageSize,id);
     }
 
     @GetMapping("edit")
@@ -103,5 +124,29 @@ public class FlyUserCenterController {
     @ResponseBody
     public JsonResult modifyPassword(String localPassword,String newPassword,String reNewPassword){
         return flyUserService.modifyPassword(localPassword,newPassword,reNewPassword);
+    }
+
+    @GetMapping("message")
+    public ModelAndView message(){
+        ModelAndView modelAndView = new ModelAndView("/fly/center_message");
+        return modelAndView;
+    }
+
+    @PostMapping("message")
+    @ResponseBody
+    public PageInfo message(Integer pageNum,Integer pageSize){
+        return flyMessageService.getReceiveMessage(pageNum,pageSize);
+    }
+
+    @PostMapping("sendMessage")
+    @ResponseBody
+    public JsonResult sendMessage(String content,Integer receiveId){
+        return  flyMessageService.add(content,receiveId);
+    }
+
+    @ResponseBody
+    @PostMapping("unRead")
+    public JsonResult getUnReadMessageCount(){
+        return flyMessageService.getUnReadMessageCount();
     }
 }

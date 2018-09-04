@@ -85,13 +85,11 @@
 <jsp:include page="foot.jsp"/>
 
 
-<script src="${pageContext.request.contextPath}/assets/layui/layui.js"></script>
-<script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
+
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath }/assets/admin/lib/kindeditor/kindeditor-all-min.js"></script>
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath }/assets/admin/lib/kindeditor/lang/zh-CN.js"></script>
 <script src="${pageContext.request.contextPath}/assets/fly/js/post.edit.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/assets/common/tool.js"></script>
+
 <script>
     var contextPath = "${pageContext.request.contextPath}";
 </script>

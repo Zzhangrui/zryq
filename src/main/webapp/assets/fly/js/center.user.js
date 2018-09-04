@@ -10,12 +10,16 @@ layui.use(['form', 'layer', 'element', 'laypage','upload'], function () {
      * 修改基本信息
      */
     form.on('submit(base-info)', function(data){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.ajax({
             url:contextPath+"/fly/user/baseInfo",
             data:data.field,
             type:'post',
             dataType:'json',
             success: function (res) {
+                layer.close(index);
                 if(res.success){
                     layer.msg("编辑成功");
                     setTimeout(function(){
@@ -33,12 +37,16 @@ layui.use(['form', 'layer', 'element', 'laypage','upload'], function () {
      * 修改密码
      */
     form.on('submit(password)', function(data){
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.ajax({
             url:contextPath+"/fly/user/password",
             data:data.field,
             type:'post',
             dataType:'json',
             success: function (res) {
+                layer.close(index);
                 if(res.success){
                     layer.msg("编辑成功");
                     setTimeout(function(){

@@ -25,8 +25,8 @@
 <div class="layui-container fly-marginTop fly-user-main">
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item">
-            <a href="home.html">
-                <i class="layui-icon">&#xe609;</i>
+            <a href="${pageContext.request.contextPath}/fly/user/home/${sessionScope.flyUser.uuid}">
+                <i class="layui-icon">&#xe68e;</i>
                 我的主页
             </a>
         </li>
@@ -122,11 +122,10 @@
 
 <jsp:include page="foot.jsp"/>
 
-<script src="${pageContext.request.contextPath}/assets/layui/layui.js"></script>
+
 <script src="${pageContext.request.contextPath}/assets/fly/js/center.index.js"></script>
-<script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/assets/common/tool.js"></script>
+
+
 <script>
     var contextPath = "${pageContext.request.contextPath}";
     var createUserId = "${sessionScope.flyUser.id}"

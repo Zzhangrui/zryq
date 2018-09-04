@@ -352,15 +352,19 @@ public class ArticleService {
             criteria.andCreateArtContentLike("%" + article.getArtContent() + "%");
         }
         List<Article> articleList = articleMapper.selectByExampleWithBLOBs(articleExample);
-        articleList.forEach(articleRes -> {
-            if(!Strings.isNullOrEmpty(articleRes.getArtContent())){
-                List<String> imgPath = OperateHtmlUtil.getImgSrc(articleRes.getArtContent());
-                articleRes.setImgPath(imgPath);
-                articleRes.setFirstPicPath(imgPath.get(0));
-                articleRes.setLikeCount(this.getLikeCount(articleRes.getId()));
-            }
+        if(CollectionUtils.isNotEmpty(articleList)){
+            articleList.forEach(articleRes -> {
+                if(!Strings.isNullOrEmpty(articleRes.getArtContent())){
+                    List<String> imgPath = OperateHtmlUtil.getImgSrc(articleRes.getArtContent());
+                    if(CollectionUtils.isNotEmpty(imgPath)){
+                        articleRes.setImgPath(imgPath);
+                        articleRes.setFirstPicPath(imgPath.get(0));
+                    }
+                    articleRes.setLikeCount(this.getLikeCount(articleRes.getId()));
+                }
 
-        });
+            });
+        }
         PageInfo pageInfo = new PageInfo(articleList);
         LayUiData layUiData = new LayUiData();
         layUiData.setData(pageInfo.getList());
@@ -455,15 +459,13 @@ public class ArticleService {
     }
 
 
-    public PageInfo getSelfArticle(Integer pageNum,Integer pageSize){
+    public PageInfo getSelfArticle(Integer pageNum,Integer pageSize,Integer id){
         if(null==pageNum){
             pageNum=0;
         }
         if(null==pageSize){
             pageSize=10;
         }
-        FlyUser flyUser = SessionPerson.currentFlyUser();
-        Integer id = flyUser.getId();
         ArticleExample articleExample = new ArticleExample();
         ArticleExample.Criteria criteria = articleExample.or();
         criteria.andCreateUserIdEqualTo(id);
@@ -473,15 +475,13 @@ public class ArticleService {
         return pageInfo;
     }
 
-    public PageInfo getSelfLikeArticle(Integer pageNum,Integer pageSize){
+    public PageInfo getSelfLikeArticle(Integer pageNum,Integer pageSize,Integer id){
         if(null==pageNum){
             pageNum=0;
         }
         if(null==pageSize){
             pageSize=10;
         }
-        FlyUser flyUser = SessionPerson.currentFlyUser();
-        Integer id = flyUser.getId();
         PageHelper.startPage(pageNum,pageSize);
         List<Article> articles = articleMapper.getSelfLikeArticle(id);
         return new PageInfo(articles);

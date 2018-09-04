@@ -22,10 +22,10 @@
                 <a href="${pageContext.request.contextPath}/fly/post/index"><i class="iconfont icon-jiaoliu"></i>交流</a>
             </li>
             <li class="layui-nav-item">
-                <a href="${pageContext.request.contextPath}/blog/index"><i class="iconfont icon-iconmingxinganli"></i>博客</a>
+                <a href="${pageContext.request.contextPath}/blog/index"><i class="layui-icon layui-icon-website"></i>博客</a>
             </li>
             <li class="layui-nav-item">
-                <a href="${pageContext.request.contextPath}/fly/user/index" target="_blank"><i class="iconfont icon-ui"></i>主页</a>
+                <a href="${pageContext.request.contextPath}/fly/user/home/${sessionScope.flyUser.uuid}" target="_blank"><i class="layui-icon layui-icon-home"></i>我的主页</a>
             </li>
         </ul>
 
@@ -55,14 +55,14 @@
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
                     <cite class="layui-hide-xs">${flyUser.nickName}</cite>
-                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：layui 作者"></i>
-                    <i class="layui-badge fly-badge-vip layui-hide-xs">${flyUser.level}</i>
+                    <i class="iconfont icon-renzheng layui-hide-xs" title="认证信息：普通用户"></i>
+                    <i class="layui-badge fly-badge-vip layui-hide-xs">VIP${flyUser.level}</i>
                     <img src="${pageContext.request.contextPath}/${flyUser.imgPath}">
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${pageContext.request.contextPath}/fly/user/baseInfo"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="${pageContext.request.contextPath}/fly/user/index"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
-                    <dd><a href="${pageContext.request.contextPath}/fly/user/index"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/fly/user/set"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/fly/user/index"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息<span id="unRead" class="layui-badge" style="display:none;height: 13px;line-height: 15px;margin: -6px 0px 0">6</span></a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/fly/user/home/${sessionScope.flyUser.uuid}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
                     <hr style="margin: 5px 0;">
                     <dd><a href="${pageContext.request.contextPath}/fly/logout" style="text-align: center;">退出</a></dd>
                 </dl>
@@ -109,4 +109,12 @@
     );
 
 </script>--%>
+<script src="${pageContext.request.contextPath}/assets/layui/layui.js"></script>
+<script src="${pageContext.request.contextPath}/assets/admin/js/jquery-1.9.1.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/assets/common/tool.js"></script>
+<script src="${pageContext.request.contextPath}/assets/fly/js/head.js"></script>
+<script>
+    var contextPath = "${pageContext.request.contextPath}";
+</script>
 </html>

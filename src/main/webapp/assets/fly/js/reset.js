@@ -5,7 +5,6 @@ layui.use(['form','layer','element'], function() {
         , layer = layui.layer;
 
     form.on('submit(reset)',function(data){
-        console.log(data.field);
         $.ajax({
             url:contextPath+"/fly/reset",
             type:'post',

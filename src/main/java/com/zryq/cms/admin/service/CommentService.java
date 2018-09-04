@@ -110,6 +110,9 @@ public class CommentService {
         if (null == pageSize) {
             pageSize = 5;
         }
+        if(null == articleId){
+            return new PageInfo();
+        }
         CommentExample commentExample = new CommentExample();
         commentExample.setOrderByClause("id DESC");
         CommentExample.Criteria criteria = commentExample.or();
