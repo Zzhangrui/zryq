@@ -140,8 +140,14 @@ public class FlyUserCenterController {
 
     @PostMapping("sendMessage")
     @ResponseBody
-    public JsonResult sendMessage(String content,Integer receiveId){
-        return  flyMessageService.add(content,receiveId);
+    public JsonResult sendMessage(String content,Integer receiveId,Integer parentId){
+        return  flyMessageService.add(content,receiveId,parentId);
+    }
+
+    @PostMapping("replyMessage")
+    @ResponseBody
+    public JsonResult replyMessage(String content,Integer parentId){
+        return flyMessageService.reply(content,parentId);
     }
 
     @ResponseBody

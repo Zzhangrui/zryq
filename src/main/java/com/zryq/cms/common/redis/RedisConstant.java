@@ -12,4 +12,6 @@ public class RedisConstant {
     public static final String ARTICLE_LIKE_COUNT_PREFIX ="article-like-count-";
 
     public static final String ARTICLE_READ_COUNT_PREFIX ="article-read-count-";
+
+    public static final String MESSAGE_ID_PREFIX = "message-";
 }

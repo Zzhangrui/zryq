@@ -27,7 +27,7 @@
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item">
             <a href="${pageContext.request.contextPath}/fly/user/home/${sessionScope.flyUser.uuid}">
-                <i class="layui-icon">&#xe609;</i>
+                <i class="layui-icon">&#xe68e;</i>
                 我的主页
             </a>
         </li>

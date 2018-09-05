@@ -16,24 +16,37 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <select id="getMessage" resultType="com.zryq.cms.admin.entity.FlyMessage"
-            parameterType="java.lang.Integer">
-                SELECT
-                    a.id,
-                    a.send_user_id AS sendUserId,
-                    a.receive_user_id AS receiveUserId,
-                    a.parent_id AS parentId,
-                    a.content,
-                    a.create_time as createTime,
-                    b.nick_name as sendUserName,
-                    c.nick_name as receiveUserName
-                FROM
-                    fly_message AS a,
-                    fly_user AS b,
-                    fly_user AS c
-                WHERE
-                    a.send_user_id = b.id
-                AND a.receive_user_id = c.id
-                and c.id=#{receiveUserId}
-  </select>
+    <select id="getMessage" resultType="com.zryq.cms.admin.entity.FlyMessage">
+        SELECT
+        a.id,
+        a.send_user_id AS sendUserId,
+        a.receive_user_id AS receiveUserId,
+        a.parent_id AS parentId,
+        a.content,
+        a.is_read AS isRead,
+        a.create_time as createTime,
+        b.nick_name as sendUserName,
+        c.nick_name as receiveUserName
+        FROM
+        fly_message AS a,
+        fly_user AS b,
+        fly_user AS c
+        WHERE
+        a.send_user_id = b.id
+        AND a.receive_user_id = c.id
+        <if test="receiveUserId != null">
+            AND c.id=#{receiveUserId}
+        </if>
+        <if test="parentId != null and parentId != 0">
+            AND a.parent_id = #{parentId}
+        </if>
+        <if test="parentId == null">
+            AND a.parent_id is NULL
+        </if>
+        <if test="id != null">
+            AND a.id = #{id}
+        </if>
+
+        order by a.is_read ASC,a.id DESC
+    </select>
 </mapper>

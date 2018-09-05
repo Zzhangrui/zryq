@@ -1,6 +1,7 @@
 package com.zryq.cms.admin.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 import javax.persistence.Column;
 
@@ -58,6 +59,20 @@ public class FlyMessage {
 
     @Column(name = "update_time")
     private Date updateTime;
+
+    /**
+     * 回复的集合
+     */
+    @Transient
+    private List<FlyMessage> replyList;
+
+    public List<FlyMessage> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<FlyMessage> replyList) {
+        this.replyList = replyList;
+    }
 
     /**
      * @return id
