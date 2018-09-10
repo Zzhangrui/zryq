@@ -61,7 +61,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/fly/user/set"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="${pageContext.request.contextPath}/fly/user/index"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息<span id="unRead" class="layui-badge" style="display:none;height: 13px;line-height: 15px;margin: -6px 0px 0">6</span></a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/fly/user/message"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息<span id="unRead" class="layui-badge" style="display:none;height: 13px;line-height: 15px;margin: -6px 0px 0">6</span></a></dd>
                     <dd><a href="${pageContext.request.contextPath}/fly/user/home/${sessionScope.flyUser.uuid}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
                     <hr style="margin: 5px 0;">
                     <dd><a href="${pageContext.request.contextPath}/fly/logout" style="text-align: center;">退出</a></dd>

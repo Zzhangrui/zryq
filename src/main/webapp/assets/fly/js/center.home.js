@@ -25,6 +25,44 @@ layui.use(['form', 'layer', 'element', 'laypage'], function () {
             '</div>'
         });
     })
+
+    $("#attention").on("click",function () {
+        $.ajax({
+            url:contextPath+"/fly/user/attention",
+            type:'post',
+            dataType:'json',
+            data:{type:1,toUserId:receiveId},
+            success:function (res) {
+                if(res.success){
+                    $(this).hide();
+                    $("#attention-cancel").show();
+                    layer.msg("关注成功")
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+        })
+
+    })
+
+    $("#attention-cancel").on("click",function () {
+        $.ajax({
+            url:contextPath+"/fly/user/attention",
+            type:'post',
+            dataType:'json',
+            data:{type:2,toUserId:receiveId},
+            success:function (res) {
+                if(res.success){
+                    $(this).hide();
+                    $("#attention").show();
+                    layer.msg("取消关注成功")
+                }else{
+                    layer.msg(res.message);
+                }
+            }
+        })
+
+    })
 });
 
 //提交评论

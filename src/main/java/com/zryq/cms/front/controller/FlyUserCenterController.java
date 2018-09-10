@@ -132,12 +132,19 @@ public class FlyUserCenterController {
         return modelAndView;
     }
 
-    @PostMapping("message")
+    @PostMapping("getReceiveMessage")
     @ResponseBody
     public PageInfo message(Integer pageNum,Integer pageSize){
-        return flyMessageService.getReceiveMessage(pageNum,pageSize);
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        return flyMessageService.getMessage(flyUser.getId(),null,pageNum,pageSize);
     }
 
+    @PostMapping("getSendMessage")
+    @ResponseBody
+    public PageInfo getSendMessage(Integer pageNum,Integer pageSize){
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        return flyMessageService.getMessage(null,flyUser.getId(),pageNum,pageSize);
+    }
     @PostMapping("sendMessage")
     @ResponseBody
     public JsonResult sendMessage(String content,Integer receiveId,Integer parentId){
@@ -154,5 +161,12 @@ public class FlyUserCenterController {
     @PostMapping("unRead")
     public JsonResult getUnReadMessageCount(){
         return flyMessageService.getUnReadMessageCount();
+    }
+
+
+    @GetMapping("attention")
+    @ResponseBody
+    public JsonResult attention(Integer type,Integer toUserId){
+        return flyUserService.attention(type,toUserId);
     }
 }

@@ -37,6 +37,9 @@
         <if test="receiveUserId != null">
             AND c.id=#{receiveUserId}
         </if>
+        <if test="sendUserId != null">
+            AND b.id=#{sendUserId}
+        </if>
         <if test="parentId != null and parentId != 0">
             AND a.parent_id = #{parentId}
         </if>

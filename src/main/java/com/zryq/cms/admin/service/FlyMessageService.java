@@ -112,15 +112,18 @@ public class FlyMessageService extends BaseService<FlyMessageMapper, FlyMessage>
     /**
      * 根据id ，获取所有回复
      *
-     * @param parentId
-     * @param replyList
      * @return
      */
     public void getReplyList(FlyMessage flyMessage) {
         List<FlyMessage> flyMessageList =
-                flyMessageMapper.getMessage(null, flyMessage.getId(), null);
+                flyMessageMapper.getMessage(null,null, flyMessage.getId(), null);
         if (CollectionUtils.isNotEmpty(flyMessageList)) {
             flyMessageList.forEach(flyMessage1 -> {
+                //改变已读状态
+                FlyMessage flyMessage2 = new FlyMessage();
+                flyMessage2.setIsRead(YES);
+                flyMessage2.setId(flyMessage1.getId());
+                flyMessageMapper.updateByPrimaryKeySelective(flyMessage2);
                 this.getReplyList(flyMessage1);
                 flyMessage.setReplyList(flyMessageList);
             });
@@ -129,20 +132,22 @@ public class FlyMessageService extends BaseService<FlyMessageMapper, FlyMessage>
     }
 
 
-
-    public PageInfo<FlyMessage> getReceiveMessage(Integer pageNum, Integer pageSize) {
+    public PageInfo<FlyMessage> getMessage(Integer receiveUserId,Integer sendUserId,Integer pageNum, Integer pageSize) {
         if (null == pageNum) {
             pageNum = 0;
         }
         if (null == pageSize) {
             pageSize = 10;
         }
-        FlyUser flyUser = SessionPerson.currentFlyUser();
         PageHelper.startPage(pageNum, pageSize);
-        List<FlyMessage> flyMessageList = flyMessageMapper.getMessage(flyUser.getId(), null, null);
+        List<FlyMessage> flyMessageList = flyMessageMapper.getMessage(receiveUserId,sendUserId, null, null);
         if (CollectionUtils.isNotEmpty(flyMessageList)) {
             flyMessageList.forEach(flyMessage -> {
-                Integer parentId = flyMessage.getId();
+                //改变已读状态
+                FlyMessage flyMessage1 = new FlyMessage();
+                flyMessage1.setIsRead(YES);
+                flyMessage1.setId(flyMessage.getId());
+                flyMessageMapper.updateByPrimaryKeySelective(flyMessage1);
                 getReplyList(flyMessage);
 
             });
@@ -150,6 +155,8 @@ public class FlyMessageService extends BaseService<FlyMessageMapper, FlyMessage>
         PageInfo pageInfo = new PageInfo(flyMessageList);
         return pageInfo;
     }
+
+
 
     public JsonResult getUnReadMessageCount() {
         FlyUser flyUser = SessionPerson.currentFlyUser();

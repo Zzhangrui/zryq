@@ -63,10 +63,27 @@
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
             <button class="layui-btn layui-btn-danger" id="clean-message">清空全部消息</button>
-            <div  id="LAY_minemsg" style="margin-top: 10px;">
-                <div class="fly-none">您暂时没有最新消息</div>
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">别人给我的留言</li>
+                    <li>我给别人的留言</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div  id="LAY_minemsg" style="margin-top: 10px;">
+                            <div class="fly-none">您暂时没有收到留言</div>
+                        </div>
+                        <div id="LAY_page-message" style="text-align: center"></div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div  id="receive-message" style="margin-top: 10px;">
+                            <div class="fly-none">您还没有给别人留言</div>
+                        </div>
+                        <div id="receive-message-page" style="text-align: center"></div>
+                    </div>
+
+                </div>
             </div>
-            <div id="LAY_page-message" style="text-align: center"></div>
         </div>
     </div>
 

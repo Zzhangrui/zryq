@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface FlyMessageMapper extends Mapper<FlyMessage> {
 
-    List<FlyMessage>  getMessage(@Param("receiveUserId") Integer receiveUserId, @Param("parentId")Integer parentId, @Param("id")Integer id);
+    List<FlyMessage>  getMessage(@Param("receiveUserId") Integer receiveUserId,@Param("sendUserId") Integer sendUserId, @Param("parentId")Integer parentId, @Param("id")Integer id);
 }

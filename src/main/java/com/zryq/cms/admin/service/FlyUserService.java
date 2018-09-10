@@ -1,7 +1,9 @@
 package com.zryq.cms.admin.service;
 
 import com.google.common.base.Strings;
+import com.zryq.cms.admin.dao.FlyAttentionMapper;
 import com.zryq.cms.admin.dao.FlyUserMapper;
+import com.zryq.cms.admin.entity.FlyAttention;
 import com.zryq.cms.admin.entity.FlyUser;
 import com.zryq.cms.common.data.FileAttr;
 import com.zryq.cms.common.data.JsonResult;
@@ -38,9 +40,12 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
 
     private static final String EMAIL_UUID_PREFIX = "EMAIL_";
 
-    private static final String FORGET_MAIL_SUBJECT="【重置密码】";
+    private static final String FORGET_MAIL_SUBJECT = "【重置密码】";
     @Autowired
     private FlyUserMapper flyUserMapper;
+
+    @Autowired
+    private FlyAttentionMapper flyAttentionMapper;
 
     @Autowired
     private FileOperateService fileOperateService;
@@ -134,8 +139,8 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
                     PBECoderUtil.encrypt(flyUser.getUuid().getBytes(), PBECoderUtil.PASSWORD, salt).toString();
 
             //存redis 30min有效时间
-            jedisClient.set(SALT_PREFIX + email, salt.toString(),30*60);
-            jedisClient.set(EMAIL_UUID_PREFIX + email, flyUser.getUuid(), 30*60);
+            jedisClient.set(SALT_PREFIX + email, salt.toString(), 30 * 60);
+            jedisClient.set(EMAIL_UUID_PREFIX + email, flyUser.getUuid(), 30 * 60);
             sendForgetEmail(email, encryptData);
         } catch (Exception e) {
             e.printStackTrace();
@@ -260,8 +265,8 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
         return JsonResult.SUCCESS;
     }
 
-    public FlyUser selectByUuid(String uuid){
-        if(Strings.isNullOrEmpty(uuid)){
+    public FlyUser selectByUuid(String uuid) {
+        if (Strings.isNullOrEmpty(uuid)) {
             return null;
         }
         FlyUser flyUser = new FlyUser();
@@ -275,16 +280,34 @@ public class FlyUserService extends BaseService<FlyUserMapper, FlyUser> {
         HttpServletRequest request = Servlets.getRequest();
         String host = request.getRemoteHost();
         String path = request.getContextPath();
-        String resetPassHref = host  + path + "/fly/reset?email=" + email + "&data=" + data;
+        String resetPassHref = host + path + "/fly/reset?email=" + email + "&data=" + data;
         String emailContent =
                 "请勿回复本邮件.点击下面的链接重设密码<br/><a href=" + resetPassHref + " target='_BLANK'>"
                         + resetPassHref + "</a><br/>tips:本邮件超过30分钟链接将会失效，30分钟之内本链接可以重复使用。";
         try {
-            MailService.sendMail(FORGET_MAIL_SUBJECT,email, emailContent);
+            MailService.sendMail(FORGET_MAIL_SUBJECT, email, emailContent);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
 
+        return JsonResult.SUCCESS;
+    }
+
+    public JsonResult attention(Integer type, Integer toUserId) {
+
+        if ((type != 1 && type != 2) || null == toUserId) {
+            return JsonResult.ERROR_PARAM;
+        }
+        FlyUser flyUser = SessionPerson.currentFlyUser();
+        FlyAttention flyAttention = new FlyAttention();
+        flyAttention.setToUserId(toUserId);
+        flyAttention.setFromUserId(flyUser.getId());
+        //新增
+        if (1 == type) {
+            flyAttentionMapper.insert(flyAttention);
+        } else {
+            flyAttentionMapper.delete(flyAttention);
+        }
         return JsonResult.SUCCESS;
     }
 

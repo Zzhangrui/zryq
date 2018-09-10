@@ -56,7 +56,8 @@
 
     </c:if>
     <div class="fly-sns" data-user="">
-        <a href="javascript:;" class="layui-btn layui-btn-warm ">关注</a>
+        <a href="javascript:;" class="layui-btn layui-btn-warm " id="attention"><i class="layui-icon layui-icon-star" style="font-size: 16px"></i>关注</a>
+        <a href="javascript:;" class="layui-btn layui-btn-danger " id="attention-cancel" style="display: none"><i class="layui-icon layui-icon-star-fill" style="font-size: 16px"></i>取消关注</a>
         <a href="javascript:;" class="layui-btn layui-btn-normal fly-imActive"
            id="chat"><i class="layui-icon layui-icon-reply-fill" style="font-size: 16px"></i>留言</a>
     </div>
